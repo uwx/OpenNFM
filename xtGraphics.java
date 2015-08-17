@@ -40,13 +40,31 @@ public class xtGraphics extends Panel
     };
     float proba[] = {
         0.6F, 0.7F, 0.4F, 0.3F, 0.8F, 0, 0.3F, 0.3F, 0.3F, 0.1F, 
+        0.1F, 0.5F, 0, 0, 0, 0,
+        0.6F, 0.7F, 0.4F, 0.3F, 0.8F, 0, 0.3F, 0.3F, 0.3F, 0.1F, 
+        0.1F, 0.5F, 0, 0, 0, 0,
+        0.6F, 0.7F, 0.4F, 0.3F, 0.8F, 0, 0.3F, 0.3F, 0.3F, 0.1F, 
+        0.1F, 0.5F, 0, 0, 0, 0,
+        0.6F, 0.7F, 0.4F, 0.3F, 0.8F, 0, 0.3F, 0.3F, 0.3F, 0.1F, 
         0.1F, 0.5F, 0, 0, 0, 0
     };
     float dishandle[] = {
         0.65F, 0.6F, 0.55F, 0.77F, 0.62F, 0.9F, 0.6F, 0.72F, 0.45F, 0.8F, 
+        0.95F, 0.4F, 0.87F, 0.42F, 1.0F, 0.95F,
+        0.65F, 0.6F, 0.55F, 0.77F, 0.62F, 0.9F, 0.6F, 0.72F, 0.45F, 0.8F, 
+        0.95F, 0.4F, 0.87F, 0.42F, 1.0F, 0.95F,
+        0.65F, 0.6F, 0.55F, 0.77F, 0.62F, 0.9F, 0.6F, 0.72F, 0.45F, 0.8F, 
+        0.95F, 0.4F, 0.87F, 0.42F, 1.0F, 0.95F,
+        0.65F, 0.6F, 0.55F, 0.77F, 0.62F, 0.9F, 0.6F, 0.72F, 0.45F, 0.8F, 
         0.95F, 0.4F, 0.87F, 0.42F, 1.0F, 0.95F
     };
     float outdam[] = {
+        0.67F, 0.35F, 0.8F, 0.5F, 0.42F, 0.76F, 0.82F, 0.76F, 0.72F, 0.62F, 
+        0.79F, 0.95F, 0.77F, 1.0F, 0.85F, 1.0F,
+        0.67F, 0.35F, 0.8F, 0.5F, 0.42F, 0.76F, 0.82F, 0.76F, 0.72F, 0.62F, 
+        0.79F, 0.95F, 0.77F, 1.0F, 0.85F, 1.0F,
+        0.67F, 0.35F, 0.8F, 0.5F, 0.42F, 0.76F, 0.82F, 0.76F, 0.72F, 0.62F, 
+        0.79F, 0.95F, 0.77F, 1.0F, 0.85F, 1.0F,
         0.67F, 0.35F, 0.8F, 0.5F, 0.42F, 0.76F, 0.82F, 0.76F, 0.72F, 0.62F, 
         0.79F, 0.95F, 0.77F, 1.0F, 0.85F, 1.0F
     };
@@ -147,7 +165,18 @@ public class xtGraphics extends Panel
     boolean pengs[];
     int enginsignature[] = {
         0, 1, 2, 1, 0, 3, 2, 2, 1, 0, 
-        3, 4, 1, 4, 0, 3
+        3, 4, 1, 4, 0, 3,
+        
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0
     };
     AudioClip air[];
     boolean aird;
@@ -192,7 +221,17 @@ public class xtGraphics extends Panel
     int dested[];
     String names[] = {
         "Tornado Shark", "Formula 7", "Wow Caninaro", "La Vite Crab", "Nimi", "MAX Revenge", "Lead Oxide", "Kool Kat", "Drifter X", "Sword of Justice", 
-        "High Rider", "EL KING", "Mighty Eight", "M A S H E E N", "Radical One", "DR Monstaa"
+        "High Rider", "EL KING", "Mighty Eight", "M A S H E E N", "Radical One", "DR Monstaa",
+        "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", 
+        "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", 
+        "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", 
+        "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", 
+        "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", 
+        "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", 
+        "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", 
+        "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", 
+        "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", 
+        "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car", "Added Car"
     };
     int dmcnt;
     boolean dmflk;
@@ -221,7 +260,18 @@ public class xtGraphics extends Panel
     boolean aflk;
     int sndsize[] = {
         106, 76, 56, 116, 92, 208, 70, 80, 152, 102, 
-        27, 65, 52, 30, 151, 129, 70
+        27, 65, 52, 30, 151, 129, 70, 
+        
+        100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 
+        100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 
+        100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 
+        100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 
+        100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 
+        100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 
+        100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 
+        100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 
+        100, 100, 100, 100, 100, 100, 100, 100, 100, 100, 
+        100, 100, 100, 100, 100, 100, 100, 100, 100, 100
     };
     Image hello;
     Image sign;
@@ -241,7 +291,18 @@ public class xtGraphics extends Panel
     int trklim;
     float hipno[] = {
         1.0F, 1.0F, 3F, 1.0F, 1.2F, 1.0F, 1.7F, 1.0F, 1.0F, 8F, 
-        1.5F, 2.0F, 1.2F, 10F, 1.8F, 1.4F, 2.0F
+        1.5F, 2.0F, 1.2F, 10F, 1.8F, 1.4F, 2.0F,
+        
+        1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 
+        1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 
+        1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 
+        1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 
+        1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 
+        1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 
+        1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 
+        1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 
+        1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 
+        1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F, 1.0F
     };
     int flkat;
     int movly;
@@ -1844,7 +1905,7 @@ public class xtGraphics extends Panel
                 loadedt[i - 1] = true;
             }
         }
-        if(i == 1)
+        if(i == 1) // may glitch
         {
             stracks[0].loadMod(130, 8000, 125, sunny, macn);
         }
@@ -2667,7 +2728,7 @@ public class xtGraphics extends Panel
                 }
                 if(!holdit && fase != -6 && starcnt == 0)
                 {
-                    rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                    rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
                     arrow(madness[0].point, madness[0].missedcp, checkpoints, conto, arrace);
                     //rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
                     if(!arrace && auscnt == 45 && madness[0].capcnt == 0)
@@ -3236,7 +3297,7 @@ public class xtGraphics extends Panel
         {
             if(checkpoints.stage == unlocked)
             {
-                if(checkpoints.stage != 17)
+                if(checkpoints.stage != 51)
                 {
                     rd.drawImage(congrd, 200, 30, null);
                     drawcs(80, "Stage " + checkpoints.stage + " Completed!", 170, 170, 170, 3);
@@ -3303,7 +3364,14 @@ public class xtGraphics extends Panel
                     pin = 0;
                     sc[0] = 15;
                 }
-                if(checkpoints.stage != 17)
+                if(checkpoints.stage == 18) // may glitch here
+                {
+                    byte0 = 16;
+                    i = 290;
+                    pin = 0;
+                    sc[0] = 16;
+                }
+                if(checkpoints.stage != 51)
                 {
                     rd.setFont(new Font("SansSerif", 1, 13));
                     ftm = rd.getFontMetrics();
@@ -3479,7 +3547,7 @@ public class xtGraphics extends Panel
             {
                 stracks[checkpoints.stage - 1].stop();
             }
-            if(checkpoints.stage == unlocked && winner && unlocked != 17)
+            if(checkpoints.stage == unlocked && winner && unlocked != 51)
             {
                 checkpoints.stage++;
                 unlocked++;
@@ -3494,13 +3562,189 @@ public class xtGraphics extends Panel
     {
         if(i != 0)
         {
+            for(int j = 1; j < 7; j++)
+                sc[j] = -1;
+
+            boolean aflag[] = new boolean[7];
+            if(i < 0)
+                i = 27;
+            byte byte0 = 7;
+            boolean flag = false;
+            if(i <= 10)
+            {
+                byte byte1 = 6;
+                if((i == 1 || i == 2) && sc[0] != 5)
+                {
+                    sc[byte1] = 5;
+                    byte0 = byte1;
+                }
+                if((i == 3 || i == 4) && sc[0] != 6)
+                {
+                    sc[byte1] = 6;
+                    byte0 = byte1;
+                }
+                if((i == 5 || i == 6) && sc[0] != 11)
+                {
+                    sc[byte1] = 11;
+                    byte0 = byte1;
+                }
+                if((i == 7 || i == 8) && sc[0] != 14)
+                {
+                    sc[byte1] = 14;
+                    byte0 = byte1;
+                }
+                if((i == 9 || i == 10) && sc[0] != 15)
+                {
+                    sc[byte1] = 15;
+                    byte0 = byte1;
+                }
+            } else
+            {
+                i -= 10;
+                flag = true;
+                if(sc[0] != 7 + (i + 1) / 2 && i != 17)
+                {
+                    sc[6] = 7 + (i + 1) / 2;
+                    byte0 = 6;
+                }
+            }
+            int k = 16;
+            int l = 1;
+            int i1 = 2;
+            for(int j1 = 1; j1 < byte0; j1++)
+            {
+                aflag[j1] = false;
+                do
+                {
+                    if(aflag[j1])
+                        break;
+                    float f = 10F;
+                    if(flag)
+                        f = 17F;
+                    sc[j1] = (int)(Math.random() * (double)(24F + 8F * ((float)i / f)));
+                    if(sc[j1] >= 16)
+                        sc[j1] -= 16;
+                    aflag[j1] = true;
+                    for(int l4 = 0; l4 < 7; l4++)
+                        if(j1 != l4 && sc[j1] == sc[l4])
+                            aflag[j1] = false;
+
+                    if(flag)
+                        f = 16F;
+                    float f1 = ((float)(15 - sc[j1]) / 15F) * ((float)i / f);
+                    if((double)f1 > 0.80000000000000004D)
+                        f1 = 0.8F;
+                    if(i == 17 && (double)f1 > 0.5D)
+                        f1 = 0.5F;
+                    if((double)f1 > Math.random())
+                        aflag[j1] = false;
+                    if((sc[j1] - 7) * 2 > unlocked)
+                        aflag[j1] = false;
+                    if(i == 16 && unlocked == 16 && sc[j1] < 9)
+                        aflag[j1] = false;
+                } while(true);
+                if(sc[j1] >= k)
+                    continue;
+                k = sc[j1];
+                if(l != j1)
+                {
+                    i1 = l;
+                    l = j1;
+                }
+            }
+
+            if(!flag && i == 10)
+            {
+                boolean flag1 = false;
+                for(int i2 = 0; i2 < 7; i2++)
+                    if(sc[i2] == 11)
+                        flag1 = true;
+
+                if(Math.random() > Math.random())
+                    sc[l] = 11;
+                flag1 = false;
+                for(int j2 = 0; j2 < 7; j2++)
+                    if(sc[j2] == 14)
+                        flag1 = true;
+
+                if(Math.random() > Math.random())
+                    sc[i1] = 14;
+            }
+            if(i == 12)
+            {
+                boolean flag2 = false;
+                for(int k2 = 0; k2 < 7; k2++)
+                    if(sc[k2] == 11)
+                        flag2 = true;
+
+                if(!flag2)
+                    sc[l] = 11;
+            }
+            if(i == 14)
+            {
+                boolean flag3 = false;
+                for(int l2 = 0; l2 < 7; l2++)
+                    if(sc[l2] == 12)
+                        flag3 = true;
+
+                if(Math.random() > Math.random())
+                    sc[l] = 12;
+                flag3 = false;
+                for(int i3 = 0; i3 < 7; i3++)
+                    if(sc[i3] == 10)
+                        flag3 = true;
+
+                if(Math.random() > Math.random())
+                    sc[i1] = 10;
+            }
+            if(i == 15)
+            {
+                boolean flag4 = false;
+                for(int j3 = 0; j3 < 7; j3++)
+                    if(sc[j3] == 11)
+                        flag4 = true;
+
+                if(Math.random() > Math.random())
+                    sc[l] = 11;
+                flag4 = false;
+                for(int k3 = 0; k3 < 7; k3++)
+                    if(sc[k3] == 13)
+                        flag4 = true;
+
+                if(Math.random() > Math.random())
+                    sc[i1] = 13;
+            }
+            if(i == 16)
+            {
+                boolean flag5 = false;
+                for(int l3 = 0; l3 < 7; l3++)
+                    if(sc[l3] == 13)
+                        flag5 = true;
+
+                if(Math.random() > Math.random())
+                    sc[l] = 13;
+                flag5 = false;
+                for(int i4 = 0; i4 < 7; i4++)
+                    if(sc[i4] == 12)
+                        flag5 = true;
+
+                if(Math.random() > Math.random())
+                    sc[i1] = 12;
+            }
+        }
+    }
+    
+    public void sortcarsold(int i) //needs new cars
+    {
+        if(i != 0)
+        {
             int j = 1;
             do
             {
                 sc[j] = -1;
             } while(++j < 7);
             boolean aflag[] = new boolean[7];
-            if(unlocked == i && unlocked != 17)
+            if(unlocked == i && unlocked != 51)
             {
                 sc[6] = 7 + (i + 1) / 2;
                 int k = 1;
@@ -3794,7 +4038,7 @@ public class xtGraphics extends Panel
             } else
             {
                 byte byte0 = 7;
-                if(sc[0] != 7 + (i + 1) / 2 && i != 17)
+                if(sc[0] != 7 + (i + 1) / 2 && i != 51)
                 {
                     sc[6] = 7 + (i + 1) / 2;
                     byte0 = 6;
@@ -3804,7 +4048,7 @@ public class xtGraphics extends Panel
                     for(aflag[k2] = false; !aflag[k2];)
                     {
                         int i3 = unlocked;
-                        if(i3 == 17)
+                        if(i3 == 51)
                         {
                             i3 = 16;
                         }
@@ -3820,7 +4064,7 @@ public class xtGraphics extends Panel
                             }
                         } while(++f < 7);
                         f = proba[sc[k2]];
-                        if(i - sc[k2] > 4 && i != 17)
+                        if(i - sc[k2] > 4 && i != 51)
                         {
                             f += (float)(i - sc[k2] - 4) / 10F;
                             if((double)f > 0.90000000000000002D)
@@ -4037,13 +4281,13 @@ public class xtGraphics extends Panel
         {
             rd.drawImage(back[pback], 50, 110, null);
         }
-        if(checkpoints.stage != 17)
+        if(checkpoints.stage != 51)
         {
             rd.drawImage(next[pnext], 560, 110, null);
         }
         rd.setFont(new Font("SansSerif", 1, 13));
         ftm = rd.getFontMetrics();
-        if(checkpoints.stage != 17)
+        if(checkpoints.stage != 51)
         {
             drawcs(80, "Stage " + checkpoints.stage + "  >", 255, 255, 255, 3);
         } else
@@ -4067,7 +4311,7 @@ public class xtGraphics extends Panel
             stages.stop();
             stages.unloadMod();
         }
-        if(control.right && checkpoints.stage != 17)
+        if(control.right && checkpoints.stage != 51)
         {
             if(checkpoints.stage != unlocked)
             {
@@ -4463,8 +4707,8 @@ public class xtGraphics extends Panel
         skid = new AudioClip[3];
         dustskid = new AudioClip[3];
         mutes = false;
-        stracks = new RadicalMod[17];
-        loadedt = new boolean[17];
+        stracks = new RadicalMod[51];
+        loadedt = new boolean[51];
         lastload = -1;
         mutem = false;
         sunny = false;
@@ -4556,7 +4800,7 @@ public class xtGraphics extends Panel
         do
         {
             loadedt[i] = false;
-        } while(++i < 17);
+        } while(++i < 51);
     }
 
     public void maini(Control control)
@@ -5546,7 +5790,7 @@ public class xtGraphics extends Panel
         if(control.right)
         {
             control.right = false;
-            if(sc[0] != 15 && flipo == 0)
+            if(sc[0] != 50 && flipo == 0) // minus 1
             {
                 if(flatrstart > 1)
                 {
@@ -5871,7 +6115,7 @@ public class xtGraphics extends Panel
     {
         while(runtyp != 0) 
         {
-            if(runtyp >= 1 && runtyp <= 17)
+            if(runtyp >= 1 && runtyp <= 51)
             {
                 hipnoload(runtyp, false);
             }

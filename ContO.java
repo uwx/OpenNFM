@@ -657,7 +657,7 @@ public class ContO
                             break;
                         }
 
-                        rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                        rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
                         if(flag)
                         {
                             for(int i2 = 0; i2 < npl; i2++)
