@@ -689,7 +689,7 @@ public class GameSparker extends Applet
         boolean flag2 = false;
         exwist = false;
         double interpolation = 0;
-        final int TICKS_PER_SECOND = 25;
+        final int TICKS_PER_SECOND = 60;
         final int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
         final int MAX_FRAMESKIP = 5;
 
@@ -849,6 +849,7 @@ public class GameSparker extends Applet
             if(xtgraphics.fase == 1)
             {
                 xtgraphics.trackbg(false);
+                rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
                 medium.aroundtrack(checkpoints);
                 int i3 = 0;
                 int ai[] = new int[200];
@@ -896,6 +897,7 @@ public class GameSparker extends Applet
                     mouses = 0;
                 if(mouses == 1)
                     mouses = 2;
+                rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                 xtgraphics.stageselect(checkpoints, u[0]);
             }
             if(xtgraphics.fase == 176)
