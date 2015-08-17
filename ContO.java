@@ -679,7 +679,7 @@ public class ContO
                             }
                         }
                         m.addsp(x - m.x, z - m.z, (int)((double)maxR * 0.80000000000000004D));
-                        rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
+                        //rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
                     } else
                     {
                         lowshadow(rd, k);
