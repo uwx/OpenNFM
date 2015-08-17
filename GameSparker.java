@@ -173,11 +173,23 @@ public class GameSparker extends Applet
     {
         String as[] = {
             "2000tornados", "formula7", "canyenaro", "lescrab", "nimi", "maxrevenge", "leadoxide", "koolkat", "drifter", "policecops", 
-            "mustang", "king", "audir8", "masheen", "radicalone", "drmonster", "road", "froad", "twister2", "twister1", 
-            "turn", "offroad", "bumproad", "offturn", "nroad", "nturn", "roblend", "noblend", "rnblend", "roadend", 
-            "offroadend", "hpground", "ramp30", "cramp35", "dramp15", "dhilo15", "slide10", "takeoff", "sramp22", "offbump", 
-            "offramp", "sofframp", "halfpipe", "spikes", "rail", "thewall", "checkpoint", "fixpoint", "offcheckpoint", "sideoff", 
-            "bsideoff", "uprise", "riseroad", "sroad", "soffroad", "tree", "speedramp", "mountain", "trap", "tunnel", "newoffroad"
+            "mustang", "king", "audir8", "masheen", "radicalone", "drmonster", //16
+            
+            
+            "road", "froad", "twister2", "twister1", //20
+            "turn", "offroad", "bumproad", "offturn", "nroad", "nturn", "roblend", "noblend", "rnblend", "roadend", //30
+            "offroadend", "hpground", "ramp30", "cramp35", "dramp15", "dhilo15", "slide10", "takeoff", "sramp22", "offbump", //40
+            "offramp", "sofframp", "halfpipe", "spikes", "rail", "thewall", "checkpoint", "fixpoint", "offcheckpoint", "sideoff", //50
+            "bsideoff", "uprise", "riseroad", "sroad", "soffroad", "tree", "speedramp", "mountain", "trap", "tunnel", "newoffroad", //61
+            
+            //new parts
+            "tree9", "tree10", "grass", "lamppost", "sun", 
+            "cloud", "tree11", "postalbox", "tree12",
+            "stopsign", "concretebarrier", "dumpstertrashcan", "tree13",
+            "pavedroad", "pavedturn", "pavedend", "burj_al_arab",
+            "feather_reed", "pyramid_of_giza", "rock", "rock2",
+            "rock3", "rainbowroad", "questionmarkblock", "rainbowstraight",
+            "rainbowturn", "rainbowend", "onepartmaze" //27
         };
         xtgraphics.dnload += 6;
         try
@@ -194,7 +206,7 @@ public class GameSparker extends Applet
                 do
                     if(zipentry.getName().startsWith(as[j]))
                         i = j;
-                while(++j < 61);
+                while(++j < as.length);
                 j = (int)zipentry.getSize();
                 byte abyte0[] = new byte[j];
                 int k = 0;
@@ -641,7 +653,7 @@ public class GameSparker extends Applet
         xtGraphics xtgraphics = new xtGraphics(medium, rd, this);
         xtgraphics.loaddata(k);
         Record record = new Record(medium);
-        ContO aconto[] = new ContO[61];
+        ContO aconto[] = new ContO[61 + 27];
         loadbase(aconto, medium, trackers, xtgraphics);
         ContO aconto1[] = new ContO[3000];
         Madness amadness[] = new Madness[7];
