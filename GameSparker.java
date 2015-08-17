@@ -688,8 +688,17 @@ public class GameSparker extends Applet
         int k2 = 0;
         boolean flag2 = false;
         exwist = false;
-        do
-        {
+        double interpolation = 0;
+        final int TICKS_PER_SECOND = 25;
+        final int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
+        final int MAX_FRAMESKIP = 5;
+
+        double next_game_tick = System.currentTimeMillis();
+        int loops;
+
+        while (true) {
+        loops = 0;
+        while (System.currentTimeMillis() > next_game_tick && loops < MAX_FRAMESKIP) {
             Date date1 = new Date();
             long l4 = date1.getTime();
             if(xtgraphics.fase == 111)
@@ -1575,7 +1584,11 @@ public class GameSparker extends Applet
                 Thread.sleep(l2);
             }
             catch(InterruptedException _ex) { }
-        } while(true);
+            next_game_tick += SKIP_TICKS;
+            loops++;
+        }
+        interpolation = (System.currentTimeMillis() + SKIP_TICKS - next_game_tick / (double) SKIP_TICKS);
+        }
     }
 
     public void init() {
