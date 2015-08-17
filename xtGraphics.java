@@ -2669,7 +2669,7 @@ public class xtGraphics extends Panel
                 {
                     rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                     arrow(madness[0].point, madness[0].missedcp, checkpoints, conto, arrace);
-                    rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
+                    //rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
                     if(!arrace && auscnt == 45 && madness[0].capcnt == 0)
                     {
                         if(madness[0].missedcp > 0)
