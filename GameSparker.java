@@ -143,9 +143,11 @@ public class GameSparker extends Applet
           i = Integer.valueOf(String.valueOf(jsobject.getMember("scook"))).intValue();
         }catch (NoClassDefFoundError localException)
         {
+            System.out.println("Not running in web browser");
             return 51;
         }catch (Exception localException)
         {
+            localException.printStackTrace();
             return 51;
         }
         return i;
@@ -1645,10 +1647,12 @@ public class GameSparker extends Applet
             JSObject jsobject = JSObject.getWindow(this);
             jsobject.eval("SetCookie('" + string + "','" + string_107_ + "');");
         } catch (Exception exception) {
-            /* empty */
-        } catch (NoClassDefFoundError localException){}
+            exception.printStackTrace();
+        } catch (NoClassDefFoundError localException) {
+            System.out.println("Not running in web browser");
+        }
     }
-
+    
     public void catchlink(int i)
     {
         if(!lostfcs)
