@@ -4287,12 +4287,16 @@ public class xtGraphics extends Panel
         }
         rd.setFont(new Font("SansSerif", 1, 13));
         ftm = rd.getFontMetrics();
-        if(checkpoints.stage != 51)
+        
+        if(checkpoints.stage == 17)
+        {
+            drawcs(80, "Party Stage  >", 255, 255, 255, 3);
+        } else if(checkpoints.stage != 51)
         {
             drawcs(80, "Stage " + checkpoints.stage + "  >", 255, 255, 255, 3);
         } else
         {
-            drawcs(80, "Final Party Stage  >", 255, 255, 255, 3);
+            drawcs(80, "Final Stage  >", 255, 255, 255, 3);
         }
         drawcs(100, "| " + checkpoints.name + " |", 210, 210, 210, 3);
         rd.drawImage(contin[pcontin], 290, 325, null);
@@ -5790,28 +5794,16 @@ public class xtGraphics extends Panel
         if(control.right)
         {
             control.right = false;
-            if(sc[0] != 50 && flipo == 0) // minus 1
-            {
-                if(flatrstart > 1)
-                {
-                    flatrstart = 0;
-                }
-                nextc = true;
-                flipo = 20;
-            }
+            sc[0]++;
+            if(sc[0] == 51)
+                sc[0] = 50;
         }
         if(control.left)
         {
             control.left = false;
-            if(sc[0] != 0 && flipo == 0)
-            {
-                if(flatrstart > 1)
-                {
-                    flatrstart = 0;
-                }
-                nextc = false;
-                flipo = 20;
-            }
+            sc[0]--;
+            if(sc[0] == -1)
+                sc[0] = 0;
         }
         if(control.handb || control.enter)
         {

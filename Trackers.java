@@ -22,19 +22,19 @@ public class Trackers
 
     public Trackers()
     {
-        x = new int[870];
-        y = new int[870];
-        z = new int[870];
-        xy = new int[870];
-        zy = new int[870];
-        skd = new int[870];
-        dam = new int[870];
-        notwall = new boolean[870];
+        x = new int[100000];
+        y = new int[100000];
+        z = new int[100000];
+        xy = new int[100000];
+        zy = new int[1000000];
+        skd = new int[100000];
+        dam = new int[100000];
+        notwall = new boolean[100000];
         tracksReady = false;
-        c = new int[870][3];
-        radx = new int[870];
-        radz = new int[870];
-        rady = new int[870];
+        c = new int[100000][3];
+        radx = new int[100000];
+        radz = new int[100000];
+        rady = new int[100000];
         nt = 0;
     }
 }

@@ -661,7 +661,7 @@ public class GameSparker extends Applet
         Record record = new Record(medium);
         ContO aconto[] = new ContO[61 + 27 + 34];
         loadbase(aconto, medium, trackers, xtgraphics);
-        ContO aconto1[] = new ContO[3000];
+        ContO aconto1[] = new ContO[10000];
         Madness amadness[] = new Madness[7];
         int l = 0;
         do
@@ -870,7 +870,7 @@ public class GameSparker extends Applet
                 rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
                 medium.aroundtrack(checkpoints);
                 int i3 = 0;
-                int ai[] = new int[200];
+                int ai[] = new int[10000];
                 for(int k5 = 7; k5 < notb; k5++)
                     if(aconto1[k5].dist != 0)
                     {
@@ -922,7 +922,7 @@ public class GameSparker extends Applet
             {
                 medium.d(rd);
                 int j3 = 0;
-                int ai1[] = new int[200];
+                int ai1[] = new int[10000];
                 for(int i6 = 0; i6 < nob; i6++)
                     if(aconto1[i6].dist != 0)
                     {
@@ -994,7 +994,7 @@ public class GameSparker extends Applet
                 } while(++k3 < 7);
                 medium.d(rd);
                 k3 = 0;
-                int ai2[] = new int[200];
+                int ai2[] = new int[10000];
                 for(int k6 = 0; k6 < nob; k6++)
                     if(aconto1[k6].dist != 0)
                     {

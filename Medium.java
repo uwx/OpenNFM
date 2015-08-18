@@ -550,10 +550,10 @@ public class Medium /////// This entire class was re-edited by Chaotic for full 
         vert = false;
         trns = 1;
         dispolys = 0;
-        ogpx = new int[9500][8];
-        ogpz = new int[9500][8];
-        cgpx = new int[9500];
-        cgpz = new int[9500];
+        ogpx = new int[50000][8];
+        ogpz = new int[50000][8];
+        cgpx = new int[50000];
+        cgpz = new int[50000];
         sgpx = 0;
         sgpz = 0;
         nrw = 0;

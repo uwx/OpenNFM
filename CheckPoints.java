@@ -35,10 +35,10 @@ public class CheckPoints
 
     public CheckPoints()
     {
-        x = new int[140];
-        z = new int[140];
-        y = new int[140];
-        typ = new int[140];
+        x = new int[1000];
+        z = new int[1000];
+        y = new int[1000];
+        typ = new int[1000];
         pcs = 0;
         nsp = 0;
         n = 0;
