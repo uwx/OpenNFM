@@ -90,6 +90,7 @@ public class xtGraphics extends Panel
     Image ogameh;
     Image oloadingmusic;
     Image oflaot;
+    Image sped;
     Image dmg;
     Image pwr;
     Image pos;
@@ -2327,6 +2328,10 @@ public class xtGraphics extends Panel
                 {
                     nfmcom = loadimage(abyte0, mediatracker, toolkit);
                 }
+                if(s.equals("speed.gif"))
+                {
+                    sped = loadimage(abyte0, mediatracker, toolkit);
+                }
                 dnload += 3;
             }
 
@@ -2809,7 +2814,25 @@ public class xtGraphics extends Panel
                     rd.drawString("" + checkpoints.wasted + " / 6", 150, 18);
                     rd.drawImage(pos, 42, 27, null);
                     rd.drawImage(rank[checkpoints.pos[madness[0].im]], 110, 28, null);
-                                                          
+                    
+                    rd.drawImage(sped, 7, 234, null);
+                    float speedKph = (madness[0].speed * 1.4F * 21F * 60F * 60F) / 100000F;
+                    float speedMph = speedKph * 0.621371F;
+                    rd.setColor(new Color(0, 0, 100));
+                    if (speedKph > 0) {
+                        rd.drawString("" + (int)speedKph, 62, 245);
+                    }
+                    else
+                    {
+                        rd.drawString("" + (int)-speedKph, 62, 245);
+                    }
+                    if (speedMph > 0) {
+                        rd.drawString("" + (int)speedMph, 132, 245);
+                    }
+                    else
+                    {
+                        rd.drawString("" + (int)-speedMph, 132, 245);
+                    }
                     m.flex++;
                 } else
                 {
