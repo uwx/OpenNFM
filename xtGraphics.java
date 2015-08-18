@@ -5635,7 +5635,7 @@ public class xtGraphics extends Panel
             {
                 rd.drawImage(back[pback], 30, 250, null);
             }
-            if(sc[0] != 15)
+            if(sc[0] != 50) //minus one
             {
                 rd.drawImage(next[pnext], 580, 250, null);
             }
