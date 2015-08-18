@@ -2264,6 +2264,28 @@ public class Medium /////// This entire class was re-edited by Chaotic for full 
         }
     }
     
+    public void eagle(ContO conto, int i)
+    {
+        zy = 25;
+        xz = -i;
+        x = (conto.x - cx) + (int)((float)(-(conto.z - 1000 - conto.z)) * sin(i));
+        z = (conto.z - cz) + (int)((float)(conto.z - 1000 - conto.z) * cos(i));
+        y = conto.y - 850 - cy;
+        if(trns != 1)
+        {
+            trns = 1;
+        }
+    }
+    
+    public void gopro(Madness madness, ContO conto, int i)
+    {
+        //zy = 10 + (int)madness.af2[0];
+        xz = -i;       
+        x = (conto.x - cx) + (int)((float)(-(conto.z - 1 - conto.z)) * sin(i));
+        z = (conto.z - cz) + (int)((float)(conto.z - 1 - conto.z) * cos(i));
+        y = conto.y - Math.abs(madness.flipy[madness.cn]) - cy - 100;
+    }
+    
     public void getaround(ContO conto)
     {
         if(!vert)

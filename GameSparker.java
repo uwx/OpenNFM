@@ -59,7 +59,7 @@ public class GameSparker extends Applet
             if(i == 118 || i == 86)
             {
                 view++;
-                if(view == 3)
+                if(view == 5)
                     view = 0;
             }
         }
@@ -1084,6 +1084,16 @@ public class GameSparker extends Applet
                     if(view == 2)
                     {
                         medium.watch(aconto1[0], amadness[0].mxz);
+                        xtgraphics.stat(amadness, checkpoints, u[0], aconto1, false);
+                    }
+                    if(view == 3)
+                    {
+                        medium.eagle(aconto1[0], aconto1[0].xz);
+                        xtgraphics.stat(amadness, checkpoints, u[0], aconto1, false);
+                    }
+                    if(view == 4)
+                    {
+                        medium.gopro(amadness[0], aconto1[0], aconto1[0].xz);
                         xtgraphics.stat(amadness, checkpoints, u[0], aconto1, false);
                     }
                     if(mouses == 1)
