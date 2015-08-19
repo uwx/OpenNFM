@@ -2195,9 +2195,10 @@ public class Medium /////// This entire class was re-edited by Chaotic for full 
     
     public void fadfrom(int i)
     {
-        if(i > 8000)
+        // rendering distance
+        if(i > 10000)
         {
-            i = 8000;
+            i = 10000;
         }
         for(int j = 1; j < 17; j++)
         {
