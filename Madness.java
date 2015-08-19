@@ -412,6 +412,16 @@ public class Madness
                             madness.lastcolido = 70;
                         if(madness.im == 0)
                             lastcolido = 70;
+                        int f = 0;
+                        do
+                        {
+                            if(im == f)
+                            madness.lastcolido2 = 70;
+        
+                            if(madness.im == f)
+                            lastcolido2 = 70;
+        
+                        } while(++f < 7);
                         madness.scy[l] -= lift[cn];
                     }
                 while(++l < 4);
@@ -1897,7 +1907,13 @@ public class Madness
                 control.wall = -1;
         } else
         if(lastcolido != 0 && !dest)
+        {
             lastcolido--;
+        }
+            if(lastcolido2 != 0 && !dest)    
+        {
+            lastcolido2--;
+        }
         if(dest)
         {
             if(checkpoints.dested[im] == 0)
@@ -2506,4 +2522,5 @@ public class Madness
     boolean nofocus;
     int rpdcatch;
     boolean colidim;
+    int lastcolido2;
 }

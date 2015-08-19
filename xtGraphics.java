@@ -3307,10 +3307,82 @@ public class xtGraphics extends Panel
                             say = "You wasted " + names[sc[k]] + "!";
                             tcnt = -15;
                         }
+                        if(dested[k] == 3)
+                        {                  
+                            wasay = true;
+                            say = "" + names[sc[1]] + " has wasted " + names[sc[k]] + "!";
+                            tcnt = -15;
+	                    }
+	                    if(dested[k] == 4)
+	                    {
+	                       wasay = true;
+	                       say = "" + names[sc[1]] + " has wasted " + names[sc[k]] + "!";
+	                       tcnt = -15;
+	                    }
+	                    if(dested[k] == 5)
+	                    {
+	                        wasay = true;
+	                        say = "" + names[sc[1]] + " has wasted " + names[sc[k]] + "!";
+	                        tcnt = -15;
+	                    }
+	                    if(dested[k] == 6)
+	                    {
+	                        wasay = true;
+	                        say = "" + names[sc[1]] + " has wasted " + names[sc[k]] + "!";
+	                        tcnt = -15;
+	                    }
+	                    if(dested[k] == 7)
+	                    {    
+	                        wasay = true;
+	                        say = "" + names[sc[1]] + " has wasted " + names[sc[k]] + "!";
+	                        tcnt = -15;
+	                    }
+	                    if(dested[k] == 8)
+	                    {
+	                        wasay = true;
+	                        say = "" + names[sc[1]] + " has wasted " + names[sc[k]] + "!";
+	                        tcnt = -15;
+	                    }
                     }
                 } while(++k < 7);
             }
         }
+    }
+    
+    public void stat2(Madness madness[], CheckPoints checkpoints, Control control, boolean flag)
+    {
+        int f = 0;
+        do
+        {
+            if(madness[f].dest)
+            {
+                madness[f].lastcolido2 = 0;
+                if(madness[1].lastcolido2 > 0 && (checkpoints.dested[madness[f].im] == 0 || checkpoints.dested[madness[f].im] == 1))
+                {
+                    checkpoints.dested[madness[f].im] = 3;
+                }
+                if(madness[2].lastcolido2 > 0 && (checkpoints.dested[madness[f].im] == 0 || checkpoints.dested[madness[f].im] == 1))
+                {
+                    checkpoints.dested[madness[f].im] = 4;
+                }
+                if(madness[3].lastcolido2 > 0 && (checkpoints.dested[madness[f].im] == 0 || checkpoints.dested[madness[f].im] == 1))
+                {
+                    checkpoints.dested[madness[f].im] = 5;
+                }
+                if(madness[4].lastcolido2 > 0 && (checkpoints.dested[madness[f].im] == 0 || checkpoints.dested[madness[f].im] == 1))
+                {
+                    checkpoints.dested[madness[f].im] = 6;
+                }
+                if(madness[5].lastcolido2 > 0 && (checkpoints.dested[madness[f].im] == 0 || checkpoints.dested[madness[f].im] == 1))
+                {
+                    checkpoints.dested[madness[f].im] = 7;
+                }
+                if(madness[6].lastcolido2 > 0 && (checkpoints.dested[madness[f].im] == 0 || checkpoints.dested[madness[f].im] == 1))
+                {
+                    checkpoints.dested[madness[f].im] = 8;
+                }
+            }
+        } while(++f < 7);
     }
 
     public void finish(CheckPoints checkpoints, ContO aconto[], Control control)

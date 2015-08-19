@@ -1077,26 +1077,31 @@ public class GameSparker extends Applet
                     {
                         medium.follow(aconto1[0], amadness[0].cxz, u[0].lookback);
                         xtgraphics.stat(amadness, checkpoints, u[0], aconto1, true);
+                        xtgraphics.stat2(amadness, checkpoints, u[0], true);
                     }
                     if(view == 1)
                     {
                         medium.around(aconto1[0], false);
                         xtgraphics.stat(amadness, checkpoints, u[0], aconto1, false);
+                        xtgraphics.stat2(amadness, checkpoints, u[0], false);
                     }
                     if(view == 2)
                     {
                         medium.watch(aconto1[0], amadness[0].mxz);
                         xtgraphics.stat(amadness, checkpoints, u[0], aconto1, false);
+                        xtgraphics.stat2(amadness, checkpoints, u[0], false);
                     }
                     if(view == 3)
                     {
                         medium.eagle(aconto1[0], aconto1[0].xz);
                         xtgraphics.stat(amadness, checkpoints, u[0], aconto1, false);
+                        xtgraphics.stat2(amadness, checkpoints, u[0], false);
                     }
                     if(view == 4)
                     {
                         medium.gopro(amadness[0], aconto1[0], aconto1[0].xz);
                         xtgraphics.stat(amadness, checkpoints, u[0], aconto1, false);
+                        xtgraphics.stat2(amadness, checkpoints, u[0], false);
                     }
                     if(mouses == 1)
                     {
@@ -1126,6 +1131,7 @@ public class GameSparker extends Applet
                         checkpoints.checkstat(amadness, aconto1, record);
                         medium.follow(aconto1[0], amadness[0].cxz, 0);
                         xtgraphics.stat(amadness, checkpoints, u[0], aconto1, true);
+                        xtgraphics.stat2(amadness, checkpoints, u[0], true);
                         rd.setColor(new Color(255, 255, 255));
                         rd.fillRect(0, 0, 670, 400);
                     }
