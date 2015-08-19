@@ -659,6 +659,7 @@ public class GameSparker extends Applet
             j = 500;
         CheckPoints checkpoints = new CheckPoints();
         xtGraphics xtgraphics = new xtGraphics(medium, rd, this);
+        xtgraphics.makeFont();
         xtgraphics.loaddata(k);
         Record record = new Record(medium);
         ContO aconto[] = new ContO[61 + 27 + 34];
@@ -708,6 +709,7 @@ public class GameSparker extends Applet
         int k2 = 0;
         boolean flag2 = false;
         exwist = false;
+        //fps stuff
         double interpolation = 0;
         final int TICKS_PER_SECOND = 60;
         final int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
