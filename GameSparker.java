@@ -174,8 +174,8 @@ public class GameSparker extends Applet
        public void loadbase(ContO aconto[], Medium medium, Trackers trackers, xtGraphics xtgraphics)
     {
         String as[] = {
-            "2000tornados", "formula7", "canyenaro", "lescrab", "nimi", "maxrevenge", "leadoxide", "koolkat", "drifter", "policecops", 
-            "mustang", "king", "audir8", "masheen", "radicalone", "drmonster", //16
+            "TunedTornadoShark", "formula7", "canyenaro", "TunedLVC", "TunedNimi", "TunedMaxRevenge", "TunedOxide", "koolkat", "drifter", "policecops", 
+            "mustang", "king", "TunedM8", "masheen", "radicalone", "TunedMonstaa", //16
             
             //added cars
             "car17", "car18", "car19", 
