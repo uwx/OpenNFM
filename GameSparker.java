@@ -693,7 +693,7 @@ public class GameSparker extends Applet
         l = readcookie("unlocked");
         if(l >= 1 && l <= 51)
         {
-            xtgraphics.unlocked = 51;
+            xtgraphics.unlocked = l;
             if(xtgraphics.unlocked != 51)
                 checkpoints.stage = xtgraphics.unlocked;
             else
