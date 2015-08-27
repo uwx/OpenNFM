@@ -15,6 +15,7 @@ import java.net.URL;
 import java.util.Date;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+//import org.apache.commons.io.FileUtils;
 
 import netscape.javascript.JSObject;
 
@@ -135,7 +136,7 @@ public class GameSparker extends Applet
         return Integer.valueOf(s3).intValue();
     }
 
-    public int readcookie(String string) {
+    /*public int readcookie(String string) {
         int i = -1;
         try {
           JSObject jsobject = JSObject.getWindow(this);
@@ -151,6 +152,20 @@ public class GameSparker extends Applet
             return 51;
         }
         return i;
+    }*/
+    
+    public int readcookie(String string) {
+        try {
+            BufferedReader saveFile = new BufferedReader(new FileReader(string + ".dat"));
+            
+            String it_up_your_ass = saveFile.readLine(); 
+            saveFile.close();
+            return Integer.parseInt(it_up_your_ass);
+        } catch (IOException werefucked) {
+            System.out.println(werefucked.toString());
+            System.out.println(string + ".dat probably doesn't exist");
+            return 51;
+        }
     }
 
     public void paint(Graphics g)
@@ -1650,7 +1665,7 @@ public class GameSparker extends Applet
         }
     }        
 
-    public void savecookie(String string, String string_107_) {
+    /*public void savecookie(String string, String string_107_) {
         try {
             JSObject jsobject = JSObject.getWindow(this);
             jsobject.eval("SetCookie('" + string + "','" + string_107_ + "');");
@@ -1659,6 +1674,22 @@ public class GameSparker extends Applet
         } catch (NoClassDefFoundError localException) {
             System.out.println("Not running in web browser");
         }
+    }*/
+    
+    public void savecookie(String filename, String num) {
+        try {
+            FileWriter saveFile = new FileWriter(filename + ".dat");
+            
+            // Write the data to the file.
+            saveFile.write(num);
+            saveFile.write("\n");
+
+            // All done, close the FileWriter.
+            saveFile.close();
+        } catch (IOException werefuckedagain) {
+            //suicide
+        }
+        
     }
     
     public void catchlink(int i)

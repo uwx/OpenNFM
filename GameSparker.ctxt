@@ -21,8 +21,9 @@ comment17.params=
 comment17.target=void\ run()
 comment18.params=
 comment18.target=void\ init()
-comment19.params=string\ string_107_
+comment19.params=filename\ num
 comment19.target=void\ savecookie(java.lang.String,\ java.lang.String)
+comment19.text=public\ void\ savecookie(String\ string,\ String\ string_107_)\ {\r\n\ \ \ \ \ \ \ \ try\ {\r\n\ \ \ \ \ \ \ \ \ \ \ \ JSObject\ jsobject\ \=\ JSObject.getWindow(this);\r\n\ \ \ \ \ \ \ \ \ \ \ \ jsobject.eval("SetCookie('"\ +\ string\ +\ "','"\ +\ string_107_\ +\ "');");\r\n\ \ \ \ \ \ \ \ }\ catch\ (Exception\ exception)\ {\r\n\ \ \ \ \ \ \ \ \ \ \ \ exception.printStackTrace();\r\n\ \ \ \ \ \ \ \ }\ catch\ (NoClassDefFoundError\ localException)\ {\r\n\ \ \ \ \ \ \ \ \ \ \ \ System.out.println("Not\ running\ in\ web\ browser");\r\n\ \ \ \ \ \ \ \ }\r\n}
 comment2.params=event\ obj
 comment2.target=boolean\ lostFocus(java.awt.Event,\ java.lang.Object)
 comment20.params=i
@@ -37,6 +38,7 @@ comment5.params=s\ s1\ i
 comment5.target=int\ getint(java.lang.String,\ java.lang.String,\ int)
 comment6.params=string
 comment6.target=int\ readcookie(java.lang.String)
+comment6.text=public\ int\ readcookie(String\ string)\ {\r\n\ \ \ \ \ \ \ \ int\ i\ \=\ -1;\r\n\ \ \ \ \ \ \ \ try\ {\r\n\ \ \ \ \ \ \ \ \ \ JSObject\ jsobject\ \=\ JSObject.getWindow(this);\r\n\ \ \ \ \ \ \ \ \ \ jsobject.eval("scook\=GetCookie('"\ +\ string\ +\ "');");\r\n\ \ \ \ \ \ \ \ \ \ i\ \=\ Integer.valueOf(String.valueOf(jsobject.getMember("scook"))).intValue();\r\n\ \ \ \ \ \ \ \ }catch\ (NoClassDefFoundError\ localException)\r\n\ \ \ \ \ \ \ \ {\r\n\ \ \ \ \ \ \ \ \ \ \ \ System.out.println("Not\ running\ in\ web\ browser");\r\n\ \ \ \ \ \ \ \ \ \ \ \ return\ 51;\r\n\ \ \ \ \ \ \ \ }catch\ (Exception\ localException)\r\n\ \ \ \ \ \ \ \ {\r\n\ \ \ \ \ \ \ \ \ \ \ \ localException.printStackTrace();\r\n\ \ \ \ \ \ \ \ \ \ \ \ return\ 51;\r\n\ \ \ \ \ \ \ \ }\r\n\ \ \ \ \ \ \ \ return\ i;\r\n}
 comment7.params=g
 comment7.target=void\ paint(java.awt.Graphics)
 comment8.params=
