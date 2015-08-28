@@ -155,17 +155,38 @@ public class GameSparker extends Applet
     }*/
     
     public int readcookie(String string) {
+    	int i = -1;
         try {
-            BufferedReader saveFile = new BufferedReader(new FileReader(string + ".dat"));
-            
-            String it_up_your_ass = saveFile.readLine(); 
-            saveFile.close();
-            return Integer.parseInt(it_up_your_ass);
-        } catch (IOException werefucked) {
-            System.out.println(werefucked.toString());
-            System.out.println(string + ".dat probably doesn't exist");
-            return 51;
+        	//if in browser and plugin.jar present
+        	JSObject jsobject = JSObject.getWindow(this);
+        	jsobject.eval("scook=GetCookie('" + string + "');");
+        	i = Integer.valueOf(String.valueOf(jsobject.getMember("scook"))).intValue();
+        } catch (NoClassDefFoundError | netscape.javascript.JSException localException)
+        {
+        	// if not in browser or no plugin.jar
+            System.out.println("Not running in web browser (" + string + ")");
+            try {
+                BufferedReader saveFile = new BufferedReader(new FileReader(string + ".dat"));
+                
+                String saveLine = saveFile.readLine(); 
+                saveFile.close();
+                return Integer.parseInt(saveLine);
+            } catch (IOException ioexception) {
+            	// if not in browser or no plugin.jar
+            	// and the saved game doesn't exist
+                System.out.println(ioexception.toString());
+                System.out.println(string + ".dat probably doesn't exist");
+                return -1;
+            }
+        } catch (Exception localException)
+        {
+        	// if in browser and the saved game doesn't exist
+        	System.out.println("No cookie found (" + string + ")");
+            localException.printStackTrace();
+            return -1;
         }
+        System.out.println("Successfully loaded cookie " + string);
+        return i; //will this kill my code? find out at 11
     }
 
     public void paint(Graphics g)
@@ -1678,18 +1699,26 @@ public class GameSparker extends Applet
     
     public void savecookie(String filename, String num) {
         try {
-            FileWriter saveFile = new FileWriter(filename + ".dat");
-            
-            // Write the data to the file.
-            saveFile.write(num);
-            saveFile.write("\n");
+            JSObject jsobject = JSObject.getWindow(this);
+            jsobject.eval("SetCookie('" + filename + "','" + num + "');");
+        } catch (netscape.javascript.JSException | NoClassDefFoundError localException) {
+        	System.out.println("Not running in web browser (" + filename + ")");
+        	try {
+                FileWriter saveFile = new FileWriter(filename + ".dat");
+                
+                // Write the data to the file.
+                saveFile.write(num);
+                saveFile.write("\n");
 
-            // All done, close the FileWriter.
-            saveFile.close();
-        } catch (IOException werefuckedagain) {
-            //suicide
+                // All done, close the FileWriter.
+                saveFile.close();
+                
+                System.out.println("Successfully saved game (" + filename + ")");
+            } catch (IOException fileNoAccess) {
+            	System.out.println("Could not access file " + filename);
+            	fileNoAccess.printStackTrace();
+            }
         }
-        
     }
     
     public void catchlink(int i)
