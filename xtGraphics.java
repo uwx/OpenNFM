@@ -201,6 +201,8 @@ public class xtGraphics extends Panel
     RadicalMod stages;
     RadicalMod cars;
     RadicalMod stracks[];
+    RadicalMidi mtracks[];
+    boolean isMidi[];
     boolean loadedt[];
     int lastload;
     boolean mutem;
@@ -1593,12 +1595,23 @@ public class xtGraphics extends Panel
                 {
                     if(loadedt[i - 1])
                     {
-                        stracks[i - 1].stop();
+                    	if(isMidi[i - 1]) {
+                    		mtracks[i - 1].stopMidi();
+                    	} else {
+                    		stracks[i - 1].stop();
+                    	}
                     }
                 } else
                 if(loadedt[i - 1])
                 {
-                    stracks[i - 1].resume();
+                	System.out.println("We've reached an unmute check...");
+                	if(isMidi[i - 1]) {
+                		System.out.println("Unmute check > play midi...");
+                		mtracks[i - 1].resumeMidi();
+                	} else {
+                		System.out.println("Unmute check > play mod...");
+                		stracks[i - 1].resume();
+                	}
                 }
             }
         }
@@ -1920,80 +1933,108 @@ public class xtGraphics extends Panel
         }
         if(!loadedt[i - 1])
         {
-            stracks[i - 1] = new RadicalMod("music/stage" + i + ".radq", app);
-            if(stracks[i - 1].loaded == 1)
-            {
-                loadedt[i - 1] = true;
-            }
+        	System.out.println("Loading music...");
+        	File f = new File("music/stage" + i + ".mid");
+        	// this also serves as a check so radicalmidi doesn't throw an error
+        	if (f.exists()) { 
+        		System.out.println("Initializing midi...");
+        		isMidi[i - 1] = true;
+        		mtracks[i - 1] = new RadicalMidi("music/stage" + i + ".mid");
+        		System.out.println("Loading midi...");
+            	mtracks[i - 1].loadMidi();
+            	loadedt[i - 1] = true;
+            	//mtracks[i - 1].playMidi();
+        		// also applicable: 
+        		//mtracks[i - 1].playMidi(0.5D);
+        		// would play it at half volume
+        		//mtracks[i - 1].playMidi(0.5D, 1);
+        		// would play it 1 time 
+        		// (or 2? i don't know and don't care)
+        		// and at half volume
+        	} else {
+        		System.out.println("Initializing mod...");
+        		isMidi[i - 1] = false;
+        		stracks[i - 1] = new RadicalMod("music/stage" + i + ".radq", app);
+            	if(stracks[i - 1].loaded == 1)
+            	{
+            		loadedt[i - 1] = true;
+            	}
+        	}
+    	}
+        
+        if (!isMidi[i - 1]) {
+        	System.out.println("Loading mod...");
+        
+	    	if(i == 1) // may glitch
+	        {
+	            stracks[0].loadMod(130, 8000, 125, sunny, macn);
+	        }
+	        if(i == 2)
+	        {
+	            stracks[1].loadMod(260, 7200, 125, sunny, macn);
+	        }
+	        if(i == 3)
+	        {
+	            stracks[2].loadMod(270, 8000, 125, sunny, macn);
+	        }
+	        if(i == 4)
+	        {
+	            stracks[3].loadMod(190, 8000, 125, sunny, macn);
+	        }
+	        if(i == 5)
+	        {
+	            stracks[4].loadMod(162, 7800, 125, sunny, macn);
+	        }
+	        if(i == 6)
+	        {
+	            stracks[5].loadMod(220, 7600, 125, sunny, macn);
+	        }
+	        if(i == 7)
+	        {
+	            stracks[6].loadMod(300, 7500, 125, sunny, macn);
+	        }
+	        if(i == 8)
+	        {
+	            stracks[7].loadMod(200, 7900, 125, sunny, macn);
+	        }
+	        if(i == 9)
+	        {
+	            stracks[8].loadMod(200, 7900, 125, sunny, macn);
+	        }
+	        if(i == 10)
+	        {
+	            stracks[9].loadMod(232, 7300, 125, sunny, macn);
+	        }
+	        if(i == 11)
+	        {
+	            stracks[10].loadMod(370, 7900, 125, sunny, macn);
+	        }
+	        if(i == 12)
+	        {
+	            stracks[11].loadMod(290, 7900, 125, sunny, macn);
+	        }
+	        if(i == 13)
+	        {
+	            stracks[12].loadMod(222, 7600, 125, sunny, macn);
+	        }
+	        if(i == 14)
+	        {
+	            stracks[13].loadMod(230, 8000, 125, sunny, macn);
+	        }
+	        if(i == 15)
+	        {
+	            stracks[14].loadMod(220, 8000, 125, sunny, macn);
+	        }
+	        if(i == 16)
+	        {
+	            stracks[15].loadMod(261, 8000, 125, sunny, macn);
+	        }
+	        if(i == 17)
+	        {
+	            stracks[16].loadMod(400, 7600, 125, sunny, macn);
+	        }
         }
-        if(i == 1) // may glitch
-        {
-            stracks[0].loadMod(130, 8000, 125, sunny, macn);
-        }
-        if(i == 2)
-        {
-            stracks[1].loadMod(260, 7200, 125, sunny, macn);
-        }
-        if(i == 3)
-        {
-            stracks[2].loadMod(270, 8000, 125, sunny, macn);
-        }
-        if(i == 4)
-        {
-            stracks[3].loadMod(190, 8000, 125, sunny, macn);
-        }
-        if(i == 5)
-        {
-            stracks[4].loadMod(162, 7800, 125, sunny, macn);
-        }
-        if(i == 6)
-        {
-            stracks[5].loadMod(220, 7600, 125, sunny, macn);
-        }
-        if(i == 7)
-        {
-            stracks[6].loadMod(300, 7500, 125, sunny, macn);
-        }
-        if(i == 8)
-        {
-            stracks[7].loadMod(200, 7900, 125, sunny, macn);
-        }
-        if(i == 9)
-        {
-            stracks[8].loadMod(200, 7900, 125, sunny, macn);
-        }
-        if(i == 10)
-        {
-            stracks[9].loadMod(232, 7300, 125, sunny, macn);
-        }
-        if(i == 11)
-        {
-            stracks[10].loadMod(370, 7900, 125, sunny, macn);
-        }
-        if(i == 12)
-        {
-            stracks[11].loadMod(290, 7900, 125, sunny, macn);
-        }
-        if(i == 13)
-        {
-            stracks[12].loadMod(222, 7600, 125, sunny, macn);
-        }
-        if(i == 14)
-        {
-            stracks[13].loadMod(230, 8000, 125, sunny, macn);
-        }
-        if(i == 15)
-        {
-            stracks[14].loadMod(220, 8000, 125, sunny, macn);
-        }
-        if(i == 16)
-        {
-            stracks[15].loadMod(261, 8000, 125, sunny, macn);
-        }
-        if(i == 17)
-        {
-            stracks[16].loadMod(400, 7600, 125, sunny, macn);
-        }
+        
         if(flag)
         {
             runner.stop();
@@ -2004,10 +2045,20 @@ public class xtGraphics extends Panel
         lastload = i - 1;
         if(j == 0)
         {
+        	System.out.println("We've reached the loadedt check...");
             if(loadedt[i - 1])
             {
-                stracks[i - 1].play();
+            	if (isMidi[i - 1]) {
+            		// why can't we ever reach this??? dragshot help pls
+            		System.out.println("Playing midi...");
+            		mtracks[i - 1].playMidi();
+            	} else {
+            		// but this is totes fine!!!
+            		System.out.println("Playing mod...");
+            		stracks[i - 1].play();
+            	}
             }
+            System.out.println("We've passed the loadedt check... Is the midi playing?");
             app.setCursor(new Cursor(0));
             fase = 6;
         } else
@@ -2445,7 +2496,14 @@ public class xtGraphics extends Panel
             {
                 if(loadedt[i - 1] && !mutem)
                 {
-                    stracks[i - 1].resume();
+                	System.out.println("We've reached an unmute check...");
+                	if(isMidi[i - 1]) {
+                		System.out.println("Unmute check > play midi...");
+                		mtracks[i - 1].resumeMidi();
+                	} else {
+                		System.out.println("Unmute check > play mod...");
+                		stracks[i - 1].resume();
+                	}
                 }
                 fase = 0;
             }
@@ -2455,7 +2513,14 @@ public class xtGraphics extends Panel
                 {
                     if(loadedt[i - 1] && !mutem)
                     {
-                        stracks[i - 1].resume();
+                    	System.out.println("We've reached an unmute check...");
+                    	if(isMidi[i - 1]) {
+                    		System.out.println("Unmute check > play midi...");
+                    		mtracks[i - 1].resumeMidi();
+                    	} else {
+                    		System.out.println("Unmute check > play mod...");
+                    		stracks[i - 1].resume();
+                    	}
                     }
                     fase = -1;
                 } else
@@ -2467,7 +2532,11 @@ public class xtGraphics extends Panel
             {
                 if(loadedt[i - 1])
                 {
-                    stracks[i - 1].stop();
+                	if(isMidi[i - 1]) {
+                		mtracks[i - 1].stopMidi();
+                	} else {
+                		stracks[i - 1].stop();
+                	}
                 }
                 oldfase = -7;
                 fase = 11;
@@ -2476,7 +2545,11 @@ public class xtGraphics extends Panel
             {
                 if(loadedt[i - 1])
                 {
-                    stracks[i - 1].stop();
+                	if(isMidi[i - 1]) {
+                		mtracks[i - 1].stopMidi();
+                	} else {
+                		stracks[i - 1].stop();
+                	}
                 }
                 fase = 10;
                 opselect = 0;
@@ -2631,7 +2704,11 @@ public class xtGraphics extends Panel
             {
                 if(loadedt[checkpoints.stage - 1])
                 {
-                    stracks[checkpoints.stage - 1].stop();
+                	if(isMidi[checkpoints.stage - 1]) {
+                		mtracks[checkpoints.stage - 1].stopMidi();
+                	} else {
+                		stracks[checkpoints.stage - 1].stop();
+                	}
                 }
                 fase = -6;
                 control.enter = false;
@@ -3660,7 +3737,11 @@ public class xtGraphics extends Panel
             fase = 10;
             if(loadedt[checkpoints.stage - 1])
             {
-                stracks[checkpoints.stage - 1].stop();
+            	if(isMidi[checkpoints.stage - 1]) {
+            		mtracks[checkpoints.stage - 1].stopMidi();
+            	} else {
+            		stracks[checkpoints.stage - 1].stop();
+            	}
             }
             if(checkpoints.stage == unlocked && winner && unlocked != 51)
             {
@@ -4827,7 +4908,9 @@ public class xtGraphics extends Panel
         dustskid = new AudioClip[3];
         mutes = false;
         stracks = new RadicalMod[51];
+        mtracks = new RadicalMidi[51];
         loadedt = new boolean[51];
+        isMidi = new boolean[51];
         lastload = -1;
         mutem = false;
         sunny = false;
@@ -4919,6 +5002,7 @@ public class xtGraphics extends Panel
         do
         {
             loadedt[i] = false;
+            isMidi[i] = false;
         } while(++i < 51);
     }
 
@@ -4926,7 +5010,11 @@ public class xtGraphics extends Panel
     {
         if(lastload >= 0 && loadedt[lastload])
         {
-            stracks[lastload].unloadMod();
+            if (isMidi[lastload]) {
+            	mtracks[lastload].unloadMidi();
+            } else {
+            	stracks[lastload].unloadMod();
+        	}
         }
         if(flipo == 0)
         {
@@ -5662,8 +5750,12 @@ public class xtGraphics extends Panel
         {
             if(loadedt[i])
             {
-                stracks[i].unloadAll();
-                stracks[i] = null;
+            	if (isMidi[i]) {
+            		mtracks[i].unloadMidi();
+            	} else {
+            		stracks[i].unloadAll();
+                	stracks[i] = null;
+            	}
             }
         } while(++i < 17);
         i = 0;

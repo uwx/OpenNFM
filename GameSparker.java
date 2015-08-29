@@ -1009,8 +1009,13 @@ public class GameSparker extends Applet
                 {
                     u[0].enter = false;
                     u[0].handb = false;
-                    if(xtgraphics.loadedt[checkpoints.stage - 1])
-                        xtgraphics.stracks[checkpoints.stage - 1].play();
+                    if(xtgraphics.loadedt[checkpoints.stage - 1]) {
+                    	if (xtgraphics.isMidi[checkpoints.stage - 1]) {
+                    		xtgraphics.mtracks[checkpoints.stage - 1].playMidi();
+                    	} else {
+                    		xtgraphics.stracks[checkpoints.stage - 1].play();
+                    	}
+                    }
                     setCursor(new Cursor(0));
                     xtgraphics.fase = 6;
                 }
