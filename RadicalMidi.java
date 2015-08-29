@@ -1,16 +1,9 @@
 //package com.javacodegeeks.snippets.desktop;
 
-import java.applet.Applet;
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.net.URL;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.util.List;
 
 import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiSystem;
