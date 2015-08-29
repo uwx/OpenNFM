@@ -1011,8 +1011,13 @@ public class GameSparker extends Applet
                     u[0].handb = false;
                     if(xtgraphics.loadedt[checkpoints.stage - 1]) {
                     	if (xtgraphics.isMidi[checkpoints.stage - 1]) {
+                    		System.out.println("Playing midi...");
                     		xtgraphics.mtracks[checkpoints.stage - 1].playMidi();
+                    	} else if (xtgraphics.isIt[checkpoints.stage - 1]) {
+                    		System.out.println("Playing it...");
+                    		xtgraphics.itracks[checkpoints.stage - 1].playIT();
                     	} else {
+                    		System.out.println("Playing mod...");
                     		xtgraphics.stracks[checkpoints.stage - 1].play();
                     	}
                     }

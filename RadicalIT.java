@@ -1,7 +1,6 @@
 import java.io.File;
 
-import ozmod.ITPlayer;
-import ozmod.PipeIn;
+import ozmod.*;
 
 public class RadicalIT {
 	
@@ -9,12 +8,14 @@ public class RadicalIT {
     boolean playing = false;
     String s;
     ITPlayer itplayer;
+    OZMod ozm = new OZMod();
     
 	public RadicalIT(String fn)
     {
+        ozm.initOutput();
 		s = fn;
 		itplayer = new ITPlayer();
-		itplayer.load(new PipeIn(new File(fn),1));
+		itplayer.load(new PipeIn(new File(fn),PipeIn.LITTLEENDIAN));
 		loaded = true;
     }
 	
@@ -41,7 +42,9 @@ public class RadicalIT {
 	
 	public void resumeIT()
 	{
-		itplayer.load(new PipeIn(new File(s),1));
+		ozm.initOutput();
+		itplayer = new ITPlayer();
+		itplayer.load(new PipeIn(new File(s),PipeIn.LITTLEENDIAN));
 		itplayer.play();
 		loaded = true;
 		playing = true;
