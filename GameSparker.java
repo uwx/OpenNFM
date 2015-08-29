@@ -233,7 +233,7 @@ public class GameSparker extends Applet
             "pavedroad", "pavedturn", "pavedend", "burj_al_arab",
             "feather_reed", "pyramid_of_giza", "rock", "rock2",
             "rock3", "rainbowroad", "questionmarkblock", "rainbowstraight",
-            "rainbowturn", "rainbowend", "onepartmaze", //27
+            "rainbowturn", "rainbowend", "onepartmaze" //27
         };
         xtgraphics.dnload += 6;
         try
