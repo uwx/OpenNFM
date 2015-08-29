@@ -745,8 +745,6 @@ public class GameSparker extends Applet
         int k2 = 0;
         boolean flag2 = false;
         exwist = false;
-        //fps stuff
-        double interpolation = 0;
         final int TICKS_PER_SECOND = 60;
         final int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
         final int MAX_FRAMESKIP = 5;
@@ -907,7 +905,7 @@ public class GameSparker extends Applet
             if(xtgraphics.fase == 1)
             {
                 xtgraphics.trackbg(false);
-                rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
+                rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                 medium.aroundtrack(checkpoints);
                 int i3 = 0;
                 int ai[] = new int[10000];
@@ -1011,8 +1009,13 @@ public class GameSparker extends Applet
                 {
                     u[0].enter = false;
                     u[0].handb = false;
-                    if(xtgraphics.loadedt[checkpoints.stage - 1])
-                        xtgraphics.stracks[checkpoints.stage - 1].play();
+                    if(xtgraphics.loadedt[checkpoints.stage - 1]) {
+                    	if (xtgraphics.isMidi[checkpoints.stage - 1]) {
+                    		xtgraphics.mtracks[checkpoints.stage - 1].playMidi();
+                    	} else {
+                    		xtgraphics.stracks[checkpoints.stage - 1].play();
+                    	}
+                    }
                     setCursor(new Cursor(0));
                     xtgraphics.fase = 6;
                 }
@@ -1663,7 +1666,6 @@ public class GameSparker extends Applet
             next_game_tick += SKIP_TICKS;
             loops++;
         }
-        interpolation = (System.currentTimeMillis() + SKIP_TICKS - next_game_tick / (double) SKIP_TICKS);
         }
     }
 
