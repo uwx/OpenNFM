@@ -5809,7 +5809,9 @@ public class xtGraphics extends Panel
         m.xz = 0;
         m.zy = 10;
         m.ground = 470;
+        rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         aconto[sc[0]].d(rd);
+        rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
         if(flipo == 0)
         {
             rd.setFont(adventure13);

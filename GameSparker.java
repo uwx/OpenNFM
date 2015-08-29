@@ -905,7 +905,7 @@ public class GameSparker extends Applet
             if(xtgraphics.fase == 1)
             {
                 xtgraphics.trackbg(false);
-                rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
+                rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                 medium.aroundtrack(checkpoints);
                 int i3 = 0;
                 int ai[] = new int[10000];
