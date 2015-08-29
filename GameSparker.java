@@ -233,7 +233,7 @@ public class GameSparker extends Applet
             "pavedroad", "pavedturn", "pavedend", "burj_al_arab",
             "feather_reed", "pyramid_of_giza", "rock", "rock2",
             "rock3", "rainbowroad", "questionmarkblock", "rainbowstraight",
-            "rainbowturn", "rainbowend", "onepartmaze" //27
+            "rainbowturn", "rainbowend", "onepartmaze", //27
         };
         xtgraphics.dnload += 6;
         try
@@ -745,8 +745,6 @@ public class GameSparker extends Applet
         int k2 = 0;
         boolean flag2 = false;
         exwist = false;
-        //fps stuff
-        double interpolation = 0;
         final int TICKS_PER_SECOND = 60;
         final int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
         final int MAX_FRAMESKIP = 5;
@@ -1663,7 +1661,6 @@ public class GameSparker extends Applet
             next_game_tick += SKIP_TICKS;
             loops++;
         }
-        interpolation = (System.currentTimeMillis() + SKIP_TICKS - next_game_tick / (double) SKIP_TICKS);
         }
     }
 

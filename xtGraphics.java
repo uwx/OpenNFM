@@ -5909,16 +5909,14 @@ public class xtGraphics extends Panel
         if(control.right)
         {
             control.right = false;
-            sc[0]++;
-            if(sc[0] == 51)
-                sc[0] = 50;
+            if(sc[0] < 51 - 1) //number of cars
+            	sc[0]++;
         }
         if(control.left)
         {
             control.left = false;
-            sc[0]--;
-            if(sc[0] == -1)
-                sc[0] = 0;
+            if(sc[0] > 0)
+            	sc[0]--;
         }
         if(control.handb || control.enter)
         {
