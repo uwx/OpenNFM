@@ -1673,7 +1673,13 @@ public class GameSparker extends Applet
             next_game_tick += SKIP_TICKS;
             loops++;
         }
+        memory = (int)((((float)Runtime.getRuntime().totalMemory() - (float)Runtime.getRuntime().freeMemory()) / (float)Runtime.getRuntime().maxMemory()) * 100);
+        if (memory != memprev) {
+        	System.out.println("[MEMORY] " + memory + "% memory used of " + (int)(Runtime.getRuntime().totalMemory() / 1048576.0F /* bytes to MB */) + "mb");
         }
+        memprev = memory;
+        }
+        
     }
 
     public void init() {
@@ -1791,4 +1797,6 @@ public class GameSparker extends Applet
     int nob;
     int notb;
     int view;
+    int memory = 0;
+    int memprev = 0;
 }
