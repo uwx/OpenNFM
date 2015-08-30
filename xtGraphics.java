@@ -2762,7 +2762,7 @@ public class xtGraphics extends Panel
         if (speed >= maxSpeed - 5) {
     		rd.setFont(digital718);
     		rd.setColor(Color.WHITE);
-            rd.drawString("[TOP SPEED]", drawX + (5 * size), drawY + (60 * size));
+            rd.drawString("[ TOP SPEED ]", drawX + (10 * size), drawY + (60 * size));
             //undo
             rd.setColor(Color.BLACK);
             rd.setFont(adventure11);
