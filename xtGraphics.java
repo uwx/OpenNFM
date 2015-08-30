@@ -3246,6 +3246,7 @@ public class xtGraphics extends Panel
                             } else
                             {
                             	rd.setFont(adventure18);
+                            	ftm = rd.getFontMetrics();
                                 drawcs(105, say, 255, 128, 0, 0);
                                 rd.setFont(adventure13);
                                 ftm = rd.getFontMetrics();
@@ -6605,9 +6606,12 @@ public class xtGraphics extends Panel
         }
         rd.setColor(new Color(j, l, j1));
         rd.fillRect(0, 0, 670, 400);
-        rd.setFont(adventure13);
+        rd.setFont(adventure18);
         ftm = rd.getFontMetrics();
         drawcs(25, asay, 0, 0, 0, 3);
+        rd.setFont(adventure13);
+        ftm = rd.getFontMetrics();
+        
         byte byte0 = -90;
         if(i == unlocked && (i == 1 || i == 2 || i == 3 || i == 4 || i == 7 || i == 8 || i == 9 || i == 10 || i == 12 || i == 13 || i == 16 || i == 18))
         {
