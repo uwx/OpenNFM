@@ -3,4 +3,5 @@
 	<classpathentry kind="src" path=""/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path=""/>
+	<classpathentry kind="lib" path="E:/Games/Need For Madness/data/appcore.jar" sourcepath="E:/Games/Need For Madness/data/appcore"/>
 </classpath>
