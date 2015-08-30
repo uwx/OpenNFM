@@ -714,11 +714,17 @@ public class GameSparker extends Applet
         l = readcookie("unlocked");
         if(l >= 1 && l <= 51)
         {
+        	int l2 = readcookie("userstage");
             xtgraphics.unlocked = l;
-            if(xtgraphics.unlocked != 51)
+            if(xtgraphics.unlocked != 51) {
                 checkpoints.stage = xtgraphics.unlocked;
-            else
-                checkpoints.stage = (int)(Math.random() * 51D) + 1;
+        	} else {
+        		if (l2 >= 1 && l2 <= 51) {
+        			checkpoints.stage = l2;
+        		} else {
+        			checkpoints.stage = (int)(Math.random() * 51D) + 1;
+        		}
+            }
             xtgraphics.opselect = 0;
         }
         l = readcookie("usercar");
@@ -877,6 +883,7 @@ public class GameSparker extends Applet
                     savecookie("usercar", "" + xtgraphics.sc[0]);
                     flag = true;
                 }
+                savecookie("userstage", "" + checkpoints.stage);
             }
             if(xtgraphics.fase == 4)
             {
