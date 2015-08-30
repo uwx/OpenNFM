@@ -11,6 +11,8 @@ import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorConvertOp;
 import java.awt.image.WritableRaster;  
+import java.text.DecimalFormat;
+import java.awt.geom.*;
 
 public class xtGraphics extends Panel
     implements Runnable
@@ -342,6 +344,7 @@ public class xtGraphics extends Panel
     float blacknados;
     Font adventure13;
     Font adventure11;
+    Font digital718;
      
     public void makeFont()
     {
@@ -349,6 +352,7 @@ public class xtGraphics extends Panel
             //create the font to use. Specify the size!
             adventure13 = Font.createFont(Font.TRUETYPE_FONT, new File("Adventure.ttf")).deriveFont(13f);
             adventure11 = Font.createFont(Font.TRUETYPE_FONT, new File("Adventure.ttf")).deriveFont(11f);
+            digital718 = Font.createFont(Font.TRUETYPE_FONT, new File("Digital7.ttf")).deriveFont(18f);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             //register the font
             ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, new File("Adventure.ttf")));
@@ -2680,6 +2684,146 @@ public class xtGraphics extends Panel
         return (float)Math.sqrt((i - j) * (i - j) + (k - l) * (k - l));
     }
     
+    public double unitsToMiles(int units)
+    {
+    	return units * 0.64918032786 + 0.000000003; // imprecise as fuck
+    }
+    
+    public double unitsToKilometers(int units)
+    {
+    	return units * 1.04262295082;
+    }
+    
+    public double unitsToMiles(double units)
+    {
+    	return units * 0.64918032786 + 0.000000003; // imprecise as fuck
+    }
+    
+    public double unitsToKilometers(double units)
+    {
+    	return units * 1.04262295082;
+    }
+    
+    public double unitsToMiles(float units)
+    {
+    	return units * 0.64918032786 + 0.000000003; // imprecise as fuck
+    }
+    
+    public double unitsToKilometers(float units)
+    {
+    	return units * 1.04262295082;
+    }
+    
+    public void drawSpeedo(float speed, float maxSpeed, float minSpeed, int drawX, int drawY) {
+    	final float size = 1.0F; //speedo size
+    	//shake effect
+    	if (speed >= maxSpeed - 5) {
+    		drawX += Math.round((float)(Math.random()));
+    		drawY += Math.round((float)(Math.random()));
+    		drawX -= Math.round((float)(Math.random()));
+    		drawY -= Math.round((float)(Math.random()));
+    	}
+    	rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        System.out.println("Speed equals " + speed);
+        final int radius = (int)(75 * size);
+        float angle = ((float) (maxSpeed - Math.abs(speed)) / (float)(maxSpeed - minSpeed)) * 180;
+        //if the angle passes -90 degrees or 90 degrees make angle 90 or -90
+        if (angle > 180)
+			angle = 180;
+        if (angle < 0)
+			angle = 0;
+        // pointer arrow endpoint
+        float endpointX = (drawX + (75 * size)) + 
+                (float)((Math.cos(Math.toRadians(angle))) * radius);
+        float endpointY = (drawY + (75 * size)) - 
+                (float)((Math.sin(Math.toRadians(angle))) * radius);
+        
+        if ((int)endpointX == 150)
+        	endpointY = 151F; //prevents clipping, don't ask me why or how
+        
+        // fill speedometer
+    	//double h = ((angle / 180) - 0.5) / 2;
+    	double h = (angle / 180) * 0.4;
+    	double s = 0.9;
+    	double b = 0.9;
+        rd.setColor(Color.getHSBColor((float)h, (float)s, (float)b));
+        rd.fillArc(drawX, drawY, drawX + (int)(150 * size), drawY + (int)(75 * size),(int)angle + 1, 180-(int)angle - 1);
+
+        // draw lines
+        rd.setColor(Color.BLACK);
+        rd.setStroke(new BasicStroke(2.0f));
+        rd.drawLine(drawX + (int)(75 * size), drawY + (int)(75 * size),(int)endpointX, (int)endpointY + 1);
+        rd.drawLine(drawX, drawY + (int)(75 * size), drawX + (int)(150 * size), drawY + (int)(75 * size));     
+        rd.drawArc(drawX, drawY, 2*radius, 2*radius, drawX + (int)(180 * size), drawY - (int)(255 * size));   
+        rd.setStroke(new BasicStroke(1.0f));
+        // draw top speed text
+        if (speed >= maxSpeed - 5) {
+    		rd.setFont(digital718);
+    		rd.setColor(Color.WHITE);
+            rd.drawString("[TOP SPEED]", drawX + (5 * size), drawY + (60 * size));
+            //undo
+            rd.setColor(Color.BLACK);
+            rd.setFont(adventure11);
+        }
+        rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
+    }
+    
+    protected Color colorSnap(int r, int g, int b)
+    {
+        return colorSnap(r, g, b, 255);
+    }
+
+    protected Color colorSnap(int r, int g, int b, int a)
+    {
+        int nr = r;
+        int ng = g;
+        int nb = b;
+        nr = (int)((float)nr + (float)nr * ((float)m.snap[0] / 100F));
+        if(nr > 255)
+            nr = 255;
+        if(nr < 0)
+            nr = 0;
+        ng = (int)((float)ng + (float)ng * ((float)m.snap[1] / 100F));
+        if(ng > 255)
+            ng = 255;
+        if(ng < 0)
+            ng = 0;
+        nb = (int)((float)nb + (float)nb * ((float)m.snap[2] / 100F));
+        if(nb > 255)
+            nb = 255;
+        if(nb < 0)
+            nb = 0;
+        if(a > 255)
+            a = 255;
+        if(a < 0)
+            a = 0;
+        Color c = new Color(nr, ng, nb, a);
+        rd.setColor(c);
+        return c;
+    }
+    
+    private static Area getBFpow(Area BF_pow)
+    {
+        if(BF_pow == null)
+        {
+            Area elipse = new Area(new java.awt.geom.Ellipse2D.Float(597F, 5F, 70F, 70F));
+            elipse.add(new Area(new java.awt.geom.Rectangle2D.Float(597F, 40F, 70F, 17F)));
+            elipse.subtract(new Area(new java.awt.geom.Rectangle2D.Float(597F, 56F, 70F, 20F)));
+            elipse.add(new Area(new java.awt.geom.RoundRectangle2D.Float(690F, 6F, 94F, 50F, 15F, 15F)));
+            elipse.add(new Area(new java.awt.geom.Arc2D.Float(643F, 6F, 100F, 100F, 0.0F, 180F, 1)));
+            elipse.subtract(new Area(new java.awt.geom.Ellipse2D.Float(604F, 12F, 56F, 56F)));
+            elipse.add(new Area(new java.awt.geom.Ellipse2D.Float(619F, 27F, 26F, 26F)));
+            elipse.add(new Area(new Polygon(new int[] {
+                597, 631, 632, 666
+            }, new int[] {
+                56, 39, 39, 56
+            }, 4)));
+            elipse.subtract(new Area(new java.awt.geom.Rectangle2D.Float(597F, 56F, 70F, 20F)));
+            BF_pow = elipse;
+        }
+        return BF_pow;
+    }
+    
     public void stat(Madness madness[], CheckPoints checkpoints, Control control, ContO conto[], boolean flag)
     {        
         if(holdit)
@@ -2830,9 +2974,9 @@ public class xtGraphics extends Panel
                 }
                 if(!holdit && fase != -6 && starcnt == 0)
                 {
-                    rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
+                    rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
                     arrow(madness[0].point, madness[0].missedcp, checkpoints, conto, arrace);
-                    //rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
+                    rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
                     if(!arrace && auscnt == 45 && madness[0].capcnt == 0)
                     {
                         if(madness[0].missedcp > 0)
@@ -2913,23 +3057,14 @@ public class xtGraphics extends Panel
                     rd.drawImage(rank[checkpoints.pos[madness[0].im]], 110, 28, null);
                     
                     rd.drawImage(sped, 7, 234, null);
-                    float speedKph = (madness[0].speed * 1.4F * 21F * 60F * 60F) / 100000F;
-                    float speedMph = speedKph * 0.621371F;
+                    float speedKph = (float)unitsToKilometers((madness[0].speed * 1.4F * 21F * 60F * 60F) / 100000F);
+                    float speedMph = (float)unitsToMiles((madness[0].speed * 1.4F * 21F * 60F * 60F) / 100000F);;
                     rd.setColor(new Color(0, 0, 100));
-                    if (speedKph > 0) {
-                        rd.drawString("" + (int)speedKph, 62, 245);
-                    }
-                    else
-                    {
-                        rd.drawString("" + (int)-speedKph, 62, 245);
-                    }
-                    if (speedMph > 0) {
-                        rd.drawString("" + (int)speedMph, 132, 245);
-                    }
-                    else
-                    {
-                        rd.drawString("" + (int)-speedMph, 132, 245);
-                    }
+                    rd.drawString("" + (int)Math.abs(speedKph), 62, 245);
+                    rd.drawString("" + (int)Math.abs(speedMph), 132, 245);
+                    
+                    drawSpeedo(speedKph, (float)unitsToKilometers(madness[0].swits[sc[madness[0].im]][2] + 20), 0.0F, 0, 75);
+                    
                     m.flex++;
                 } else
                 {
