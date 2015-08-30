@@ -346,6 +346,7 @@ public class xtGraphics extends Panel
     Font adventure11;
     Font adventure18;
     Font digital718;
+    boolean lastlap;
     
     public void makeFont()
     {
@@ -2954,6 +2955,24 @@ public class xtGraphics extends Panel
                         holdit = true;
                     }
                 } while(++i < 7);
+                if(checkpoints.clear[0] < (checkpoints.nlaps * checkpoints.nsp) - 1)
+                {
+                    if((madness[0].nlaps + 1) == checkpoints.nlaps)
+                    {
+                        if(checkpoints.nlaps != 1 && !holdit)
+                        {   
+                            if(lastlap)
+                            {
+                                drawcs(367, "Final lap!", 0, 0, 225, 0);
+                                lastlap = false;
+                            } else
+                            {
+                                drawcs(367, "Final lap!", 0, 78, 255, 0);
+                                lastlap = true;
+                            }
+                        }
+                    }
+                }
             }
             if(flag)
             {                
