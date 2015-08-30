@@ -83,3 +83,6 @@ java.policy.applet
 *.html
 *.ini
 *.exe
+/ToolbarMenu.class
+/ToolbarMenu$1.class
+/ToolbarMenu$2.class
