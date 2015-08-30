@@ -8,7 +8,7 @@ import java.awt.Color;
 
 public class Madness
 {
-    float speeddec = 2.0F; /// universal rate that speed decreases when it exceeds swits[0][2], that is, top speed
+    final float speeddec = 2.0F; /// universal rate that speed decreases when it exceeds swits[0][2], that is, top speed
     
     public int py(int i, int j, int k, int l)
     {
