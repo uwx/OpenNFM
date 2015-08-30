@@ -1964,6 +1964,7 @@ public class xtGraphics extends Panel
         	} else if (itF.exists()) {
         		System.out.println("Initializing/Loading it...");
         		isIt[i - 1] = true;
+        		itracks[i - 1] = null;
         		itracks[i - 1] = new RadicalIT("music/stage" + i + ".it");
         		loadedt[i - 1] = true;
         	} else if (xmF.exists()) {
@@ -2077,6 +2078,7 @@ public class xtGraphics extends Panel
             	} else if (isIt[i - 1]) {
             		System.out.println("Playing it...");
             		itracks[i - 1].playIT();
+            		System.out.println("We're not stuck here...");
             	} else {
             		System.out.println("Playing mod...");
             		stracks[i - 1].play();
@@ -5058,9 +5060,9 @@ public class xtGraphics extends Panel
         {
             if (isMidi[lastload]) {
             	mtracks[lastload].unloadMidi();
-            } if (isIt[lastload]) {
-            	//nothing
-            }else {
+            } else if (isIt[lastload]) {
+            	itracks[lastload].unloadIT();
+            } else {
             	stracks[lastload].unloadMod();
         	}
         }
@@ -5802,13 +5804,14 @@ public class xtGraphics extends Panel
             		mtracks[i].unloadMidi();
             		mtracks[i] = null;
             	} else if (isIt[i]){
+            		itracks[i].unloadIT();
             		itracks[i] = null;
             	} else {
             		stracks[i].unloadAll();
                 	stracks[i] = null;
             	}
             }
-        } while(++i < 17);
+        } while(++i < 51);
         i = 0;
         do
         {

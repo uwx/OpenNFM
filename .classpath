@@ -2,6 +2,7 @@
 <classpath>
 	<classpathentry kind="src" path=""/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="C:/Program Files/Java/javamod-2.2.jar"/>
+	<classpathentry kind="lib" path="C:/Program Files/Java/javamod-2.2.jar" sourcepath="C:/Program Files/Java/javamod-source.zip"/>
+	<classpathentry kind="lib" path="E:/Games/Need For Madness/data/appcore.jar" sourcepath="E:/Games/Need For Madness/data/appcore"/>
 	<classpathentry kind="output" path=""/>
 </classpath>
