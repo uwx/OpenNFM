@@ -244,13 +244,13 @@ public class xtGraphics extends Panel
     boolean pwflk;
     String adj[][] = {
         {
-            "Cool", "Alright", "Nice"
+            "Cool", "Alright", "Nice", "Good"
         }, {
-            "Wicked", "Amazing", "Super"
+            "Wicked", "Amazing", "Super", "Great"
         }, {
-            "Awesome", "Ripping", "Radical"
+            "Awesome", "Ripping", "Radical", "Epic"
         }, {
-            "What the...?", "Your a super star!!!!", "Who are you again...?"
+            "What the...?", "You're a super star!!", "Who are you again...?", "Holy...", "That was incredible!!", "You killed it!!"
         }, {
             "surf style", "off the lip", "bounce back"
         }
@@ -344,14 +344,16 @@ public class xtGraphics extends Panel
     float blacknados;
     Font adventure13;
     Font adventure11;
+    Font adventure18;
     Font digital718;
-     
+    
     public void makeFont()
     {
         try {
             //create the font to use. Specify the size!
             adventure13 = Font.createFont(Font.TRUETYPE_FONT, new File("Adventure.ttf")).deriveFont(13f);
             adventure11 = Font.createFont(Font.TRUETYPE_FONT, new File("Adventure.ttf")).deriveFont(11f);
+            adventure18 = Font.createFont(Font.TRUETYPE_FONT, new File("Adventure.ttf")).deriveFont(18f);
             digital718 = Font.createFont(Font.TRUETYPE_FONT, new File("Digital7.ttf")).deriveFont(18f);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             //register the font
@@ -3218,20 +3220,35 @@ public class xtGraphics extends Panel
                         {
                             if(!wasay)
                             {
+                            	rd.setFont(adventure18);
+                            	ftm = rd.getFontMetrics();
                                 drawcs(105, say, 0, 0, 0, 0);
+                                rd.setFont(adventure13);
+                                ftm = rd.getFontMetrics();
                             } else
                             {
+                            	rd.setFont(adventure18);
+                                ftm = rd.getFontMetrics();
                                 drawcs(105, say, 0, 0, 0, 0);
+                                rd.setFont(adventure13);
+                                ftm = rd.getFontMetrics();
                             }
                             tflk = false;
                         } else
                         {
                             if(!wasay)
                             {
+                            	rd.setFont(adventure18);
+                                ftm = rd.getFontMetrics();
                                 drawcs(105, say, 0, 128, 255, 0);
+                                rd.setFont(adventure13);
+                                ftm = rd.getFontMetrics();
                             } else
                             {
+                            	rd.setFont(adventure18);
                                 drawcs(105, say, 255, 128, 0, 0);
+                                rd.setFont(adventure13);
+                                ftm = rd.getFontMetrics();
                             }
                             tflk = true;
                         }
@@ -3245,11 +3262,19 @@ public class xtGraphics extends Panel
                     {
                         if(aflk)
                         {
-                            drawcs(85, asay, 98, 176, 255, 0);
+                        	rd.setFont(adventure18);
+                            ftm = rd.getFontMetrics();
+                            drawcs(75, asay, 98, 176, 255, 0);
+                            rd.setFont(adventure13);
+                            ftm = rd.getFontMetrics();
                             aflk = false;
                         } else
                         {
-                            drawcs(85, asay, 0, 128, 255, 0);
+                        	rd.setFont(adventure18);
+                            ftm = rd.getFontMetrics();
+                            drawcs(75, asay, 0, 128, 255, 0);
+                            rd.setFont(adventure13);
+                            ftm = rd.getFontMetrics();
                             aflk = true;
                         }
                         auscnt++;
@@ -3257,11 +3282,19 @@ public class xtGraphics extends Panel
                 } else
                 if(tflk)
                 {
+                	rd.setFont(adventure18);
+                    ftm = rd.getFontMetrics();
                     drawcs(110, "Bad Landing!", 0, 0, 200, 0);
+                    rd.setFont(adventure13);
+                    ftm = rd.getFontMetrics();
                     tflk = false;
                 } else
                 {
+                	rd.setFont(adventure18);
+                    ftm = rd.getFontMetrics();
                     drawcs(110, "Bad Landing!", 255, 100, 0, 0);
+                    rd.setFont(adventure13);
+                    ftm = rd.getFontMetrics();
                     tflk = true;
                 }
                 if(madness[0].trcnt == 10)
@@ -3459,14 +3492,14 @@ public class xtGraphics extends Panel
                         }
                         if(madness[0].surfer)
                         {
-                            asay = " " + adj[4][(int)(m.random() * 3F)] + asay;
+                            asay = " " + adj[4][(int)(m.random() * 3F)] + asay; //surfer, off the lip etc
                         }
                         if(byte0 != 3)
                         {
-                            asay = adj[byte0][(int)(m.random() * 3F)] + asay + exlm[byte0];
+                            asay = adj[byte0][(int)(m.random() * 4F)] + asay + exlm[byte0]; //regular adjectives
                         } else
                         {
-                            asay = adj[byte0][(int)(m.random() * 3F)];
+                            asay = adj[byte0][(int)(m.random() * 6F)]; // what the, you're a super star etc
                         }
                         if(!wasay)
                         {
@@ -4471,6 +4504,17 @@ public class xtGraphics extends Panel
         } while(++j < 5);
     }
 
+    /**
+     * Draws a text on the middle of the screen.
+     *
+     * @param  i the y coordinate of the text
+     * @param  s the string to draw
+     * @param  j the red color of the text
+     * @param  k the green color of the text
+     * @param  l the blue color of the text
+     * @param  i1 unknown. possibly to center the string horizontally as well. default 3
+     */
+    
     public void drawcs(int i, String s, int j, int k, int l, int i1)
     {
         if(i1 != 3 && i1 != 4)
@@ -6529,7 +6573,7 @@ public class xtGraphics extends Panel
         ftm = rd.getFontMetrics();
         drawcs(25, asay, 0, 0, 0, 3);
         byte byte0 = -90;
-        if(i == unlocked && (i == 1 || i == 2 || i == 3 || i == 4 || i == 7 || i == 8 || i == 9 || i == 10 || i == 12 || i == 13 || i == 16))
+        if(i == unlocked && (i == 1 || i == 2 || i == 3 || i == 4 || i == 7 || i == 8 || i == 9 || i == 10 || i == 12 || i == 13 || i == 16 || i == 18))
         {
             byte0 = 0;
         }
@@ -6655,6 +6699,12 @@ public class xtGraphics extends Panel
                 rd.drawString("This track is actually a 4D object projected onto the 3D world.", 197, 107);
                 rd.drawString("It's been broken down, separated and, in many ways, it is also a", 197, 127);
                 rd.drawString("maze!  GOOD LUCK!", 197, 147);
+            }
+            if(i == 18)
+            {
+            	rd.drawString("This stage makes no sense whatsoever!", 197, 67);
+                rd.drawString("Are you ready for the stupidest race of your life?", 197, 87);
+                rd.drawString("Good luck! You'll need it!", 197, 127);
             }
         }
         rd.drawImage(loadingmusic, 224, 180 + byte0, null);
