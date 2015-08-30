@@ -94,3 +94,21 @@ Temporary Items
 /usercar.dat
 /Wheels.ctxt
 /xtGraphics.ctxt
+
+#
+# Mine
+#
+
+# BlueJ comment context
+*.ctxt
+
+# Saved game data
+*.dat
+
+# Bluej data
+*.bluej
+
+# Game runner
+*.html
+*.ini
+*.exe
