@@ -3264,7 +3264,7 @@ public class xtGraphics extends Panel
                         {
                         	rd.setFont(adventure18);
                             ftm = rd.getFontMetrics();
-                            drawcs(75, asay, 98, 176, 255, 0);
+                            drawcs(85, asay, 98, 176, 255, 0);
                             rd.setFont(adventure13);
                             ftm = rd.getFontMetrics();
                             aflk = false;
@@ -3272,7 +3272,7 @@ public class xtGraphics extends Panel
                         {
                         	rd.setFont(adventure18);
                             ftm = rd.getFontMetrics();
-                            drawcs(75, asay, 0, 128, 255, 0);
+                            drawcs(85, asay, 0, 128, 255, 0);
                             rd.setFont(adventure13);
                             ftm = rd.getFontMetrics();
                             aflk = true;
@@ -3325,13 +3325,25 @@ public class xtGraphics extends Panel
                     {
                         loop = "triple Forward";
                     }
-                    if(j >= 4)
+                    if(j == 4)
+                    {
+                        loop = "quadruple Forward";
+                    }
+                    if(j == 5)
+                    {
+                        loop = "quintuple Forward";
+                    }
+                    if(j == 6)
+                    {
+                        loop = "sextuple Forward";
+                    }
+                    if(j >= 7)
                     {
                         loop = "massive Forward looping";
                     }
                     if(j == -1)
                     {
-                        loop = "Backloop";
+                        loop = "Backward loop";
                     }
                     if(j == -2)
                     {
@@ -3341,7 +3353,19 @@ public class xtGraphics extends Panel
                     {
                         loop = "triple Back";
                     }
-                    if(j <= -4)
+                    if(j == -4)
+                    {
+                        loop = "quadruple Back";
+                    }
+                    if(j == -5)
+                    {
+                        loop = "quintuple Back";
+                    }
+                    if(j == -6)
+                    {
+                        loop = "sextuple Back";
+                    }
+                    if(j <= -7)
                     {
                         loop = "massive Back looping";
                     }
@@ -3397,9 +3421,21 @@ public class xtGraphics extends Panel
                     {
                         spin = "triple Rollspin";
                     }
-                    if(j >= 4)
+                    if(j == 4)
                     {
-                        spin = "massive Roll spinning";
+                        loop = "quadruple Rollspin";
+                    }
+                    if(j == 5)
+                    {
+                        loop = "quintuple Rollspin";
+                    }
+                    if(j == 6)
+                    {
+                        loop = "sextuple Rollspin";
+                    }
+                    if(j >= 7)
+                    {
+                        loop = "massive Roll spinning";
                     }
                     j = 0;
                     boolean flag1 = false;
@@ -3525,7 +3561,7 @@ public class xtGraphics extends Panel
                 {
                     if(!wasay)
                     {
-                        say = "Car Fixed";
+                        say = "Car Fixed!";
                         tcnt = 0;
                     }
                     if(crashup)
