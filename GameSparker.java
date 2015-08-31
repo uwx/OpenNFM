@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+//<<<<<<< HEAD
 import java.applet.Applet;
 import java.awt.*;
 import java.io.*;
@@ -1807,7 +1807,7 @@ public class GameSparker extends Applet
     int memory = 0;
     int memprev = 0;
 }
-=======
+//=======
  
 
  
@@ -3629,4 +3629,4 @@ public class GameSparker extends Applet
     int memory = 0;
     int memprev = 0;
 }
->>>>>>> nfm2desktop
+//>>>>>>> nfm2desktop

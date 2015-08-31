@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+//<<<<<<< HEAD
 
 public class Control
 {    
@@ -2691,7 +2691,7 @@ public class Control
         return (i - j) * (i - j) + (k - l) * (k - l);
     }
 }
-=======
+//=======
 
 public class Control
 {    
@@ -5414,4 +5414,4 @@ public class Control
         return (i - j) * (i - j) + (k - l) * (k - l);
     }
 }
->>>>>>> nfm2desktop
+//>>>>>>> nfm2desktop
