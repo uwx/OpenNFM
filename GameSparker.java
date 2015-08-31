@@ -193,7 +193,7 @@ public class GameSparker extends Applet
     {
         g.drawImage(offImage, 0, 0, this);
     }
-
+    
     public GameSparker()
     {
         u = new Control[7];
@@ -709,7 +709,7 @@ public class GameSparker extends Applet
         if(k != 2)
             j = 500;
         CheckPoints checkpoints = new CheckPoints();
-        xtGraphics xtgraphics = new xtGraphics(medium, rd, this);
+        xtGraphics xtgraphics = new xtGraphics(medium, rd, this, settings);
         xtgraphics.makeFont();
         xtgraphics.loaddata(k);
         Record record = new Record(medium);
@@ -1800,9 +1800,11 @@ public class GameSparker extends Applet
         return false;
     }
 
+    
     CheckPoints cp; 
     Graphics2D rd;
     Graphics sg;
+    Settings settings = new Settings(this);
     Image offImage;
     Thread gamer;
     Control u[];

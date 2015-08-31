@@ -12,6 +12,7 @@ public class RunApp extends Panel {
 	static Frame frame;
     static GameSparker applet;
     public static ArrayList<Image> icons;
+    static SexyMenu sexymenu;
 
     /**
     * Fetches icons of 16, 32 and 48 pixels from the 'data' folder.
@@ -36,6 +37,11 @@ public class RunApp extends Panel {
             System.out.println("Could not setup System Look&Feel: " + ex.toString());
         }
         startup();
+        sexymenu = new SexyMenu(frame, applet, new RunApp());
+        sexymenu.initSettings(applet.settings);
+        sexymenu.initMenu();
+        sexymenu.initSpeedoMenu();
+
     }
 
     static void startup() {
@@ -51,7 +57,7 @@ public class RunApp extends Panel {
                 exitsequance();
             }
         });
-        applet.setPreferredSize(new java.awt.Dimension(670, 400));//The resolution of your game goes here
+        applet.setPreferredSize(new java.awt.Dimension(670, 460));//The resolution of your game goes here
         frame.add("Center", applet);
         frame.setResizable(false);//If you plan to make you game support changes in resolution, you can comment out this line.
         frame.pack();

@@ -353,6 +353,7 @@ public class xtGraphics extends Panel
     int flickr;
     int flickr2;
     int flickr3;
+    Settings gameSettings;
     
     public void makeFont()
     {
@@ -2810,328 +2811,333 @@ public class xtGraphics extends Panel
     }
     
     public void dragShotSpeedo(CheckPoints checkpoints, Madness madness[], int swit, float speed) {
-    		final boolean isMph = false; // may want to add a setting for this
-            int px = 580;
-            int py = 320;
-            int mins = -120;
-            int maxs = 120;
-            float scale = 0.95F;
-            float sensitivity = 3.55F;
-            rd.setColor(new Color(50, 50, 50, 220));
-            rd.fillArc(px - (int)(80F * scale), py - (int)(80F * scale), (int)(160F * scale), (int)(160F * scale), -30, 240);
-            Polygon pol = new Polygon();
-            pol.addPoint(px, py);
-            pol.addPoint(px - (int)(m.sin(-120) * 80F * scale) - 1, py - (int)(m.cos(-120) * 80F * scale) - 1);
-            pol.addPoint((px - (int)(m.sin(120) * 80F * scale)) + 1, py - (int)(m.cos(120) * 80F * scale) - 1);
+    	rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+		//final boolean isMph = false; // may want to add a setting for this
+        int px = 580;
+        int py = 320;
+        int mins = -120;
+        int maxs = 120;
+        float scale = 0.95F;
+        float sensitivity = 3.55F;
+        rd.setColor(new Color(50, 50, 50, 220));
+        rd.fillArc(px - (int)(80F * scale), py - (int)(80F * scale), (int)(160F * scale), (int)(160F * scale), -30, 240);
+        Polygon pol = new Polygon();
+        pol.addPoint(px, py);
+        pol.addPoint(px - (int)(m.sin(-120) * 80F * scale) - 1, py - (int)(m.cos(-120) * 80F * scale) - 1);
+        pol.addPoint((px - (int)(m.sin(120) * 80F * scale)) + 1, py - (int)(m.cos(120) * 80F * scale) - 1);
+        rd.fillPolygon(pol);
+        pol = new Polygon();
+        byte byte0 = 3;
+        if(checkpoints.nsp * checkpoints.nlaps - madness[0].clear >= 100)
+            byte0 = 6;
+        pol.addPoint((px - (int)(m.sin(-120) * 80F * scale)) + byte0, py - (int)(m.cos(-120) * 80F * scale));
+        pol.addPoint((px - (int)(m.sin(-120) * 80F * scale)) + byte0, (py - (int)(m.cos(-120) * 80F * scale)) + 14);
+        pol.addPoint(((px - (int)(m.sin(-120) * 80F * scale)) + byte0) - 3, (py - (int)(m.cos(-120) * 80F * scale)) + 17);
+        pol.addPoint((px - (int)(m.sin(120) * 80F * scale) - byte0) + 3, (py - (int)(m.cos(120) * 80F * scale)) + 17);
+        pol.addPoint(px - (int)(m.sin(120) * 80F * scale) - byte0, (py - (int)(m.cos(120) * 80F * scale)) + 14);
+        pol.addPoint(px - (int)(m.sin(120) * 80F * scale) - byte0, py - (int)(m.cos(120) * 80F * scale));
+        if(checkpoints.stage != 18)
+        {
             rd.fillPolygon(pol);
-            pol = new Polygon();
-            byte byte0 = 3;
-            if(checkpoints.nsp * checkpoints.nlaps - madness[0].clear >= 100)
-                byte0 = 6;
-            pol.addPoint((px - (int)(m.sin(-120) * 80F * scale)) + byte0, py - (int)(m.cos(-120) * 80F * scale));
-            pol.addPoint((px - (int)(m.sin(-120) * 80F * scale)) + byte0, (py - (int)(m.cos(-120) * 80F * scale)) + 14);
-            pol.addPoint(((px - (int)(m.sin(-120) * 80F * scale)) + byte0) - 3, (py - (int)(m.cos(-120) * 80F * scale)) + 17);
-            pol.addPoint((px - (int)(m.sin(120) * 80F * scale) - byte0) + 3, (py - (int)(m.cos(120) * 80F * scale)) + 17);
-            pol.addPoint(px - (int)(m.sin(120) * 80F * scale) - byte0, (py - (int)(m.cos(120) * 80F * scale)) + 14);
-            pol.addPoint(px - (int)(m.sin(120) * 80F * scale) - byte0, py - (int)(m.cos(120) * 80F * scale));
-            if(checkpoints.stage != 18)
+            rd.setColor(new Color(0, 204, 255));
+            rd.drawPolygon(pol);
+        } else
+        {
+            rd.setColor(new Color(0, 204, 255));
+        }
+        rd.drawArc(px - (int)(81F * scale), py - (int)(81F * scale), (int)(161F * scale), (int)(161F * scale), -15, 210);
+        //swit = madness[0].swits[sc[madness[0].im]][2];
+        int degrees = 0;
+        if(speed > 0.0F)
+            degrees = 120 - (int)((speed * 2.0F) / 3F);
+        else
+            degrees = 120 - (int)((Math.abs(speed) * 2.0F) / 3F / 2.0F);
+        if(speed < 0.0F)
+        {
+            rd.setColor(new Color(100, 140, 10));
+            rd.drawString("[Rev]", 570, 340);
+        }
+        rd.setColor(new Color(0, 204, 255));
+        if(speedocnt != 0)
+            speedocnt--;
+        if(speed >= (float)swit)
+            speedocnt = 10;
+        else
+        if(speed < (float)(swit - 4))
+            speedocnt = 0;
+        if(speedocnt != 0)
+        {
+            rd.setColor(new Color(255, 0, 0));
+            rd.drawString("[Max]", 570, 340);
+        }
+        rd.setColor(new Color(0, 204, 255));
+        if(degrees > 120)
+            degrees = 120;
+        if(degrees < -120)
+            degrees = -120;
+        degreecnt += (((float)degrees - degreecnt) / sensitivity) * 3.375F; //fine tuned
+        if(Math.abs((float)degrees - degreecnt) < 1.5F)
+            degreecnt = degrees;
+        int pox;
+        int poy;
+        for(int n = mins; n <= maxs; n += 30)
+        {
+            pox = px - (int)(m.sin(n) * 70F * scale);
+            poy = py - (int)(m.cos(n) * 70F * scale);
+            int ppx = px - (int)(m.sin(n) * 80F * scale);
+            int ppy = py - (int)(m.cos(n) * 80F * scale);
+            rd.drawLine(pox, poy, ppx, ppy);
+        }
+
+        for(int n = mins + 10; n <= maxs; n += 30)
+        {
+            pox = px - (int)(m.sin(n) * 80F * scale);
+            poy = py - (int)(m.cos(n) * 80F * scale);
+            int ppx = px - (int)(m.sin(n) * 75F * scale);
+            int ppy = py - (int)(m.cos(n) * 75F * scale);
+            rd.drawLine(pox, poy, ppx, ppy);
+        }
+
+        for(int n = mins + 20; n <= maxs; n += 30)
+        {
+            pox = px - (int)(m.sin(n) * 80F * scale);
+            poy = py - (int)(m.cos(n) * 80F * scale);
+            int ppx = px - (int)(m.sin(n) * 75F * scale);
+            int ppy = py - (int)(m.cos(n) * 75F * scale);
+            rd.drawLine(pox, poy, ppx, ppy);
+        }
+
+        final String str[] = {
+            "0", "50", "90", "135", "180", "225", "270", "315", "360"
+        };
+        final String strmi[] = {
+            "0", "30", "55", "80", "115", "140", "170", "195", "225"
+        };
+        Font tmp = rd.getFont();
+        Color color = rd.getColor();
+        int r1 = 0;
+        int g1 = 0;
+        int b1 = 0;
+        for(int n = mins; n <= maxs; n += 30)
+        {
+            rd.setFont(new Font("Arial", 1, 13));
+            ftm = rd.getFontMetrics();
+            pox = px - (int)(m.sin(n) * 55F * scale);
+            poy = py - (int)(m.cos(n) * 55F * scale);
+            if(n == mins)
+                if(degreecnt >= (float)n)
+                {
+                    r1 = 70;
+                    g1 = 0;
+                    b1 = 0;
+                } else
+                {
+                    r1 = 170;
+                    g1 = 30;
+                    b1 = 30;
+                }
+            if(n == mins + 30)
+                if(degreecnt >= (float)n)
+                {
+                    r1 = 150;
+                    g1 = 0;
+                    b1 = 0;
+                } else
+                {
+                    r1 = 230;
+                    g1 = 30;
+                    b1 = 30;
+                }
+            if(n == mins + 60)
+                if(degreecnt >= (float)n)
+                {
+                    r1 = 150;
+                    g1 = 30;
+                    b1 = 0;
+                } else
+                {
+                    r1 = 230;
+                    g1 = 60;
+                    b1 = 30;
+                }
+            if(n == mins + 90)
+                if(degreecnt >= (float)n)
+                {
+                    r1 = 150;
+                    g1 = 70;
+                    b1 = 0;
+                } else
+                {
+                    r1 = 230;
+                    g1 = 100;
+                    b1 = 30;
+                }
+            if(n == mins + 120)
+                if(degreecnt >= (float)n)
+                {
+                    r1 = 150;
+                    g1 = 150;
+                    b1 = 30;
+                } else
+                {
+                    r1 = 230;
+                    g1 = 230;
+                    b1 = 60;
+                }
+            if(n == mins + 150)
+                if(degreecnt >= (float)n)
+                {
+                    r1 = 130;
+                    g1 = 150;
+                    b1 = 45;
+                } else
+                {
+                    r1 = 190;
+                    g1 = 230;
+                    b1 = 80;
+                }
+            if(n == mins + 180)
+                if(degreecnt >= (float)n)
+                {
+                    r1 = 100;
+                    g1 = 150;
+                    b1 = 45;
+                } else
+                {
+                    r1 = 150;
+                    g1 = 230;
+                    b1 = 80;
+                }
+            if(n == mins + 210)
+                if(degreecnt >= (float)n)
+                {
+                    r1 = 50;
+                    g1 = 150;
+                    b1 = 20;
+                } else
+                {
+                    r1 = 80;
+                    g1 = 230;
+                    b1 = 30;
+                }
+            if(n == mins + 240)
+                if(degreecnt >= (float)n)
+                {
+                    r1 = 0;
+                    g1 = 80;
+                    b1 = 0;
+                } else
+                {
+                    r1 = 30;
+                    g1 = 150;
+                    b1 = 30;
+                }
+            rd.setColor(new Color(r1, g1, b1));
+            if (gameSettings.isMph) {
+            	ftm = rd.getFontMetrics();
+				rd.drawString(strmi[8 - (n / 30 + 4)], pox - ftm.stringWidth(strmi[8 - (n / 30 + 4)]) / 2, poy + 5);
+			} else {
+				ftm = rd.getFontMetrics();
+				rd.drawString(str[8 - (n / 30 + 4)], pox - ftm.stringWidth(str[8 - (n / 30 + 4)]) / 2, poy + 5);
+			}
+        }
+
+        rd.setFont(tmp);
+        rd.setColor(color);
+        ftm = rd.getFontMetrics();
+        int coorx[] = new int[720];
+        int coory[] = new int[720];
+        color = rd.getColor();
+        for(int lol = 0; lol < 482; lol++)
+        {
+            //int lol2 = lol - 210;
+            if(lol < 241)
             {
-                rd.fillPolygon(pol);
-                rd.setColor(new Color(0, 204, 255));
-                rd.drawPolygon(pol);
+                coorx[lol] = px - (int)(m.sin(lol - 120) * 80F * scale);
+                coory[lol] = py - (int)(m.cos(lol - 120) * 80F * scale);
             } else
             {
-                rd.setColor(new Color(0, 204, 255));
+                coorx[lol] = px - (int)(m.sin(481 - lol - 120) * 82F * scale);
+                coory[lol] = py - (int)(m.cos(481 - lol - 120) * 82F * scale);
             }
-            rd.drawArc(px - (int)(81F * scale), py - (int)(81F * scale), (int)(161F * scale), (int)(161F * scale), -15, 210);
-            //swit = madness[0].swits[sc[madness[0].im]][2];
-            int degrees = 0;
-            if(speed > 0.0F)
-                degrees = 120 - (int)((speed * 2.0F) / 3F);
-            else
-                degrees = 120 - (int)((Math.abs(speed) * 2.0F) / 3F / 2.0F);
-            if(speed < 0.0F)
-            {
-                rd.setColor(new Color(100, 140, 10));
-                rd.drawString("[Rev]", 570, 340);
-            }
-            rd.setColor(new Color(0, 204, 255));
-            if(speedocnt != 0)
-                speedocnt--;
-            if(speed >= (float)swit)
-                speedocnt = 10;
-            else
-            if(speed < (float)(swit - 4))
-                speedocnt = 0;
-            if(speedocnt != 0)
-            {
-                rd.setColor(new Color(255, 0, 0));
-                rd.drawString("[Max]", 570, 340);
-            }
-            rd.setColor(new Color(0, 204, 255));
-            if(degrees > 120)
-                degrees = 120;
-            if(degrees < -120)
-                degrees = -120;
-            degreecnt += (((float)degrees - degreecnt) / sensitivity) * 3.375F; //fine tuned
-            if(Math.abs((float)degrees - degreecnt) < 1.5F)
-                degreecnt = degrees;
-            int pox;
-            int poy;
-            for(int n = mins; n <= maxs; n += 30)
-            {
-                pox = px - (int)(m.sin(n) * 70F * scale);
-                poy = py - (int)(m.cos(n) * 70F * scale);
-                int ppx = px - (int)(m.sin(n) * 80F * scale);
-                int ppy = py - (int)(m.cos(n) * 80F * scale);
-                rd.drawLine(pox, poy, ppx, ppy);
-            }
+        }
 
-            for(int n = mins + 10; n <= maxs; n += 30)
+        rd.fillPolygon(coorx, coory, 482);
+        rd.setColor(new Color(0, 204, 255, 150));
+        for(int lol = 0; lol < 482; lol++)
+        {
+            //int lol2 = lol - 210;
+            if(lol < 241)
             {
-                pox = px - (int)(m.sin(n) * 80F * scale);
-                poy = py - (int)(m.cos(n) * 80F * scale);
-                int ppx = px - (int)(m.sin(n) * 75F * scale);
-                int ppy = py - (int)(m.cos(n) * 75F * scale);
-                rd.drawLine(pox, poy, ppx, ppy);
-            }
-
-            for(int n = mins + 20; n <= maxs; n += 30)
-            {
-                pox = px - (int)(m.sin(n) * 80F * scale);
-                poy = py - (int)(m.cos(n) * 80F * scale);
-                int ppx = px - (int)(m.sin(n) * 75F * scale);
-                int ppy = py - (int)(m.cos(n) * 75F * scale);
-                rd.drawLine(pox, poy, ppx, ppy);
-            }
-
-            String str[] = {
-                "0", "50", "90", "135", "180", "225", "270", "315", "360"
-            };
-            String strmi[] = {
-                    "0", "30", "55", "80", "115", "140", "170", "195", "225"
-                };
-            Font tmp = rd.getFont();
-            Color color = rd.getColor();
-            int r1 = 0;
-            int g1 = 0;
-            int b1 = 0;
-            for(int n = mins; n <= maxs; n += 30)
-            {
-                rd.setFont(new Font("Arial", 1, 13));
-                ftm = rd.getFontMetrics();
-                pox = px - (int)(m.sin(n) * 55F * scale);
-                poy = py - (int)(m.cos(n) * 55F * scale);
-                if(n == mins)
-                    if(degreecnt >= (float)n)
-                    {
-                        r1 = 70;
-                        g1 = 0;
-                        b1 = 0;
-                    } else
-                    {
-                        r1 = 170;
-                        g1 = 30;
-                        b1 = 30;
-                    }
-                if(n == mins + 30)
-                    if(degreecnt >= (float)n)
-                    {
-                        r1 = 150;
-                        g1 = 0;
-                        b1 = 0;
-                    } else
-                    {
-                        r1 = 230;
-                        g1 = 30;
-                        b1 = 30;
-                    }
-                if(n == mins + 60)
-                    if(degreecnt >= (float)n)
-                    {
-                        r1 = 150;
-                        g1 = 30;
-                        b1 = 0;
-                    } else
-                    {
-                        r1 = 230;
-                        g1 = 60;
-                        b1 = 30;
-                    }
-                if(n == mins + 90)
-                    if(degreecnt >= (float)n)
-                    {
-                        r1 = 150;
-                        g1 = 70;
-                        b1 = 0;
-                    } else
-                    {
-                        r1 = 230;
-                        g1 = 100;
-                        b1 = 30;
-                    }
-                if(n == mins + 120)
-                    if(degreecnt >= (float)n)
-                    {
-                        r1 = 150;
-                        g1 = 150;
-                        b1 = 30;
-                    } else
-                    {
-                        r1 = 230;
-                        g1 = 230;
-                        b1 = 60;
-                    }
-                if(n == mins + 150)
-                    if(degreecnt >= (float)n)
-                    {
-                        r1 = 130;
-                        g1 = 150;
-                        b1 = 45;
-                    } else
-                    {
-                        r1 = 190;
-                        g1 = 230;
-                        b1 = 80;
-                    }
-                if(n == mins + 180)
-                    if(degreecnt >= (float)n)
-                    {
-                        r1 = 100;
-                        g1 = 150;
-                        b1 = 45;
-                    } else
-                    {
-                        r1 = 150;
-                        g1 = 230;
-                        b1 = 80;
-                    }
-                if(n == mins + 210)
-                    if(degreecnt >= (float)n)
-                    {
-                        r1 = 50;
-                        g1 = 150;
-                        b1 = 20;
-                    } else
-                    {
-                        r1 = 80;
-                        g1 = 230;
-                        b1 = 30;
-                    }
-                if(n == mins + 240)
-                    if(degreecnt >= (float)n)
-                    {
-                        r1 = 0;
-                        g1 = 80;
-                        b1 = 0;
-                    } else
-                    {
-                        r1 = 30;
-                        g1 = 150;
-                        b1 = 30;
-                    }
-                rd.setColor(new Color(r1, g1, b1));
-                if (isMph)
-                    rd.drawString(strmi[8 - (n / 30 + 4)], pox - ftm.stringWidth(strmi[8 - (n / 30 + 4)]) / 2, poy + 5);
-                else
-                	rd.drawString(str[8 - (n / 30 + 4)], pox - ftm.stringWidth(str[8 - (n / 30 + 4)]) / 2, poy + 5);
-            }
-
-            rd.setFont(tmp);
-            rd.setColor(color);
-            ftm = rd.getFontMetrics();
-            int coorx[] = new int[720];
-            int coory[] = new int[720];
-            color = rd.getColor();
-            for(int lol = 0; lol < 482; lol++)
-            {
-                //int lol2 = lol - 210;
-                if(lol < 241)
-                {
-                    coorx[lol] = px - (int)(m.sin(lol - 120) * 80F * scale);
-                    coory[lol] = py - (int)(m.cos(lol - 120) * 80F * scale);
-                } else
-                {
-                    coorx[lol] = px - (int)(m.sin(481 - lol - 120) * 82F * scale);
-                    coory[lol] = py - (int)(m.cos(481 - lol - 120) * 82F * scale);
-                }
-            }
-
-            rd.fillPolygon(coorx, coory, 482);
-            rd.setColor(new Color(0, 204, 255, 150));
-            for(int lol = 0; lol < 482; lol++)
-            {
-                //int lol2 = lol - 210;
-                if(lol < 241)
-                {
-                    coorx[lol] = px - (int)(m.sin(lol - 120) * 82F * scale);
-                    coory[lol] = py - (int)(m.cos(lol - 120) * 82F * scale);
-                } else
-                {
-                    coorx[lol] = px - (int)(m.sin(481 - lol - 120) * 83F * scale);
-                    coory[lol] = py - (int)(m.cos(481 - lol - 120) * 83F * scale);
-                }
-            }
-
-            rd.fillPolygon(coorx, coory, 482);
-            rd.setColor(new Color(0, 204, 255, 230));
-            for(int lol = 0; lol < 482; lol++)
-            {
-                //int lol2 = lol - 210;
-                if(lol < 241)
-                {
-                    coorx[lol] = px - (int)(m.sin(lol - 120) * 83F * scale);
-                    coory[lol] = py - (int)(m.cos(lol - 120) * 83F * scale);
-                } else
-                {
-                    coorx[lol] = px - (int)(m.sin(481 - lol - 120) * 83F * scale);
-                    coory[lol] = py - (int)(m.cos(481 - lol - 120) * 83F * scale);
-                }
-            }
-
-            rd.setColor(color);
-            rd.fillPolygon(coorx, coory, 482);
-            pol = new Polygon();
-            pol.addPoint(px - (int)(m.sin(-120) * 80F * scale), py - (int)(m.cos(-120) * 80F * scale) - 1);
-            pol.addPoint(px - (int)(m.sin(-120) * 80F * scale), (py - (int)(m.cos(-120) * 80F * scale)) + 1);
-            pol.addPoint(px - (int)(m.sin(120) * 80F * scale), (py - (int)(m.cos(120) * 80F * scale)) + 1);
-            pol.addPoint(px - (int)(m.sin(120) * 80F * scale), py - (int)(m.cos(120) * 80F * scale) - 1);
-            rd.fillPolygon(pol);
-            pol.addPoint((px - (int)(m.sin(-120) * 80F * scale)) + 3, (py - (int)(m.cos(-120) * 80F * scale)) + 14);
-            pol.addPoint(((px - (int)(m.sin(-120) * 80F * scale)) + 3) - 3, (py - (int)(m.cos(-120) * 80F * scale)) + 17);
-            pol.addPoint((px - (int)(m.sin(120) * 80F * scale) - 3) + 3, (py - (int)(m.cos(120) * 80F * scale)) + 17);
-            pol.addPoint(px - (int)(m.sin(120) * 80F * scale) - 3, (py - (int)(m.cos(120) * 80F * scale)) + 14);
-            String s9 = (new StringBuilder()).append("Checkpoints remaining: ").append(checkpoints.nsp * checkpoints.nlaps - madness[0].clear).append("").toString();
-            tmp = rd.getFont();
-            if(checkpoints.stage != 11 && checkpoints.stage != 18)
-            {
-                rd.setFont(new Font("Arial", 1, 10));
-                ftm = rd.getFontMetrics();
-                rd.drawString(s9, px - ftm.stringWidth(s9) / 2, (py - (int)(m.cos(-120) * 80F * scale)) + 13);
+                coorx[lol] = px - (int)(m.sin(lol - 120) * 82F * scale);
+                coory[lol] = py - (int)(m.cos(lol - 120) * 82F * scale);
             } else
-            if(checkpoints.stage == 11)
             {
-                rd.setFont(new Font("Arial", 1, 10));
-                ftm = rd.getFontMetrics();
-                rd.drawString(s9, px - ftm.stringWidth(s9) / 2, (py - (int)(m.cos(-120) * 80F * scale)) + 13);
+                coorx[lol] = px - (int)(m.sin(481 - lol - 120) * 83F * scale);
+                coory[lol] = py - (int)(m.cos(481 - lol - 120) * 83F * scale);
             }
-            rd.setFont(tmp);
+        }
+
+        rd.fillPolygon(coorx, coory, 482);
+        rd.setColor(new Color(0, 204, 255, 230));
+        for(int lol = 0; lol < 482; lol++)
+        {
+            //int lol2 = lol - 210;
+            if(lol < 241)
+            {
+                coorx[lol] = px - (int)(m.sin(lol - 120) * 83F * scale);
+                coory[lol] = py - (int)(m.cos(lol - 120) * 83F * scale);
+            } else
+            {
+                coorx[lol] = px - (int)(m.sin(481 - lol - 120) * 83F * scale);
+                coory[lol] = py - (int)(m.cos(481 - lol - 120) * 83F * scale);
+            }
+        }
+
+        rd.setColor(color);
+        rd.fillPolygon(coorx, coory, 482);
+        pol = new Polygon();
+        pol.addPoint(px - (int)(m.sin(-120) * 80F * scale), py - (int)(m.cos(-120) * 80F * scale) - 1);
+        pol.addPoint(px - (int)(m.sin(-120) * 80F * scale), (py - (int)(m.cos(-120) * 80F * scale)) + 1);
+        pol.addPoint(px - (int)(m.sin(120) * 80F * scale), (py - (int)(m.cos(120) * 80F * scale)) + 1);
+        pol.addPoint(px - (int)(m.sin(120) * 80F * scale), py - (int)(m.cos(120) * 80F * scale) - 1);
+        rd.fillPolygon(pol);
+        pol.addPoint((px - (int)(m.sin(-120) * 80F * scale)) + 3, (py - (int)(m.cos(-120) * 80F * scale)) + 14);
+        pol.addPoint(((px - (int)(m.sin(-120) * 80F * scale)) + 3) - 3, (py - (int)(m.cos(-120) * 80F * scale)) + 17);
+        pol.addPoint((px - (int)(m.sin(120) * 80F * scale) - 3) + 3, (py - (int)(m.cos(120) * 80F * scale)) + 17);
+        pol.addPoint(px - (int)(m.sin(120) * 80F * scale) - 3, (py - (int)(m.cos(120) * 80F * scale)) + 14);
+        String s9 = (new StringBuilder()).append("Checkpoints remaining: ").append(checkpoints.nsp * checkpoints.nlaps - madness[0].clear).append("").toString();
+        tmp = rd.getFont();
+        if(checkpoints.stage != 11 && checkpoints.stage != 18)
+        {
+            rd.setFont(new Font("Arial", 1, 10));
             ftm = rd.getFontMetrics();
-            rd.setColor(new Color(100, 0, 0));
-            pol = new Polygon();
-            pox = px - (int)(m.sin((int)degreecnt + 180) * 5F);
-            poy = py - (int)(m.cos((int)degreecnt + 180) * 5F);
-            pol.addPoint(pox, poy);
-            pox = px - (int)(m.sin((int)degreecnt + 90) * 4F);
-            poy = py - (int)(m.cos((int)degreecnt + 90) * 4F);
-            pol.addPoint(pox, poy);
-            pox = px - (int)(m.sin((int)degreecnt) * 70F * scale);
-            poy = py - (int)(m.cos((int)degreecnt) * 70F * scale);
-            pol.addPoint(pox, poy);
-            pox = px - (int)(m.sin((int)degreecnt - 90) * 4F);
-            poy = py - (int)(m.cos((int)degreecnt - 90) * 4F);
-            pol.addPoint(pox, poy);
-            rd.fillPolygon(pol);
+            rd.drawString(s9, px - ftm.stringWidth(s9) / 2, (py - (int)(m.cos(-120) * 80F * scale)) + 13);
+        } else
+        if(checkpoints.stage == 11)
+        {
+            rd.setFont(new Font("Arial", 1, 10));
+            ftm = rd.getFontMetrics();
+            rd.drawString(s9, px - ftm.stringWidth(s9) / 2, (py - (int)(m.cos(-120) * 80F * scale)) + 13);
+        }
+        rd.setFont(tmp);
+        ftm = rd.getFontMetrics();
+        rd.setColor(new Color(100, 0, 0));
+        pol = new Polygon();
+        pox = px - (int)(m.sin((int)degreecnt + 180) * 5F);
+        poy = py - (int)(m.cos((int)degreecnt + 180) * 5F);
+        pol.addPoint(pox, poy);
+        pox = px - (int)(m.sin((int)degreecnt + 90) * 4F);
+        poy = py - (int)(m.cos((int)degreecnt + 90) * 4F);
+        pol.addPoint(pox, poy);
+        pox = px - (int)(m.sin((int)degreecnt) * 70F * scale);
+        poy = py - (int)(m.cos((int)degreecnt) * 70F * scale);
+        pol.addPoint(pox, poy);
+        pox = px - (int)(m.sin((int)degreecnt - 90) * 4F);
+        poy = py - (int)(m.cos((int)degreecnt - 90) * 4F);
+        pol.addPoint(pox, poy);
+        rd.fillPolygon(pol);
+        rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
     }
     
     public void drawSpeedo(float speed, float maxSpeed, float minSpeed, int drawX, int drawY) {
@@ -5509,8 +5515,9 @@ public class xtGraphics extends Panel
         rd.fillRect(222, 346, 26 + (int)((shload / (float)kbload) * 200F), 10);
     }
 
-    public xtGraphics(Medium medium, Graphics2D graphics2d, Applet applet)
+    public xtGraphics(Medium medium, Graphics2D graphics2d, Applet applet, Settings gameSettings)
     {
+    	this.gameSettings = gameSettings;
         fase = 111;
         oldfase = 0;
         starcnt = 0;
