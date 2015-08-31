@@ -3,12 +3,68 @@
 // Decompiler options: packimports(3) 
 // Source File Name:   Madness.java
 
-import java.applet.AudioClip;
+import java.applet.Applet;
 import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.DisplayMode;
+import java.awt.Frame;
+import java.awt.GraphicsDevice;
+import java.awt.GraphicsEnvironment;
+import java.awt.Image;
+import java.awt.Toolkit;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.util.ArrayList;
 
 public class Madness
 {
     final float speeddec = 2.0F; /// universal rate that speed decreases when it exceeds swits[0][2], that is, top speed
+    
+    public static void main(String strings[])
+    {
+        System.runFinalizersOnExit(false);
+        System.out.println("NfmM DS-addons pack - version 2.2.0 build #6, core version 35 (version 36 supported)");
+        //detectProxy();
+        Frame frame = new Frame("Need for Madness DS-addons pack");
+        frame.setBackground(new Color(0, 0, 0));
+        frame.setIgnoreRepaint(true);
+        ArrayList<Image> icons = new ArrayList<Image>();
+        int resols[] = {
+            16, 24, 32, 48, 64, 96
+        };
+        int arr$[] = resols;
+        int len$ = arr$.length;
+        for(int i$ = 0; i$ < len$; i$++)
+        {
+            int res = arr$[i$];
+            icons.add(Toolkit.getDefaultToolkit().createImage((new StringBuilder()).append("data/icon_").append(res).append("px.png").toString()));
+        }
+
+        frame.setIconImages(icons);
+        Applet applet = new GameSparker();
+        //GameSparker.loadPreferences();
+        frame.addWindowListener(new WindowAdapter() {
+
+            public void windowClosing(WindowEvent windowevent)
+            {
+            	System.exit(0);
+                //Madness.exitsequance();
+            }
+
+        }
+);
+        //initMenu();
+        frame.add("Center", applet);
+        frame.show();
+        frame.setMinimumSize(new Dimension(930, 586));
+        frame.setSize(930, 586);
+        frame.setExtendedState(6);
+        applet.init();
+        applet.start();
+        GraphicsEnvironment graphicsenvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        GraphicsDevice myDevice = graphicsenvironment.getDefaultScreenDevice();
+        DisplayMode defdisp = myDevice.getDisplayMode();
+    }
     
     public int py(int i, int j, int k, int l)
     {

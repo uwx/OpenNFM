@@ -345,10 +345,15 @@ public class xtGraphics extends Panel
     Font adventure13;
     Font adventure11;
     Font adventure18;
+    Font adventure26;
+    Font adventure15;
     Font digital718;
     boolean lastlap;
     int speedocnt;
     float degreecnt;
+    int flickr;
+    int flickr2;
+    int flickr3;
     
     public void makeFont()
     {
@@ -357,6 +362,8 @@ public class xtGraphics extends Panel
             adventure13 = Font.createFont(Font.TRUETYPE_FONT, new File("Adventure.ttf")).deriveFont(13f);
             adventure11 = Font.createFont(Font.TRUETYPE_FONT, new File("Adventure.ttf")).deriveFont(11f);
             adventure18 = Font.createFont(Font.TRUETYPE_FONT, new File("Adventure.ttf")).deriveFont(18f);
+            adventure26 = Font.createFont(Font.TRUETYPE_FONT, new File("Adventure.ttf")).deriveFont(26f);
+            adventure15 = Font.createFont(Font.TRUETYPE_FONT, new File("Adventure.ttf")).deriveFont(15f);
             digital718 = Font.createFont(Font.TRUETYPE_FONT, new File("Digital7.ttf")).deriveFont(18f);
             GraphicsEnvironment ge = GraphicsEnvironment.getLocalGraphicsEnvironment();
             //register the font
@@ -2644,6 +2651,20 @@ public class xtGraphics extends Panel
             rd.fillRect(0,347,670,400);
             rd.drawImage(kaff,0,347,null);
         }
+        if(flipo == 104)
+        {
+            int i = 0;
+            do
+            {
+                rd.drawImage(bgmain, 0, bgmy[i], null);
+                bgmy[i] -= 16;
+                if(bgmy[i] <= -400)
+                {
+                    bgmy[i] = 400;
+                }
+            } while(++i < 2);
+            rd.drawImage(nfmcom, 125, 170, null);
+        }
         if(flipo == 103)
         {
             int j = 0;
@@ -2655,14 +2676,65 @@ public class xtGraphics extends Panel
                 {
                     bgmy[j] = 400;
                 }
-            } while(++j < 2);
-            rd.drawImage(nfmcom, 125, 170, null);
+                
+            } while(++j < 2);     
+            rd.setFont(adventure26);
+            ftm = rd.getFontMetrics();
+            //////////////////////////////////////////////////////////////////////
+        	if (flickr3 > 7) {
+        		flickr3 = 0;
+        	}
+        	if (flickr3 > 4) {
+        		drawcs(70, "OpenNFM", 100, 0, 0, 3); 
+        		flickr3++;
+        	} else {
+        		drawcs(70, "OpenNFM", 255, 0, 0, 3); 
+        		flickr3++;
+        	}
+            rd.setFont(adventure15);
+            ftm = rd.getFontMetrics();
+        	if (flickr > 7) {
+        		flickr = 0;
+        	}
+        	if (flickr > 4) {
+        		drawcs(120, "--[ Contributors ]--", 255, 255, 0, 3);
+        		flickr++;
+        	} else {
+        		drawcs(120, "--[ Contributors ]--", 255, 0, 255, 3);
+        		flickr++;
+        	}
+            rd.setFont(adventure13);
+            ftm = rd.getFontMetrics();            
+            drawcs(145, "rafa1231518, Kaffeinated, Ten Graves", 90, 90, 90, 3);
+            drawcs(160, "A9, DragShot, DestroyerOfHeaven, m0squ1t0", 90, 90, 90, 3);
+            rd.setFont(adventure15);
+            ftm = rd.getFontMetrics();
+        	if (flickr2 > 7) {
+        		flickr2 = 0;
+        	}
+        	if (flickr2 > 4) {
+        		drawcs(245, "--[ Special Thanks ]--", 255, 0, 0, 3);
+        		flickr2++;
+        	} else {
+        		drawcs(245, "--[ Special Thanks ]--", 0, 0, 255, 3);
+        		flickr2++;
+        	}
+            rd.setFont(adventure13);
+            ftm = rd.getFontMetrics(); 
+            drawcs(260, "To all the Jaba Haskers,", 90, 90, 90, 3);
+            drawcs(275, "To InhumanPwnage, to NFME", 90, 90, 90, 3);
+            drawcs(290, "To VolcanoGames, the first NFM hacker!", 90, 90, 90, 3);
+            drawcs(315, "And to Omar Waly, for this damn", 90, 90, 90, 3);
+            drawcs(330, "enjoyable game...", 90, 90, 90, 3);
+            
+            //////////////////////////////////////////////////////////////////////
         }
         if(flipo == 102){
             rd.drawImage(next[pnext], 600, 10, null);
         }else{
             rd.drawImage(next[pnext], 600, 370, null);
         }        
+        
         if(control.enter || control.handb || control.right)
         {
             if(flipo >= 1 && flipo <= 100)
@@ -2673,7 +2745,7 @@ public class xtGraphics extends Panel
             {
                 flipo++;
             }
-            if(flipo == 104)
+            if(flipo == 105)
             {
                 flipo = 0;
                 fase = 10;
@@ -5537,6 +5609,9 @@ public class xtGraphics extends Panel
         blacknados = 0.0F;
         speedocnt = 0;
         degreecnt = 120F;
+        flickr = 0;
+        flickr2 = 0;
+        flickr3 = 0;
         m = medium;
         app = applet;
         rd = graphics2d;

@@ -279,14 +279,28 @@ public class GameSparker extends Applet
         paint(g);
     }
 
+    /*
+     * Deprecated int since the applet is
+     * now running on a frame
+     * 
+     * 1: LD sound
+     * 2: HD sound
+     */
     public int sunytyp()
     {
-        String s = System.getProperty("java.version");
+        try {
+    	String s = System.getProperty("java.version");
         String s1 = "" + getAppletContext();
         if(!s1.startsWith("com.ms."))
             return !s.startsWith("1.3") && !s.startsWith("1.4") ? 2 : 1;
         else
-            return 0;
+        	return 1;
+        } catch (NullPointerException ex) {
+        	// 1: LD sound
+        	// 2: HD sound
+        	System.out.println("Running on a frame");
+        	return 2;
+        }
     }
 
     public boolean keyUp(Event event, int i)
@@ -678,6 +692,7 @@ public class GameSparker extends Applet
     {
     
     }
+    
     public void run()
     {
         rd.setColor(new Color(0, 0, 0));
@@ -751,12 +766,14 @@ public class GameSparker extends Applet
         int k2 = 0;
         boolean flag2 = false;
         exwist = false;
+        
         final int TICKS_PER_SECOND = 60;
         final int SKIP_TICKS = 1000 / TICKS_PER_SECOND;
         final int MAX_FRAMESKIP = 5;
 
         double next_game_tick = System.currentTimeMillis();
         int loops;
+        
 
         while (true) {
         loops = 0;
