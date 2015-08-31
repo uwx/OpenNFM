@@ -100,9 +100,9 @@ public class ModSlayer
         127, 127, 0, 0, 0, 1, 0, 0, 31, 76, 
         0, 0, 0, 1, 0, 0, 0, 0
     };
-    private static final int ERROR_SHIFT = 12;
-    private static final int ERROR_MASK = 4095;
-    private static final long ratediv = 0x14b080000000L;
+    //private static final int ERROR_SHIFT = 12;
+    //private static final int ERROR_MASK = 4095;
+    //private static final long ratediv = 0x14b080000000L;
     int oln;
 
     final void beattrack(ModTrackInfo modtrackinfo)

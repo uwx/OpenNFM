@@ -1226,10 +1226,6 @@ public class Medium /////// This entire class was re-edited by Chaotic for full 
                 rot(is_192_, is_193_, cy, cz, zy, nmv[i_185_] * 2);
                 int[] is_196_ = new int[4];
                 int[] is_197_ = new int[4];
-                boolean bool = false;
-                boolean bool_198_ = false;
-                boolean bool_199_ = false;
-                boolean bool_200_ = false;
                 boolean bool_201_ = true;
                 for (int i_202_ = 0; i_202_ < nmv[i_185_] - 1; i_202_++) {
                     int i_203_ = 0;
@@ -1943,11 +1939,6 @@ public class Medium /////// This entire class was re-edited by Chaotic for full 
             vxz -= 360;
         }
         xz = -vxz - 90;
-        char c = '\0';
-        if(-y - cy < 0)
-        {
-            c = '\uFF4C';
-        }
         Math.sqrt(((trz - (long)z) + (long)cz) * ((trz - (long)z) + (long)cz) + (trx - (long)x - (long)cx) * (trx - (long)x - (long)cx));
         if(cpflik)
         {

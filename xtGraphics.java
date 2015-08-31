@@ -10,13 +10,13 @@ import java.awt.Graphics2D;
 import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorConvertOp;
-import java.awt.image.WritableRaster;  
-import java.text.DecimalFormat;
-import java.awt.geom.*;
+//import java.awt.geom.*;
 
 public class xtGraphics extends Panel
     implements Runnable
-{            
+{         
+	static final long serialVersionUID = 1337L;
+	
     Graphics2D rd;
     Medium m;
     FontMetrics ftm;
@@ -395,7 +395,6 @@ public class xtGraphics extends Panel
             int sepiaDepth = 20;        
             int w = buff_img.getWidth();
             int h = buff_img.getHeight();
-            WritableRaster raster = sepia.getRaster();
             int[] pixels = new int[w * h * 4];
             buff_img.getRaster().getPixels(0, 0, w, h, pixels);        
             for (int x = 0; x < buff_img.getWidth(); x++) {
@@ -435,7 +434,6 @@ public class xtGraphics extends Panel
             BufferedImage invert = new BufferedImage(buff_img.getWidth(), buff_img.getHeight(), BufferedImage.TYPE_INT_ARGB);
             int w = buff_img.getWidth();
             int h = buff_img.getHeight();
-            WritableRaster raster = invert.getRaster();
             int[] pixels = new int[w * h * 4];
             buff_img.getRaster().getPixels(0, 0, w, h, pixels);        
             for (int x = 0; x < buff_img.getWidth(); x++) {
@@ -476,7 +474,6 @@ public class xtGraphics extends Panel
             BufferedImage altinvert = new BufferedImage(buff_img.getWidth(), buff_img.getHeight(), BufferedImage.TYPE_INT_ARGB);
             int w = buff_img.getWidth();
             int h = buff_img.getHeight();
-            WritableRaster raster = altinvert.getRaster();
             int[] pixels = new int[w * h * 4];
             buff_img.getRaster().getPixels(0, 0, w, h, pixels);        
             for (int x = 0; x < buff_img.getWidth(); x++) {
@@ -517,7 +514,6 @@ public class xtGraphics extends Panel
             BufferedImage washout = new BufferedImage(buff_img.getWidth(), buff_img.getHeight(), BufferedImage.TYPE_INT_ARGB);
             int w = buff_img.getWidth();
             int h = buff_img.getHeight();
-            WritableRaster raster = washout.getRaster();
             int[] pixels = new int[w * h * 4];
             buff_img.getRaster().getPixels(0, 0, w, h, pixels);        
             for (int x = 0; x < buff_img.getWidth(); x++) {
@@ -628,7 +624,6 @@ public class xtGraphics extends Panel
     }
     
     public int colorinvert(int r, int g, int b){
-        Color invertedC = new Color (r,g,b);
         int hex = (0xff << 24) | ((r&0xff) << 16) | ((g&0xff) << 8) | (b&0xff);
         int neg = 0xFFFFFF - hex;
         return neg;     
@@ -3223,7 +3218,7 @@ public class xtGraphics extends Panel
         return c;
     }
     
-    private static Area getBFpow(Area BF_pow)
+    /*private static Area getBFpow(Area BF_pow)
     {
         if(BF_pow == null)
         {
@@ -3243,7 +3238,7 @@ public class xtGraphics extends Panel
             BF_pow = elipse;
         }
         return BF_pow;
-    }
+    }*/
     
     public void stat(Madness madness[], CheckPoints checkpoints, Control control, ContO conto[], boolean flag)
     {        

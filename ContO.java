@@ -89,7 +89,6 @@ public class ContO
             {
                 sy[i] = 250;
             }
-            int _tmp = sy[i];
             int l1 = m.cx + (int)((float)(sx[i] - m.x - m.cx) * m.cos(m.xz) - (float)(sz[i] - m.z - m.cz) * m.sin(m.xz));
             int i2 = m.cz + (int)((float)(sx[i] - m.x - m.cx) * m.sin(m.xz) + (float)(sz[i] - m.z - m.cz) * m.cos(m.xz));
             int j2 = m.cy + (int)((float)(sy[i] - m.y - m.cy) * m.cos(m.zy) - (float)(i2 - m.cz) * m.sin(m.zy));

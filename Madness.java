@@ -6,10 +6,10 @@
 import java.applet.Applet;
 import java.awt.Color;
 import java.awt.Dimension;
-import java.awt.DisplayMode;
+//import java.awt.DisplayMode;
 import java.awt.Frame;
-import java.awt.GraphicsDevice;
-import java.awt.GraphicsEnvironment;
+//import java.awt.GraphicsDevice;
+//import java.awt.GraphicsEnvironment;
 import java.awt.Image;
 import java.awt.Toolkit;
 import java.awt.event.WindowAdapter;
@@ -61,9 +61,9 @@ public class Madness
         frame.setExtendedState(6);
         applet.init();
         applet.start();
-        GraphicsEnvironment graphicsenvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
-        GraphicsDevice myDevice = graphicsenvironment.getDefaultScreenDevice();
-        DisplayMode defdisp = myDevice.getDisplayMode();
+        //GraphicsEnvironment graphicsenvironment = GraphicsEnvironment.getLocalGraphicsEnvironment();
+        //GraphicsDevice myDevice = graphicsenvironment.getDefaultScreenDevice();
+        //DisplayMode defdisp = myDevice.getDisplayMode();
     }
     
     public int py(int i, int j, int k, int l)
@@ -1015,7 +1015,6 @@ public class Madness
         rot(af2, af1, conto.y, conto.z, pzy, 4);
         rot(af, af1, conto.x, conto.z, conto.xz, 4);
         boolean flag4 = false;
-        double d = 0.0D;
         int i3 = (int)((scx[0] + scx[1] + scx[2] + scx[3]) / 4F);
         int j3 = (int)((scz[0] + scz[1] + scz[2] + scz[3]) / 4F);
         int k3 = 0;
