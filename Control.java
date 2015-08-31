@@ -1769,11 +1769,19 @@ public class Control
                                 int l6 = 0;
                                 for(int l7 = byte1; l7 < checkpoints.fn; l7++)
                                 {
-                                    if(py(conto.x / 100, checkpoints.x[fpnt[l7]] / 100, conto.z / 100, checkpoints.z[fpnt[l7]] / 100) < i5 || i5 == -10)
-                                    {
-                                        i5 = py(conto.x / 100, checkpoints.x[fpnt[l7]] / 100, conto.z / 100, checkpoints.z[fpnt[l7]] / 100);
-                                        l6 = l7;
-                                    }
+                                	try {
+	                                    if(py(conto.x / 100, checkpoints.x[fpnt[l7]] / 100, conto.z / 100, checkpoints.z[fpnt[l7]] / 100) < i5 || i5 == -10)
+	                                    {
+	                                        i5 = py(conto.x / 100, checkpoints.x[fpnt[l7]] / 100, conto.z / 100, checkpoints.z[fpnt[l7]] / 100);
+	                                        l6 = l7;
+	                                    }
+                                	} catch (java.lang.ArrayIndexOutOfBoundsException ex) {
+                                		if(py(conto.x / 100, checkpoints.x[0] / 100, conto.z / 100, checkpoints.z[0] / 100) < i5 || i5 == -10)
+	                                    {
+	                                        i5 = py(conto.x / 100, checkpoints.x[0] / 100, conto.z / 100, checkpoints.z[0] / 100);
+	                                        l6 = l7;
+	                                    }
+                                	}
                                 }
 
                                 if(checkpoints.stage == 8 || checkpoints.stage == 12)
