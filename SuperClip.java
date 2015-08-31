@@ -1,5 +1,4 @@
 import java.io.ByteArrayInputStream;
-import java.io.PrintStream;
 import javax.sound.sampled.*;
 
 public class SuperClip
@@ -60,7 +59,6 @@ public class SuperClip
             }
             try
             {
-                Thread _tmp = cliper;
                 Thread.sleep(200L);
             }
             catch(InterruptedException interruptedexception) { }
