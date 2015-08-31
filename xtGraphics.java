@@ -2574,17 +2574,36 @@ public class xtGraphics extends Panel
             control.handb = false;
         }
     }
+    
+    public void settings(Control control)
+    {
+    	int i = 0;
+        do
+        {
+            rd.drawImage(bgmain, 0, bgmy[i], null);
+            bgmy[i] -= 10;
+            if(bgmy[i] <= -400)
+            {
+                bgmy[i] = 400;
+            }
+        } while(++i < 2);  
+        
+    }
 
     public void credits(Control control)
     {
-        if(flipo == 0)
+    	if(flipo == 0)
+    	{
+    		settings(control);
+    	}
+        if(flipo == 1)
         {
             powerup.play();
-            flipo = 1;
+            flipo = 2;
             bgmy[0] = 0;
             bgmy[1] = 400;
         }
-        if(flipo >= 1 && flipo <= 100)
+        if(flipo >= 2 && flipo <= 100)
         {
             rad(flipo, 0);
             flipo++;
@@ -2651,20 +2670,6 @@ public class xtGraphics extends Panel
             rd.fillRect(0,347,670,400);
             rd.drawImage(kaff,0,347,null);
         }
-        if(flipo == 104)
-        {
-            int i = 0;
-            do
-            {
-                rd.drawImage(bgmain, 0, bgmy[i], null);
-                bgmy[i] -= 16;
-                if(bgmy[i] <= -400)
-                {
-                    bgmy[i] = 400;
-                }
-            } while(++i < 2);
-            rd.drawImage(nfmcom, 125, 170, null);
-        }
         if(flipo == 103)
         {
             int j = 0;
@@ -2728,6 +2733,20 @@ public class xtGraphics extends Panel
             drawcs(330, "enjoyable game...", 90, 90, 90, 3);
             
             //////////////////////////////////////////////////////////////////////
+        }
+        if(flipo == 104)
+        {
+            int i = 0;
+            do
+            {
+                rd.drawImage(bgmain, 0, bgmy[i], null);
+                bgmy[i] -= 16;
+                if(bgmy[i] <= -400)
+                {
+                    bgmy[i] = 400;
+                }
+            } while(++i < 2);
+            rd.drawImage(nfmcom, 125, 170, null);
         }
         if(flipo == 102){
             rd.drawImage(next[pnext], 600, 10, null);
