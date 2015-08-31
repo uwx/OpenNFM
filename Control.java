@@ -1781,6 +1781,8 @@ public class Control
 	                                        i5 = py(conto.x / 100, checkpoints.x[0] / 100, conto.z / 100, checkpoints.z[0] / 100);
 	                                        l6 = l7;
 	                                    }
+                                		System.out.println("Something went wrong in Control, but we recovered it!");
+                                		//ex.printStackTrace();
                                 	}
                                 }
 
@@ -1799,16 +1801,32 @@ public class Control
                             }
                             for(int j5 = byte1; j5 < checkpoints.fn; j5++)
                             {
-                                if(py(conto.x / 100, checkpoints.x[fpnt[j5]] / 100, conto.z / 100, checkpoints.z[fpnt[j5]] / 100) < 2000)
-                                {
-                                    forget = false;
-                                    actwait = 0;
-                                    upwait = 0;
-                                    turntyp = 2;
-                                    randtcnt = -1;
-                                    acuracy = 0;
-                                    rampp = 0;
-                                    trfix = 3;
+                                try {
+	                            	if(py(conto.x / 100, checkpoints.x[fpnt[j5]] / 100, conto.z / 100, checkpoints.z[fpnt[j5]] / 100) < 2000)
+	                                {
+	                                    forget = false;
+	                                    actwait = 0;
+	                                    upwait = 0;
+	                                    turntyp = 2;
+	                                    randtcnt = -1;
+	                                    acuracy = 0;
+	                                    rampp = 0;
+	                                    trfix = 3;
+	                                }
+                                } catch(java.lang.ArrayIndexOutOfBoundsException ex) {
+                                	if(py(conto.x / 100, checkpoints.x[0] / 100, conto.z / 100, checkpoints.z[0] / 100) < 2000)
+	                                {
+	                                    forget = false;
+	                                    actwait = 0;
+	                                    upwait = 0;
+	                                    turntyp = 2;
+	                                    randtcnt = -1;
+	                                    acuracy = 0;
+	                                    rampp = 0;
+	                                    trfix = 3;
+	                                }
+                                	System.out.println("Something went wrong in Control, but we recovered it!");
+                            		//ex.printStackTrace();
                                 }
                             }
 
@@ -1820,25 +1838,29 @@ public class Control
                     }
                     if(turncnt > randtcnt)
                     {
-                        if(!gowait)
-                        {
-                            char c1 = '\0';
-                            if(checkpoints.x[i] - conto.x >= 0)
-                            {
-                                c1 = '\264';
-                            }
-                            pan = (int)((double)(90 + c1) + Math.atan((double)(checkpoints.z[i] - conto.z) / (double)(checkpoints.x[i] - conto.x)) / 0.017453292519943295D);
-                        } else
-                        {
-                            char c2 = '\0';
-                            if(wtx - conto.x >= 0)
-                            {
-                                c2 = '\264';
-                            }
-                            pan = (int)((double)(90 + c2) + Math.atan((double)(wtz - conto.z) / (double)(wtx - conto.x)) / 0.017453292519943295D);
+                        try {
+	                    	if(!gowait)
+	                        {
+	                            char c1 = '\0';
+	                            if(checkpoints.x[i] - conto.x >= 0)
+	                            {
+	                                c1 = '\264';
+	                            }
+	                            pan = (int)((double)(90 + c1) + Math.atan((double)(checkpoints.z[i] - conto.z) / (double)(checkpoints.x[i] - conto.x)) / 0.017453292519943295D);
+	                        } else
+	                        {
+	                            char c2 = '\0';
+	                            if(wtx - conto.x >= 0)
+	                            {
+	                                c2 = '\264';
+	                            }
+	                            pan = (int)((double)(90 + c2) + Math.atan((double)(wtz - conto.z) / (double)(wtx - conto.x)) / 0.017453292519943295D);
+	                        }
+	                        turncnt = 0;
+	                        randtcnt = (int)((float)acuracy * m.random());
+                        } catch (java.lang.ArrayIndexOutOfBoundsException ex) {
+                        	System.out.println("Something went wrong in Control, but we recovered it!");
                         }
-                        turncnt = 0;
-                        randtcnt = (int)((float)acuracy * m.random());
                     } else
                     {
                         turncnt++;
