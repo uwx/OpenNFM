@@ -6,7 +6,6 @@ import java.io.*;
 import java.net.URL;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-import java.awt.Graphics2D;
 import java.awt.color.ColorSpace;
 import java.awt.image.BufferedImage;
 import java.awt.image.ColorConvertOp;
@@ -5636,21 +5635,21 @@ public class xtGraphics extends Panel
         rd = graphics2d;
         MediaTracker mediatracker = new MediaTracker(app);
         String path = "data/";
-        hello = app.getImage(app.getCodeBase(), path + "hello.gif");
+        hello = Toolkit.getDefaultToolkit().getImage(path + "hello.gif");
         mediatracker.addImage(hello, 0);
         try
         {
             mediatracker.waitForID(0);
         }
         catch(Exception _ex) { }
-        sign = app.getImage(app.getCodeBase(), path + "sign.gif");
+        sign = Toolkit.getDefaultToolkit().getImage(path + "sign.gif");
         mediatracker.addImage(sign, 0);
         try
         {
             mediatracker.waitForID(0);
         }
         catch(Exception _ex) { }
-        loadbar = app.getImage(app.getCodeBase(), path + "loadbar.gif");
+        loadbar = Toolkit.getDefaultToolkit().getImage(path + "loadbar.gif");
         mediatracker.addImage(loadbar, 0);
         try
         {
