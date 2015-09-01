@@ -4524,17 +4524,15 @@ public class xtGraphics extends Panel
 
             if(!flag && i == 10)
             {
-                boolean flag1 = false;
                 for(int i2 = 0; i2 < 7; i2++)
-                    if(sc[i2] == 11)
-                        flag1 = true;
+                    if(sc[i2] == 11) {
+					}
 
                 if(Math.random() > Math.random())
                     sc[l] = 11;
-                flag1 = false;
                 for(int j2 = 0; j2 < 7; j2++)
-                    if(sc[j2] == 14)
-                        flag1 = true;
+                    if(sc[j2] == 14) {
+					}
 
                 if(Math.random() > Math.random())
                     sc[i1] = 14;
@@ -4551,51 +4549,45 @@ public class xtGraphics extends Panel
             }
             if(i == 14)
             {
-                boolean flag3 = false;
                 for(int l2 = 0; l2 < 7; l2++)
-                    if(sc[l2] == 12)
-                        flag3 = true;
+                    if(sc[l2] == 12) {
+					}
 
                 if(Math.random() > Math.random())
                     sc[l] = 12;
-                flag3 = false;
                 for(int i3 = 0; i3 < 7; i3++)
-                    if(sc[i3] == 10)
-                        flag3 = true;
+                    if(sc[i3] == 10) {
+					}
 
                 if(Math.random() > Math.random())
                     sc[i1] = 10;
             }
             if(i == 15)
             {
-                boolean flag4 = false;
                 for(int j3 = 0; j3 < 7; j3++)
-                    if(sc[j3] == 11)
-                        flag4 = true;
+                    if(sc[j3] == 11) {
+					}
 
                 if(Math.random() > Math.random())
                     sc[l] = 11;
-                flag4 = false;
                 for(int k3 = 0; k3 < 7; k3++)
-                    if(sc[k3] == 13)
-                        flag4 = true;
+                    if(sc[k3] == 13) {
+					}
 
                 if(Math.random() > Math.random())
                     sc[i1] = 13;
             }
             if(i == 16)
             {
-                boolean flag5 = false;
                 for(int l3 = 0; l3 < 7; l3++)
-                    if(sc[l3] == 13)
-                        flag5 = true;
+                    if(sc[l3] == 13) {
+					}
 
                 if(Math.random() > Math.random())
                     sc[l] = 13;
-                flag5 = false;
                 for(int i4 = 0; i4 < 7; i4++)
-                    if(sc[i4] == 12)
-                        flag5 = true;
+                    if(sc[i4] == 12) {
+					}
 
                 if(Math.random() > Math.random())
                     sc[i1] = 12;
@@ -5524,8 +5516,8 @@ public class xtGraphics extends Panel
         rd.setFont(adventure11);
         ftm = rd.getFontMetrics();
         drawcs(333, "Loading game, please wait.", 0, 0, 0, 3);
-        rd.setColor(new Color(255, 255, 255));
-        rd.fillRect(230, 373, 210, 17);
+        //rd.setColor(new Color(255, 255, 255));
+        //rd.fillRect(230, 373, 210, 17);
         shload += (((float)dnload + 10F) - shload) / 100F;
         if(shload > (float)kbload)
         {

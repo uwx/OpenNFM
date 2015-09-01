@@ -13,6 +13,8 @@ import netscape.javascript.JSObject;
 public class GameSparker extends Applet
     implements Runnable
 {
+	private static final long serialVersionUID = 9001L;
+	
     public boolean keyDown(Event event, int i)
     {
         if(!exwist)
@@ -233,7 +235,6 @@ public class GameSparker extends Applet
             DataInputStream datainputstream = new DataInputStream(url.openStream());
             ZipInputStream zipinputstream = new ZipInputStream(datainputstream);
             ZipEntry zipentry = zipinputstream.getNextEntry();
-            Object obj = null;
             for(; zipentry != null; zipentry = zipinputstream.getNextEntry())
             {
                 int i = 0;
@@ -432,7 +433,6 @@ public class GameSparker extends Applet
                     aconto[nob] = new ContO(aconto1[i2], getint("fltset", s1, 1), getint("fltset", s1, 3), getint("set", s1, 2), getint("set", s1, 4));
                     if(s1.indexOf(")p") != -1)
                     {
-                        int yvalue = getint("fltset", s1, 4);
                         checkpoints.x[checkpoints.n] = getint("fltset", s1, 1);
                         checkpoints.z[checkpoints.n] = getint("fltset", s1, 2);
                         checkpoints.y[checkpoints.n] = getint("fltset", s1, 3);
@@ -746,7 +746,6 @@ public class GameSparker extends Applet
         xtgraphics.stoploading();
         System.gc();
         Date date = new Date();
-        long l1 = 0L;
         long l3 = date.getTime();
         float f1 = 30F;
         boolean flag1 = false;
