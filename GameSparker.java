@@ -225,7 +225,7 @@ public class GameSparker extends Applet
             "feather_reed", "pyramid_of_giza", "rock", "rock2",
             "rock3", "rainbowroad", "questionmarkblock", "rainbowstraight",
             "rainbowturn", "rainbowend", "onepartmaze" //27
-        };
+            };
         xtgraphics.dnload += 6;
         try
         {
@@ -820,6 +820,9 @@ public class GameSparker extends Applet
             if(xtgraphics.fase == 8)
             {
                 xtgraphics.credits(u[0]);
+                if(xtgraphics.flipo == 102){
+                	rd.drawImage(xtgraphics.credsnap(offImage), 0, 0, null);
+                }
                 xtgraphics.ctachm(xm, ym, mouses, u[0]);
                 if(xtgraphics.flipo <= 100)
                     catchlink(0);
