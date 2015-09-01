@@ -572,74 +572,68 @@ public class xtGraphics extends Panel
         }
     }    
     
-    int colors[] = {25, 50, 100};   
-    public Image credsnap(Image image)
-    {
-        int i = image.getHeight(ob);
-        int j = image.getWidth(ob);
-        int ai[] = new int[j * i];                        
-        do{
-            if(colors[0] < 200)
-            {
-                colors[0] += 5;
-            }else{
-                do{colors[0] -= 5;}while(colors[0] > 25);
-            }
-            if(colors[1] < 100)
-            {
-                colors[1] += 5;
-            }else{
-                do{colors[1] -= 10;}while(colors[1] > 50);
-            }
-            if(colors[2] < 30)
-            {
-                colors[2] += 5;
-            }else{
-                do{colors[2] -= 5;}while(colors[2] > 100);
-            }        
-            PixelGrabber pixelgrabber = new PixelGrabber(image, 0, 0, j, i, ai, 0, j);            
-            try
-            {
-                pixelgrabber.grabPixels();
-            }
-            catch(InterruptedException _ex) { }        
-            for(int k = 0; k < j * i; k++)
-            {                
-                    Color color = new Color(ai[k]);
-                    int l = (int)((float)color.getRed() * ((float)colors[0] / 100F));
-                    if(l > 225)
-                    {
-                        l = 225;
-                    }
-                    if(l < 0)
-                    {
-                        l = 0;
-                    }
-                    int i1 = (int)((float)color.getGreen()* ((float)colors[1] / 100F));
-                    if(i1 > 225)
-                    {
-                        i1 = 225;
-                    }
-                    if(i1 < 0)
-                    {   
-                        i1 = 0;
-                    }
-                    int j1 = (int)((float)color.getBlue() * ((float)colors[2] / 100F));
-                    if(j1 > 225)
-                    {
-                        j1 = 225;
-                    }
-                    if(j1 < 0)
-                    {
-                        j1 = 0;
-                    }
-                    Color color2 = new Color(l, i1, j1);
-                    ai[k] = color2.getRGB();                                
-            }
-            Image image1 = createImage(new MemoryImageSource(j, i, ai, 0, j));
-            return image1;
-        }while(fase == 8);
-    }
+	int colors[] = { 25, 50, 100 };
+
+	public Image credsnap(Image image) {
+		int i = 350; // image.getHeight(ob);
+		int j = image.getWidth(ob);
+		int ai[] = new int[j * i];
+
+		if (colors[0] < 200) {
+			colors[0] += 5;
+		} else {
+			do {
+				colors[0] -= 5;
+			} while (colors[0] > 25);
+		}
+		if (colors[1] < 100) {
+			colors[1] += 5;
+		} else {
+			do {
+				colors[1] -= 10;
+			} while (colors[1] > 50);
+		}
+		if (colors[2] < 30) {
+			colors[2] += 5;
+		} else {
+			do {
+				colors[2] -= 5;
+			} while (colors[2] > 100);
+		}
+		PixelGrabber pixelgrabber = new PixelGrabber(image, 0, 0, j, i, ai, 0, j);
+		try {
+			pixelgrabber.grabPixels();
+		} catch (InterruptedException _ex) {
+		}
+		for (int k = 0; k < j * i; k++) {
+			Color color = new Color(ai[k]);
+			int l = (int) ((float) color.getRed() * ((float) colors[0] / 100F));
+			if (l > 225) {
+				l = 225;
+			}
+			if (l < 0) {
+				l = 0;
+			}
+			int i1 = (int) ((float) color.getGreen() * ((float) colors[1] / 100F));
+			if (i1 > 225) {
+				i1 = 225;
+			}
+			if (i1 < 0) {
+				i1 = 0;
+			}
+			int j1 = (int) ((float) color.getBlue() * ((float) colors[2] / 100F));
+			if (j1 > 225) {
+				j1 = 225;
+			}
+			if (j1 < 0) {
+				j1 = 0;
+			}
+			Color color2 = new Color(l, i1, j1, 50);
+			ai[k] = color2.getRGB();
+		}
+		Image image1 = createImage(new MemoryImageSource(j, i, ai, 0, j));
+		return image1;
+	}
     
     public int colorinvert(int r, int g, int b){
 //>>>>>>> nfm2desktop
@@ -2663,10 +2657,17 @@ public class xtGraphics extends Panel
         }
         if(flipo == 102)
         {
-            rd.drawImage(bgmain, 0, 0, null);
-            rd.setComposite(AlphaComposite.getInstance(3, 0.20F));            
-            rd.drawImage(credsnap(bgmain), 0,0, null);        
-            rd.setComposite(AlphaComposite.getInstance(3, 1.0F));            
+        	int i = 0;
+            do
+            {
+                rd.drawImage(bgmain, 0, bgmy[i], null);
+                bgmy[i] -= 10;
+                if(bgmy[i] <= -400)
+                {
+                    bgmy[i] = 400;
+                }
+            } while(++i < 2);
+            
             rd.setFont(adventure13);
             ftm = rd.getFontMetrics();
             //////////////////////////////////////////////////////////////////////
