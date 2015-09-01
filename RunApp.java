@@ -57,7 +57,7 @@ public class RunApp extends Panel {
                 exitsequance();
             }
         });
-        applet.setPreferredSize(new java.awt.Dimension(670, 460));//The resolution of your game goes here
+        applet.setPreferredSize(new java.awt.Dimension(670, 420));//The resolution of your game goes here (blazeit)
         frame.add("Center", applet);
         frame.setResizable(false);//If you plan to make you game support changes in resolution, you can comment out this line.
         frame.pack();
