@@ -3,6 +3,7 @@
 import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.InputStream;
 
 import javax.sound.midi.MidiChannel;
@@ -11,7 +12,7 @@ import javax.sound.midi.Sequencer;
 import javax.sound.midi.Synthesizer;
 
 import javazoom.jl.decoder.JavaLayerException;
-import javazoom.jl.player.*;
+//import javazoom.jl.player.*;
 import javazoom.jl.player.advanced.*;
 
 public class RadicalMidi {
@@ -23,19 +24,78 @@ public class RadicalMidi {
     boolean isMp3 = false;
     String s;
     FileInputStream fi;
-	private int pausedOnFrame = 0;
-	AdvancedPlayer player;
+    File fl;
+	private Mp3Player Mp3Player;
+	
+	public class Mp3Player extends Thread {
+		
+		AdvancedPlayer player;
+		String filePath;
+		private int pausedOnFrame = 0;
+		
+		public Mp3Player(String filePath) {
+			this.filePath = filePath;
+			try {
+				fi = new FileInputStream(fl);
+				player = new AdvancedPlayer(fi);
+		    	player.setPlayBackListener(new PlaybackListener() {
+		    	    @Override
+		    	    public void playbackFinished(PlaybackEvent event) {
+		    	        pausedOnFrame = event.getFrame();
+		    	    }
+		    	});
+			} catch (JavaLayerException | FileNotFoundException ex) {
+				System.out.println("Error loading Mp3!");
+				ex.printStackTrace();
+			}
+		}
+		
+		public void playMp3() { //// http://stackoverflow.com/a/16893482
+			try {
+		    	player.play();
+			} catch (JavaLayerException e) {
+				System.out.println("Error playing Mp3!");
+				e.printStackTrace();
+			}
+	    	// or player.play(pausedOnFrame, Integer.MAX_VALUE);
+	    }
+	    
+	    public void resumeMp3() { //// http://stackoverflow.com/a/16893482
+	    	try {
+	    		fi = new FileInputStream(fl);
+	    		player = new AdvancedPlayer(fi);
+		    	player.setPlayBackListener(new PlaybackListener() {
+		    	    @Override
+		    	    public void playbackFinished(PlaybackEvent event) {
+		    	        pausedOnFrame = event.getFrame();
+		    	    }
+		    	});
+				player.play(pausedOnFrame, Integer.MAX_VALUE);
+			} catch (JavaLayerException | FileNotFoundException e) {
+				System.out.println("Error resuming Mp3!");
+				e.printStackTrace();
+			}
+	    }
+	    
+	    public void stopMp3() { // stops, but notifies the pause thingy
+	    	player.stop();
+	    }
+	    
+	    public void closeMp3() { //stops but doesn't notify shit
+	    	player.close();
+	    }
+	    
+	    @Override
+	    public void run() {
+		    playMp3();
+	    }
+	}
     
     public RadicalMidi(String fn)
     {
     	if (fn.endsWith(".mp3")) {
     		isMp3 = true;
-    		try {
-    	    	fi = new FileInputStream(new File(fn));
-    	    } catch(java.io.FileNotFoundException ex) {
-    	    		System.out.println("Midi file not found!");
-    	    		ex.printStackTrace();
-    	    }
+    		fl = new File(fn);
     	} else if (fn.endsWith(".ogg")) {
     		// TODO add .ogg code
     	} else {
@@ -63,34 +123,50 @@ public class RadicalMidi {
     }
     
     public void load() {
-    	if (!isMp3)
+    	if (isMp3) {
+    		Mp3Player = new Mp3Player(s);
+    	} else
     		loadMidi();
     }
     
     public void play() {
-    	if (isMp3)
-    		playMp3(s);
+    	if (isMp3) {
+    		if (Mp3Player != null)
+    			Mp3Player.start();
+    		else {
+    			Mp3Player = new Mp3Player(s);
+    			Mp3Player.start();
+    		}
+    	}
     	else
     		playMidi();
     }
     
-    public void resume() {
+    @SuppressWarnings("deprecation")
+	public void resume() {
     	if (isMp3)
-    		resumeMp3();
+    		Mp3Player.resume();
+    		//Mp3Player.resumeMp3();
     	else
     		resumeMidi();
     }
     
+    @SuppressWarnings("deprecation")
     public void stop() {
     	if (isMp3)
-    		stopMp3();
+    		Mp3Player.suspend();
+    		//Mp3Player.stopMp3();
     	else
     		stopMidi();
     }
     
-    public void unload() {
-    	if (isMp3)
-    		closeMp3();
+    //@SuppressWarnings("deprecation")
+	public void unload() {
+    	if (isMp3) {
+    		//Mp3Player.closeMp3();
+    		//Mp3Player.stop();
+    		Mp3Player = null;
+    	}
     	else
     		unloadMidi();
     }
@@ -281,38 +357,5 @@ public class RadicalMidi {
 			ex.printStackTrace();
 		}
 	}
-	
-    public void playMp3(String filePath) { //// http://stackoverflow.com/a/16893482
-		try {
-			player = new AdvancedPlayer(fi);
-	    	player.setPlayBackListener(new PlaybackListener() {
-	    	    @Override
-	    	    public void playbackFinished(PlaybackEvent event) {
-	    	        pausedOnFrame = event.getFrame();
-	    	    }
-	    	});
-	    	player.play();
-		} catch (JavaLayerException e) {
-			System.out.println("Error playing Mp3!");
-			e.printStackTrace();
-		}
-    	// or player.play(pausedOnFrame, Integer.MAX_VALUE);
-    }
     
-    public void resumeMp3() { //// http://stackoverflow.com/a/16893482
-    	try {
-			player.play(pausedOnFrame, Integer.MAX_VALUE);
-		} catch (JavaLayerException e) {
-			System.out.println("Error resuming Mp3!");
-			e.printStackTrace();
-		}
-    }
-    
-    public void stopMp3() { // stops, but notifies the pause thingy
-    	player.stop();
-    }
-    
-    public void closeMp3() { //stops but doesn't notify shit
-    	player.close();
-    }
 }
