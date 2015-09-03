@@ -12,7 +12,7 @@ import javax.sound.midi.Sequencer;
 import javax.sound.midi.Synthesizer;
 
 import javazoom.jl.decoder.JavaLayerException;
-//import javazoom.jl.player.*;
+import javazoom.jl.player.*;
 import javazoom.jl.player.advanced.*;
 
 public class RadicalMidi {
@@ -23,10 +23,10 @@ public class RadicalMidi {
     boolean playing = false;
     boolean isMp3 = false;
     String s;
-    FileInputStream fi;
+    InputStream fi;
     File fl;
 
-	AdvancedPlayer player;
+    PausablePlayer player;
 	String filePath;
 	private int pausedOnFrame;
 	//private Mp3Player Mp3Player;
@@ -47,6 +47,13 @@ public class RadicalMidi {
         	pausedOnFrame = 0;
     		isMp3 = true;
     		fl = new File(fn);
+    		try {
+    			fi = new FileInputStream(fl);
+    			player = new PausablePlayer(fi);
+    		} catch (JavaLayerException | FileNotFoundException ex) {
+    			System.out.println("Error loading Mp3!");
+    			ex.printStackTrace();
+    		}
     	} else if (fn.endsWith(".ogg")) {
     		// TODO add .ogg code
     	} else {
@@ -75,7 +82,7 @@ public class RadicalMidi {
     
     public void load() {
     	if (isMp3) {
-    		initMp3(s);
+    		initMp3();
     		//Mp3Player = new Mp3Player(s);
     	} else
     		loadMidi();
@@ -314,83 +321,28 @@ public class RadicalMidi {
 		}
 	}
 	
-	public void initMp3(String filePath) {
-		this.filePath = filePath;
-		try {
-			fi = new FileInputStream(fl);
-			player = new AdvancedPlayer(fi);
-	    	player.setPlayBackListener(new PlaybackListener() {
-	    	    @Override
-	    	    public void playbackFinished(PlaybackEvent event) {
-	    	        pausedOnFrame = event.getFrame();
-	    	    }
-	    	});
-		} catch (JavaLayerException | FileNotFoundException ex) {
-			System.out.println("Error loading Mp3!");
-			ex.printStackTrace();
-		}
+	public void initMp3() {
+		
 	}
 	
 	public void playMp3() { //// http://stackoverflow.com/a/16893482
-		final Runnable r = new Runnable() {
-			public void run() {
-				try {
-			    	player.play();
-				} catch (JavaLayerException e) {
-					System.out.println("Error playing Mp3!");
-					e.printStackTrace();
-				}
-		    	// or player.play(pausedOnFrame, Integer.MAX_VALUE);
-			}
-		};
-		final Thread t = new Thread(r);
-        t.setDaemon(true);
-        t.start();
+		try {
+			player.play();
+		} catch (JavaLayerException e) {
+			e.printStackTrace();
+		}
     }
     
     public void resumeMp3() { //// http://stackoverflow.com/a/16893482
-    	final Runnable r = new Runnable() {
-    		public void run() {
-		    	try {
-		    		fi = new FileInputStream(fl);
-		    		player = new AdvancedPlayer(fi);
-			    	player.setPlayBackListener(new PlaybackListener() {
-			    	    @Override
-			    	    public void playbackFinished(PlaybackEvent event) {
-			    	        pausedOnFrame = event.getFrame();
-			    	    }
-			    	});
-					player.play(pausedOnFrame, Integer.MAX_VALUE);
-				} catch (JavaLayerException | FileNotFoundException e) {
-					System.out.println("Error resuming Mp3!");
-					e.printStackTrace();
-				}
-    		}
-    	};
-		final Thread t = new Thread(r);
-        t.setDaemon(true);
-        t.start();
+    	player.resume();
     }
     
     public void stopMp3() { // stops, but notifies the pause thingy
-    	final Runnable r = new Runnable() {
-    		public void run() {
-    			player.stop();
-    		}
-    	};
-    	final Thread t = new Thread(r);
-        t.setDaemon(true);
-        t.start();
+    	player.pause();
     }
     
     public void closeMp3() { //stops but doesn't notify shit
-    	final Runnable r = new Runnable() {
-    		public void run() {
-    			player.close();
-    		}
-    	};
-    	final Thread t = new Thread(r);
-        t.setDaemon(true);
-        t.start();
+    	player.close();
     }
+
 }
