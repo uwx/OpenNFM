@@ -10,19 +10,9 @@ import javax.sound.midi.MidiSystem;
 import javax.sound.midi.Sequencer;
 import javax.sound.midi.Synthesizer;
 
-import java.io.IOException;
- 
-// mp3 ogg imports
-import javax.sound.sampled.AudioFormat;
-import javax.sound.sampled.AudioInputStream;
-import javax.sound.sampled.AudioSystem;
-import javax.sound.sampled.DataLine.Info;
-import javax.sound.sampled.LineUnavailableException;
-import javax.sound.sampled.SourceDataLine;
-import javax.sound.sampled.UnsupportedAudioFileException;
-
-import static javax.sound.sampled.AudioSystem.getAudioInputStream;
-import static javax.sound.sampled.AudioFormat.Encoding.PCM_SIGNED;
+import javazoom.jl.decoder.JavaLayerException;
+import javazoom.jl.player.*;
+import javazoom.jl.player.advanced.*;
 
 public class RadicalMidi {
 
@@ -30,16 +20,26 @@ public class RadicalMidi {
     Sequencer sequencer;
     boolean loaded = false;
     boolean playing = false;
-    boolean isMp3Ogg = false;
+    boolean isMp3 = false;
     String s;
     FileInputStream fi;
+	private int pausedOnFrame = 0;
+	AdvancedPlayer player;
     
     public RadicalMidi(String fn)
     {
-    	if (fn.endsWith(".ogg") || fn.endsWith(".mp3")) {
-    		isMp3Ogg = true;
+    	if (fn.endsWith(".mp3")) {
+    		isMp3 = true;
+    		try {
+    	    	fi = new FileInputStream(new File(fn));
+    	    } catch(java.io.FileNotFoundException ex) {
+    	    		System.out.println("Midi file not found!");
+    	    		ex.printStackTrace();
+    	    }
+    	} else if (fn.endsWith(".ogg")) {
+    		// TODO add .ogg code
     	} else {
-    		isMp3Ogg = false;
+    		isMp3 = false;
 	    	s = fn;
 	    	try {
 	    	fi = new FileInputStream(new File(fn));
@@ -63,15 +63,36 @@ public class RadicalMidi {
     }
     
     public void load() {
-    	if (!isMp3Ogg)
+    	if (!isMp3)
     		loadMidi();
     }
     
     public void play() {
-    	if (isMp3Ogg)
-    		playMp3Ogg(s);
+    	if (isMp3)
+    		playMp3(s);
     	else
     		playMidi();
+    }
+    
+    public void resume() {
+    	if (isMp3)
+    		resumeMp3();
+    	else
+    		resumeMidi();
+    }
+    
+    public void stop() {
+    	if (isMp3)
+    		stopMp3();
+    	else
+    		stopMidi();
+    }
+    
+    public void unload() {
+    	if (isMp3)
+    		closeMp3();
+    	else
+    		unloadMidi();
     }
     
     public void loadMidi()
@@ -261,51 +282,37 @@ public class RadicalMidi {
 		}
 	}
 	
-    public void playMp3Ogg(String filePath) {
-        final File file = new File(filePath);
- 
-        try (final AudioInputStream in = getAudioInputStream(file)) {
-             
-            final AudioFormat outFormat = getOutFormat(in.getFormat());
-            final Info info = new Info(SourceDataLine.class, outFormat);
-            final SourceDataLine line;
-            
-            try {
-            	line = (SourceDataLine) AudioSystem.getLine(info);
-            } catch (LineUnavailableException e) {
-            	throw new IllegalStateException(e);
-            }
-            
-            try {
- 
-                if (line != null) {
-                    line.open(outFormat);
-                    line.start();
-                    stream(getAudioInputStream(outFormat, in), line);
-                    line.drain();
-                    line.stop();
-                }
- 
-            } catch (LineUnavailableException 
-            		| IOException e) {
-            		throw new IllegalStateException(e);
-        	}
-        } catch (IOException | UnsupportedAudioFileException e1) {
-			e1.printStackTrace();
+    public void playMp3(String filePath) { //// http://stackoverflow.com/a/16893482
+		try {
+			player = new AdvancedPlayer(fi);
+	    	player.setPlayBackListener(new PlaybackListener() {
+	    	    @Override
+	    	    public void playbackFinished(PlaybackEvent event) {
+	    	        pausedOnFrame = event.getFrame();
+	    	    }
+	    	});
+	    	player.play();
+		} catch (JavaLayerException e) {
+			System.out.println("Error playing Mp3!");
+			e.printStackTrace();
+		}
+    	// or player.play(pausedOnFrame, Integer.MAX_VALUE);
+    }
+    
+    public void resumeMp3() { //// http://stackoverflow.com/a/16893482
+    	try {
+			player.play(pausedOnFrame, Integer.MAX_VALUE);
+		} catch (JavaLayerException e) {
+			System.out.println("Error resuming Mp3!");
+			e.printStackTrace();
 		}
     }
- 
-    private AudioFormat getOutFormat(AudioFormat inFormat) {
-        final int ch = inFormat.getChannels();
-        final float rate = inFormat.getSampleRate();
-        return new AudioFormat(PCM_SIGNED, rate, 16, ch, ch * 2, rate, false);
+    
+    public void stopMp3() { // stops, but notifies the pause thingy
+    	player.stop();
     }
- 
-    private void stream(AudioInputStream in, SourceDataLine line) 
-        throws IOException {
-        final byte[] buffer = new byte[65536];
-        for (int n = 0; n != -1; n = in.read(buffer, 0, buffer.length)) {
-            line.write(buffer, 0, n);
-        }
+    
+    public void closeMp3() { //stops but doesn't notify shit
+    	player.close();
     }
 }
