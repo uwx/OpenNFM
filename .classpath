@@ -4,5 +4,8 @@
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="lib" path="libraries/dragshotMod.jar" sourcepath="libraries/dragshotMod.zip"/>
 	<classpathentry kind="lib" path="libraries/plugin.jar"/>
+	<classpathentry kind="lib" path="libraries/mp3spi-1.9.5-1.jar"/>
+	<classpathentry kind="lib" path="libraries/tritonus-share-0.3.7-2.jar"/>
+	<classpathentry kind="lib" path="libraries/vorbisspi-1.0.3-1.jar"/>
 	<classpathentry kind="output" path=""/>
 </classpath>
