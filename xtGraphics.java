@@ -2600,10 +2600,16 @@ public class xtGraphics extends Panel
 
     public void credits(Control control)
     {
-    	if(flipo == 0)
+    	/*
+    	 * TODO: make settings using java swing shit
+    	 * (probably unnecessary)
+    	 * i'm just gonna end up
+    	 * using the toolbar stuff
+    	 * 
+		if(flipo == 0)
     	{
     		settings(control);
-    	}
+    	}*/
         if(flipo == 1)
         {
             powerup.play();
