@@ -4,12 +4,15 @@ import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.InputStream;
 
 import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiSystem;
 import javax.sound.midi.Sequencer;
 import javax.sound.midi.Synthesizer;
+
+import org.newdawn.easyogg.OggClip;
 
 import javazoom.jl.decoder.JavaLayerException;
 import javazoom.jl.player.*;
@@ -19,16 +22,18 @@ public class RadicalMidi {
 
     InputStream is;
     Sequencer sequencer;
-    boolean loaded = false;
-    boolean playing = false;
-    boolean isMp3 = false;
+    boolean loaded;
+    boolean playing;
+    boolean isMp3;
+    boolean isOgg;
     String s;
     InputStream fi;
     File fl;
+	OggClip ogg;
 
     PausablePlayer player;
 	String filePath;
-	private int pausedOnFrame;
+	//private int pausedOnFrame;
 	//private Mp3Player Mp3Player;
 	
 	public class Mp3Player extends Thread {
@@ -43,9 +48,15 @@ public class RadicalMidi {
     
     public RadicalMidi(String fn)
     {
+    	loaded = false;
+    	playing = false;
+    	isMp3 = false;
+    	isOgg = false;
     	if (fn.endsWith(".mp3")) {
-        	pausedOnFrame = 0;
+    		s = fn;
+        	//pausedOnFrame = 0;
     		isMp3 = true;
+        	isOgg = false;
     		fl = new File(fn);
     		try {
     			fi = new FileInputStream(fl);
@@ -55,7 +66,15 @@ public class RadicalMidi {
     			ex.printStackTrace();
     		}
     	} else if (fn.endsWith(".ogg")) {
-    		// TODO add .ogg code
+    		s = fn;
+    		isMp3 = false;
+        	isOgg = true;
+    		try {
+    			ogg = new OggClip(fn);
+    		} catch (IOException e) {
+    			System.out.println("Error loading Ogg!");
+    			e.printStackTrace();
+    		}
     	} else {
     		isMp3 = false;
 	    	s = fn;
@@ -84,7 +103,7 @@ public class RadicalMidi {
     	if (isMp3) {
     		initMp3();
     		//Mp3Player = new Mp3Player(s);
-    	} else
+    	} else if (!isOgg)
     		loadMidi();
     }
     
@@ -99,7 +118,8 @@ public class RadicalMidi {
     		}
     		*/
     		playMp3();
-    	}
+    	} else if (isOgg)
+    		playOgg();
     	else
     		playMidi();
     }
@@ -109,6 +129,8 @@ public class RadicalMidi {
     	if (isMp3)
     		//Mp3Player.resume();
     		resumeMp3();
+    	else if (isOgg)
+    		resumeOgg();
     	else
     		resumeMidi();
     }
@@ -118,6 +140,8 @@ public class RadicalMidi {
     	if (isMp3)
     		//Mp3Player.suspend();
     		stopMp3();
+    	else if (isOgg)
+    		stopOgg();
     	else
     		stopMidi();
     }
@@ -129,7 +153,8 @@ public class RadicalMidi {
     		//Mp3Player.stop();
     		//Mp3Player = null;
     		closeMp3();
-    	}
+    	} else if (isOgg)
+    		unloadOgg();
     	else
     		unloadMidi();
     }
@@ -345,4 +370,21 @@ public class RadicalMidi {
     	player.close();
     }
 
+	public void playOgg() {
+		ogg.loop();
+	}
+	
+	public void stopOgg() {
+		ogg.pause();
+	}
+	
+	public void unloadOgg() {
+		ogg.stop();
+		ogg.close();
+	}
+	
+	public void resumeOgg() {
+		ogg.resume();
+	}
+	
 }

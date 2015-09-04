@@ -8,5 +8,16 @@
 	<classpathentry kind="lib" path="libraries/tritonus-share-0.3.7-2.jar"/>
 	<classpathentry kind="lib" path="libraries/vorbisspi-1.0.3-1.jar"/>
 	<classpathentry kind="lib" path="libraries/jl1.0.1.jar" sourcepath="libraries/jl1.0.1.zip"/>
+	<classpathentry kind="lib" path="libraries/CodecJOrbis.jar"/>
+	<classpathentry kind="lib" path="libraries/LibraryJavaSound.jar"/>
+	<classpathentry kind="lib" path="libraries/SoundSystem.jar"/>
+	<classpathentry kind="lib" path="libraries/easyogg/easyogg.jar">
+		<attributes>
+			<attribute name="javadoc_location" value="jar:platform:/resource/OpenNFM/libraries/docs/OggClip.html!/"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="libraries/easyogg/jogg-0.0.7.jar"/>
+	<classpathentry kind="lib" path="libraries/easyogg/jorbis-0.0.15.jar"/>
+	<classpathentry kind="lib" path="libraries/easyogg/startup2.jar"/>
 	<classpathentry kind="output" path=""/>
 </classpath>

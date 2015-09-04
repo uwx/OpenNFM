@@ -1960,6 +1960,7 @@ public class xtGraphics extends Panel
         	System.out.println("Loading music...");
         	File f = new File("music/stage" + i + ".mid");
         	File f2 = new File("music/stage" + i + ".mp3");
+        	File f3 = new File("music/stage" + i + ".ogg");
         	// this also serves as a check so radicalmidi doesn't throw an error
         	if (f.exists()) { 
         		System.out.println("Initializing midi...");
@@ -1982,6 +1983,11 @@ public class xtGraphics extends Panel
         		mtracks[i - 1] = new RadicalMidi("music/stage" + i + ".mp3");
         		System.out.println("Loading mp3...");
             	mtracks[i - 1].load();
+            	loadedt[i - 1] = true;
+        	} else if (f3.exists()) {
+        		System.out.println("Initializing/loading ogg...");
+        		isMidi[i - 1] = true;
+        		mtracks[i - 1] = new RadicalMidi("music/stage" + i + ".ogg");
             	loadedt[i - 1] = true;
         	} else {
         		System.out.println("Initializing mod...");
