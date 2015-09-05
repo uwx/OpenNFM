@@ -83,7 +83,7 @@ public class RadicalMidi {
 	    	try {
 	    		fi = new FileInputStream(new File(fn));
 	    	} catch(java.io.FileNotFoundException ex) {
-	    		System.out.println("Midi file not found!");
+	    		System.out.println("Midi file \"" + fn + "\" not found!");
 	    		ex.printStackTrace();
 	    	}
 	    	try {
@@ -95,7 +95,7 @@ public class RadicalMidi {
 	    	sequencer.open();
 	
 	    	} catch (Exception ex) {
-	    		System.out.println("Error loading Midi file:");
+	    		System.out.println("Error loading Midi file \"" + fn + "\":");
 	    		ex.printStackTrace();
 	    	}
     	}
