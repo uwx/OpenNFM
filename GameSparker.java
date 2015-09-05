@@ -339,7 +339,6 @@ public class GameSparker extends Applet
             String s;
             while((s = datainputstream.readLine()) != null) 
             {
-            	System.out.println(s);
                 s1 = "" + s.trim();
                 if (s1.startsWith("mountains"))
                     medium.mgen = getint("mountains", s1, 0);
