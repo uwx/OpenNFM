@@ -30,14 +30,14 @@ public class RadicalMidi {
     FileInputStream fi;
     File fl;
 	OggClip ogg;
-	long pos;
+	//long pos;
 
     PausablePlayer player;
 	String filePath;
 	//private int pausedOnFrame;
 	//private Mp3Player Mp3Player;
 	
-	public class Mp3Player extends Thread {
+	/*public class Mp3Player extends Thread {
 		
 		
 	    
@@ -45,16 +45,16 @@ public class RadicalMidi {
 	    public void run() {
 		    //playMp3();
 	    }
-	}
+	}*/
     
     public RadicalMidi(String fn)
     {
-    	pos = 0L;
+    	//pos = 0L;
     	loaded = false;
     	playing = false;
     	isMp3 = false;
     	isOgg = false;
-    	if (fn.endsWith(".mp3")) {
+    	if (fn.endsWith(".mp3")) { // is it an mp3?
     		s = fn;
         	//pausedOnFrame = 0;
     		isMp3 = true;
@@ -67,7 +67,7 @@ public class RadicalMidi {
     			System.out.println("Error loading Mp3!");
     			ex.printStackTrace();
     		}
-    	} else if (fn.endsWith(".ogg")) {
+    	} else if (fn.endsWith(".ogg")) { //is it an ogg?
     		s = fn;
     		isMp3 = false;
         	isOgg = true;
@@ -77,8 +77,9 @@ public class RadicalMidi {
     			System.out.println("Error loading Ogg!");
     			e.printStackTrace();
     		}
-    	} else {
+    	} else { //then it must be a midi!
     		isMp3 = false;
+    		isOgg = false;
 	    	s = fn;
 	    	try {
 	    		fi = new FileInputStream(new File(fn));
@@ -189,7 +190,7 @@ public class RadicalMidi {
     		System.out.println("Error buffering Midi file:");
     		ex.printStackTrace();
     	}
-    	playMidi(gain, loops, pos);
+    	playMidi(gain, loops/*, pos*/);
     }
     
     public void resumeMidi(double gain) {
@@ -206,7 +207,7 @@ public class RadicalMidi {
     		System.out.println("Error buffering Midi file:");
     		ex.printStackTrace();
     	}
-    	playMidi(gain, pos);
+    	playMidi(gain/*, pos*/);
     }
     
     public void resumeMidi() {
@@ -223,9 +224,10 @@ public class RadicalMidi {
     		System.out.println("Error buffering Midi file:");
     		ex.printStackTrace();
     	}
-    	playMidi(pos);
+    	playMidi(/*pos*/);
     }
     
+    /*
     public void playMidi(double gain, int loops, long pos) {
 
 		try {
@@ -248,7 +250,7 @@ public class RadicalMidi {
 			
 	    	// Starts playback of the MIDI data in the currently loaded sequence.
 	    	sequencer.start();
-	    	sequencer.setTickPosition(pos);
+	    	//sequencer.setTickPosition(pos);
 	    
 	    	playing = true;
 		} catch(IllegalArgumentException ex) {
@@ -291,7 +293,7 @@ public class RadicalMidi {
 
 	    	// Starts playback of the MIDI data in the currently loaded sequence.
 	    	sequencer.start();
-	    	sequencer.setTickPosition(pos);
+	    	//sequencer.setTickPosition(pos);
 	    
 	    	playing = true;
 		} catch(IllegalArgumentException ex) {
@@ -324,7 +326,7 @@ public class RadicalMidi {
 			
 	    	// Starts playback of the MIDI data in the currently loaded sequence.
 	    	sequencer.start();
-	    	sequencer.setTickPosition(pos);
+	    	//sequencer.setTickPosition(pos);
 	    
 	    	playing = true;
 		} catch(IllegalArgumentException ex) {
@@ -344,6 +346,7 @@ public class RadicalMidi {
     		ex.printStackTrace();
     	}
 	}
+	*/
     
     public void playMidi(double gain, int loops) {
 
@@ -449,7 +452,7 @@ public class RadicalMidi {
 	public void stopMidi() {
 		System.out.println("Stopping Midi file...");
 		try {
-			pos = sequencer.getTickPosition();
+			//pos = sequencer.getTickPosition();
 			//pos = fi.getPosition();
 			sequencer.stop();
 			playing = false;

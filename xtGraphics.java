@@ -5197,6 +5197,12 @@ public class xtGraphics extends Panel
 
     public void stageselect(CheckPoints checkpoints, Control control)
     {
+    	for (int i = 0; i < nTracks; i++) {
+    		mtracks[i] = null;
+    		stracks[i] = null;
+    		isMidi[i] = false;
+    		loadedt[i] = false;
+    	}
         stages.play();
         rd.drawImage(br, 0, 0, null);
         rd.drawImage(select, 273, 45, null);
