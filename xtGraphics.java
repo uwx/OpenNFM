@@ -5680,7 +5680,11 @@ public class xtGraphics extends Panel
 //<<<<<<< HEAD
 //        hello = app.getImage(app.getCodeBase(), path + "hello.gif");
 //=======
-        hello = Toolkit.getDefaultToolkit().getImage(path + "hello.gif");
+        try {
+        	hello = Toolkit.getDefaultToolkit().getImage(path + "hello.gif");
+        } catch (Exception ex) {
+        	hello = app.getImage(app.getCodeBase(), path + "hello.gif");
+        }
 //>>>>>>> nfm2desktop
         mediatracker.addImage(hello, 0);
         try
@@ -5691,7 +5695,11 @@ public class xtGraphics extends Panel
 //<<<<<<< HEAD
 //        sign = app.getImage(app.getCodeBase(), path + "sign.gif");
 //=======
-        sign = Toolkit.getDefaultToolkit().getImage(path + "sign.gif");
+        try {
+        	sign = Toolkit.getDefaultToolkit().getImage(path + "sign.gif");
+        } catch (Exception ex) {
+        	sign = app.getImage(app.getCodeBase(), path + "sign.gif");
+        }
 //>>>>>>> nfm2desktop
         mediatracker.addImage(sign, 0);
         try
@@ -5702,7 +5710,11 @@ public class xtGraphics extends Panel
 //<<<<<<< HEAD
 //        loadbar = app.getImage(app.getCodeBase(), path + "loadbar.gif");
 //=======
-        loadbar = Toolkit.getDefaultToolkit().getImage(path + "loadbar.gif");
+        try {
+        	loadbar = Toolkit.getDefaultToolkit().getImage(path + "loadbar.gif");
+        } catch (Exception ex) {
+        	loadbar = app.getImage(app.getCodeBase(), path + "loadbar.gif");
+        }
 //>>>>>>> nfm2desktop
         mediatracker.addImage(loadbar, 0);
         try
