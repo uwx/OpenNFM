@@ -67,3 +67,7 @@ java.policy.applet
 
 # Eclipse
 user_dictionary.txt
+*.html
+data/exit.html
+*.ini
+package.bluej
