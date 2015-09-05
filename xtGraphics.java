@@ -368,6 +368,8 @@ public class xtGraphics extends Panel
 //=======
     Settings gameSettings;
 //>>>>>>> nfm2desktop
+    AudioClip turbo;
+    //boolean togturbo;
     
     public void makeFont()
     {
@@ -1477,7 +1479,7 @@ public class xtGraphics extends Panel
                                 {
                                     pwait = 7;
                                 }
-                                sparkeng(j);
+                                sparkeng(j, control);
                             }
                             if(Math.abs(madness.speed) > (float)madness.swits[madness.cn][0] && Math.abs(madness.speed) <= (float)madness.swits[madness.cn][1])
                             {
@@ -1495,12 +1497,12 @@ public class xtGraphics extends Panel
                                 {
                                     pwait = 7;
                                 }
-                                sparkeng(k);
+                                sparkeng(k, control);
                             }
                             if(Math.abs(madness.speed) > (float)madness.swits[madness.cn][1] && Math.abs(madness.speed) <= (float)madness.swits[madness.cn][2])
                             {
                                 int l = (int)((3F * (Math.abs(madness.speed) - (float)madness.swits[madness.cn][1])) / (float)(madness.swits[madness.cn][2] - madness.swits[madness.cn][1]));
-                                sparkeng(l);
+                                sparkeng(l, control);
                             }
                         } else
                         {
@@ -1515,11 +1517,11 @@ public class xtGraphics extends Panel
                             {
                                 pwait--;
                             }
-                            sparkeng(byte0);
+                            sparkeng(byte0, control);
                         }
                     } else
                     {
-                        sparkeng(-1);
+                        sparkeng(-1, control);
                         if(flag2)
                         {
                             if(stopcnt <= 0)
@@ -1536,7 +1538,7 @@ public class xtGraphics extends Panel
                     }
                 } else
                 {
-                    sparkeng(3);
+                    sparkeng(3, control);
                 }
                 grrd = false;
                 aird = false;
@@ -1556,7 +1558,7 @@ public class xtGraphics extends Panel
                     stopcnt = 10;
                     aird = true;
                 }
-                sparkeng(-1);
+                sparkeng(-1, control);
             }
             if(madness.cntdest != 0 && cntwis < 7)
             {
@@ -1579,7 +1581,7 @@ public class xtGraphics extends Panel
             }
         } else
         {
-            sparkeng(-2);
+            sparkeng(-2, control);
             if(pwastd)
             {
                 wastd.stop();
@@ -4987,7 +4989,7 @@ public class xtGraphics extends Panel
         }
     }
 
-    public void sparkeng(int i)
+    public void sparkeng(int i, Control control)
     {
         i++;
         int j = 0;
@@ -5004,6 +5006,10 @@ public class xtGraphics extends Panel
             if(pengs[j])
             {
                 engs[enginsignature[sc[0]]][j].stop();
+                // turbo sfx
+                if (i == 2) {
+                	turbo.play();
+                }
                 pengs[j] = false;
             }
         } while(++j < 5);
@@ -5665,6 +5671,7 @@ public class xtGraphics extends Panel
         flickr = 0;
         flickr2 = 0;
         flickr3 = 0;
+        //togturbo = false;
         m = medium;
         app = applet;
         rd = graphics2d;
@@ -6287,6 +6294,8 @@ public class xtGraphics extends Panel
                 dnload += 7;
             }
         } while(++j < 3);
+        turbo = getSound("sounds/" + s + "turbo." + s1);
+        dnload += 456;
     }
 
     public void clicknow()

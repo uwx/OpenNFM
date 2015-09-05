@@ -280,12 +280,12 @@ public class GameSparker extends Applet
     public int sunytyp()
     {
         try {
-    	String s = System.getProperty("java.version");
-        String s1 = "" + getAppletContext();
-        if(!s1.startsWith("com.ms."))
-            return !s.startsWith("1.3") && !s.startsWith("1.4") ? 2 : 1;
-        else
-        	return 1;
+	    	String s = System.getProperty("java.version");
+	        String s1 = "" + getAppletContext();
+	        if(!s1.startsWith("com.ms."))
+	            return !s.startsWith("1.3") && !s.startsWith("1.4") ? 2 : 1;
+	        else
+	        	return 1;
         } catch (NullPointerException ex) {
         	// 1: LD sound
         	// 2: HD sound
