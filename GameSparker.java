@@ -198,34 +198,8 @@ public class GameSparker extends Applet
         view = 0;
     }
 
-       public void loadbase(ContO aconto[], Medium medium, Trackers trackers, xtGraphics xtgraphics)
+       public void loadbase(ContO aconto[], Medium medium, Trackers trackers, xtGraphics xtgraphics, String as[])
     {
-        String as[] = {
-            "TunedTornadoShark", "formula7", "canyenaro", "TunedLVC", "TunedNimi", "TunedMaxRevenge", "TunedOxide", "koolkat", "drifter", "policecops", 
-            "mustang", "king", "TunedM8", "masheen", "radicalone", "TunedMonstaa", //16
-            
-            //added cars
-            "car17", "car18", "car19", 
-            "car20", "car21", "car22", "car23", "car24", "car25", "car26", "car27", "car28", 
-            "car29", "car30", "car31", "car32", "car33", "car34", "car35", "car36", "car37", 
-            "car38", "car39", "car40", "car41", "car42", "car43", "car44", "car45", "car46", 
-            "car47", "car48", "car49", "car50", "car51",
-            
-            "road", "froad", "twister2", "twister1", //20
-            "turn", "offroad", "bumproad", "offturn", "nroad", "nturn", "roblend", "noblend", "rnblend", "roadend", //30
-            "offroadend", "hpground", "ramp30", "cramp35", "dramp15", "dhilo15", "slide10", "takeoff", "sramp22", "offbump", //40
-            "offramp", "sofframp", "halfpipe", "spikes", "rail", "thewall", "checkpoint", "fixpoint", "offcheckpoint", "sideoff", //50
-            "bsideoff", "uprise", "riseroad", "sroad", "soffroad", "tree", "speedramp", "mountain", "trap", "tunnel", "newoffroad", //61
-            
-            //new parts
-            "tree9", "tree10", "grass", "lamppost", "sun", 
-            "cloud", "tree11", "postalbox", "tree12",
-            "stopsign", "concretebarrier", "dumpstertrashcan", "tree13",
-            "pavedroad", "pavedturn", "pavedend", "burj_al_arab",
-            "feather_reed", "pyramid_of_giza", "rock", "rock2",
-            "rock3", "rainbowroad", "questionmarkblock", "rainbowstraight",
-            "rainbowturn", "rainbowend", "onepartmaze" //27
-        };
         xtgraphics.dnload += 6;
         try
         {
@@ -402,7 +376,7 @@ public class GameSparker extends Applet
                 if(s1.startsWith("set"))
                 {
                     int k1 = getint("set", s1, 0);
-                    k1 += 41;
+                    k1 += xtgraphics.nCars - 10; //MAY NEED TO BE - 10
                     aconto[nob] = new ContO(aconto1[k1], getint("set", s1, 1), medium.ground - aconto1[k1].grat, getint("set", s1, 2), getint("set", s1, 3));
                     if(s1.indexOf(")p") != -1)
                     {
@@ -428,7 +402,7 @@ public class GameSparker extends Applet
                 if(s1.startsWith("fltset"))
                 {
                     int i2 = getint("fltset", s1, 0);
-                    i2 += 41;
+                    i2 += xtgraphics.nCars - 10; //MAY NEED TO BE - 10
                     aconto[nob] = new ContO(aconto1[i2], getint("fltset", s1, 1), getint("fltset", s1, 3), getint("set", s1, 2), getint("set", s1, 4));
                     if(s1.indexOf(")p") != -1)
                     {
@@ -461,7 +435,7 @@ public class GameSparker extends Applet
                 if(s1.startsWith("chk"))
                 {
                     int l1 = getint("chk", s1, 0);
-                    l1 += 41;
+                    l1 += xtgraphics.nCars - 10; //MAY NEED TO BE - 10
                     aconto[nob] = new ContO(aconto1[l1], getint("chk", s1, 1), medium.ground - aconto1[l1].grat, getint("chk", s1, 2), getint("chk", s1, 3));
                     checkpoints.x[checkpoints.n] = getint("chk", s1, 1);
                     checkpoints.z[checkpoints.n] = getint("chk", s1, 2);
@@ -480,7 +454,7 @@ public class GameSparker extends Applet
                 if(s1.startsWith("fltchk"))
                 {
                     int l1 = getint("fltchk", s1, 0);
-                    l1 += 41;
+                    l1 += xtgraphics.nCars - 10; //MAY NEED TO BE - 10
                     aconto[nob] = new ContO(aconto1[l1], getint("fltchk", s1, 1), getint("fltchk", s1, 3), getint("fltchk", s1, 2), getint("fltchk", s1, 4));
                     checkpoints.x[checkpoints.n] = getint("fltchk", s1, 1);
                     checkpoints.z[checkpoints.n] = getint("fltchk", s1, 2);
@@ -499,7 +473,7 @@ public class GameSparker extends Applet
                 if(s1.startsWith("fix"))
                 {
                     int i2 = getint("fix", s1, 0);
-                    i2 += 41;
+                    i2 += xtgraphics.nCars - 10; //MAY NEED TO BE - 10
                     aconto[nob] = new ContO(aconto1[i2], getint("fix", s1, 1), getint("fix", s1, 3), getint("fix", s1, 2), getint("fix", s1, 4));
                     checkpoints.fx[checkpoints.fn] = getint("fix", s1, 1);
                     checkpoints.fz[checkpoints.fn] = getint("fix", s1, 2);
@@ -533,7 +507,7 @@ public class GameSparker extends Applet
                     int j4 = getint("maxr", s1, 2);
                     for(int j5 = 0; j5 < j2; j5++)
                     {
-                        aconto[nob] = new ContO(aconto1[45 + 35], j3, medium.ground - aconto1[45 + 35].grat, j5 * 4800 + j4, 0);
+                        aconto[nob] = new ContO(aconto1[45 + (xtgraphics.nCars - 16)], j3, medium.ground - aconto1[45 + (xtgraphics.nCars - 16)].grat, j5 * 4800 + j4, 0);
                         nob++;
                     }
 
@@ -556,7 +530,7 @@ public class GameSparker extends Applet
                     int k4 = getint("maxl", s1, 2);
                     for(int k5 = 0; k5 < k2; k5++)
                     {
-                        aconto[nob] = new ContO(aconto1[45 + 35], k3, medium.ground - aconto1[45 + 35].grat, k5 * 4800 + k4, 0);
+                        aconto[nob] = new ContO(aconto1[45 + (xtgraphics.nCars - 16)], k3, medium.ground - aconto1[45 + (xtgraphics.nCars - 16)].grat, k5 * 4800 + k4, 0);
                         nob++;
                     }
 
@@ -580,7 +554,7 @@ public class GameSparker extends Applet
                     int l4 = getint("maxt", s1, 2);
                     for(int l5 = 0; l5 < l2; l5++)
                     {
-                        aconto[nob] = new ContO(aconto1[45 + 35], l5 * 4800 + l4, medium.ground - aconto1[45 + 35].grat, l3, 90);
+                        aconto[nob] = new ContO(aconto1[45 + (xtgraphics.nCars - 16)], l5 * 4800 + l4, medium.ground - aconto1[45 + (xtgraphics.nCars - 16)].grat, l3, 90);
                         nob++;
                     }
 
@@ -603,7 +577,7 @@ public class GameSparker extends Applet
                     int i5 = getint("maxb", s1, 2);
                     for(int i6 = 0; i6 < i3; i6++)
                     {
-                        aconto[nob] = new ContO(aconto1[45 + 35], i6 * 4800 + i5, medium.ground - aconto1[45 + 35].grat, i4, 90);
+                        aconto[nob] = new ContO(aconto1[45 + (xtgraphics.nCars - 16)], i6 * 4800 + i5, medium.ground - aconto1[45 + (xtgraphics.nCars - 16)].grat, i4, 90);
                         nob++;
                     }
 
@@ -704,8 +678,34 @@ public class GameSparker extends Applet
         xtgraphics.makeFont();
         xtgraphics.loaddata(k);
         Record record = new Record(medium);
-        ContO aconto[] = new ContO[61 + 27 + 34];
-        loadbase(aconto, medium, trackers, xtgraphics);
+        String as[] = {
+                "TunedTornadoShark", "formula7", "canyenaro", "TunedLVC", "TunedNimi", "TunedMaxRevenge", "TunedOxide", "koolkat", "drifter", "policecops", 
+                "mustang", "king", "TunedM8", "masheen", "radicalone", "TunedMonstaa", //16
+                
+                //added cars
+                "car17", "car18", "car19", 
+                "car20", "car21", "car22", "car23", "car24", "car25", "car26", "car27", "car28", 
+                "car29", "car30", "car31", "car32", "car33", "car34", "car35", "car36", "car37", 
+                "car38", "car39", "car40", "car41", "car42", "car43", "car44", "car45", "car46", 
+                "car47", "car48", "car49", "car50",/* "car51",*/
+                
+                "road", "froad", "twister2", "twister1", //20
+                "turn", "offroad", "bumproad", "offturn", "nroad", "nturn", "roblend", "noblend", "rnblend", "roadend", //30
+                "offroadend", "hpground", "ramp30", "cramp35", "dramp15", "dhilo15", "slide10", "takeoff", "sramp22", "offbump", //40
+                "offramp", "sofframp", "halfpipe", "spikes", "rail", "thewall", "checkpoint", "fixpoint", "offcheckpoint", "sideoff", //50
+                "bsideoff", "uprise", "riseroad", "sroad", "soffroad", "tree", "speedramp", "mountain", "trap", "tunnel", "newoffroad", //61
+                
+                //new parts
+                "tree9", "tree10", "grass", "lamppost", "sun", 
+                "cloud", "tree11", "postalbox", "tree12",
+                "stopsign", "concretebarrier", "dumpstertrashcan", "tree13",
+                "pavedroad", "pavedturn", "pavedend", "burj_al_arab",
+                "feather_reed", "pyramid_of_giza", "rock", "rock2",
+                "rock3", "rainbowroad", "questionmarkblock", "rainbowstraight",
+                "rainbowturn", "rainbowend", "onepartmaze" //27
+        };
+        ContO aconto[] = new ContO[as.length];
+        loadbase(aconto, medium, trackers, xtgraphics, as);
         ContO aconto1[] = new ContO[10000];
         Madness amadness[] = new Madness[7];
         int l = 0;
@@ -718,23 +718,23 @@ public class GameSparker extends Applet
         float f = 35F;
         int i1 = 80;
         l = readcookie("unlocked");
-        if(l >= 1 && l <= 51)
+        if(l >= 1 && l <= xtgraphics.nTracks)
         {
         	int l2 = readcookie("userstage");
             xtgraphics.unlocked = l;
-            if(xtgraphics.unlocked != 51) {
+            if(xtgraphics.unlocked != xtgraphics.nTracks) {
                 checkpoints.stage = xtgraphics.unlocked;
         	} else {
-        		if (l2 >= 1 && l2 <= 51) {
+        		if (l2 >= 1 && l2 <= xtgraphics.nTracks) {
         			checkpoints.stage = l2;
         		} else {
-        			checkpoints.stage = (int)(Math.random() * 51D) + 1;
+        			checkpoints.stage = (int)(Math.random() * (double)xtgraphics.nTracks) + 1;
         		}
             }
             xtgraphics.opselect = 0;
         }
         l = readcookie("usercar");
-        if(l >= 0 && l <= 15)
+        if(l >= 0 && l <= xtgraphics.nCars - 1)
             xtgraphics.sc[0] = l;
         l = readcookie("gameprfact");
         if(l != -1)
@@ -854,14 +854,14 @@ public class GameSparker extends Applet
                 xtgraphics.finish(checkpoints, aconto, u[0]);
                 if(flag)
                 {
-                    if(checkpoints.stage == xtgraphics.unlocked && xtgraphics.winner && xtgraphics.unlocked != 51)
+                    if(checkpoints.stage == xtgraphics.unlocked && xtgraphics.winner && xtgraphics.unlocked != xtgraphics.nTracks)
                         savecookie("unlocked", "" + (xtgraphics.unlocked + 1));
                     savecookie("gameprfact", "" + (int)f);
                     savecookie("usercar", "" + xtgraphics.sc[0]);
                     flag = true;
                 }
                 xtgraphics.ctachm(xm, ym, mouses, u[0]);
-                if(checkpoints.stage == 51 && xtgraphics.winner)
+                if(checkpoints.stage == xtgraphics.nTracks && xtgraphics.winner)
                     catchlink(1);
                 if(mouses == 2)
                     mouses = 0;
@@ -1535,7 +1535,7 @@ public class GameSparker extends Applet
                 if(k1 >= 0)
                     xtgraphics.fleximage(offImage, k1, checkpoints.stage);
                 k1++;
-                if(checkpoints.stage == 51 && k1 == 10)
+                if(checkpoints.stage == xtgraphics.nTracks && k1 == 10)
                     xtgraphics.fase = -5;
                 if(k1 == 12)
                     xtgraphics.fase = -5;
