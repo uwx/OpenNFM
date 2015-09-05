@@ -6,6 +6,7 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+//import stackoverflow.io.PositionInputStream;
 
 import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiSystem;
@@ -15,21 +16,21 @@ import javax.sound.midi.Synthesizer;
 import org.newdawn.easyogg.OggClip;
 
 import javazoom.jl.decoder.JavaLayerException;
-import javazoom.jl.player.*;
-import javazoom.jl.player.advanced.*;
+import javazoom.jl.player.PausablePlayer;
 
 public class RadicalMidi {
 
-    InputStream is;
+	BufferedInputStream is;
     Sequencer sequencer;
     boolean loaded;
     boolean playing;
     boolean isMp3;
     boolean isOgg;
     String s;
-    InputStream fi;
+    FileInputStream fi;
     File fl;
 	OggClip ogg;
+	long pos;
 
     PausablePlayer player;
 	String filePath;
@@ -48,6 +49,7 @@ public class RadicalMidi {
     
     public RadicalMidi(String fn)
     {
+    	pos = 0L;
     	loaded = false;
     	playing = false;
     	isMp3 = false;
@@ -79,7 +81,7 @@ public class RadicalMidi {
     		isMp3 = false;
 	    	s = fn;
 	    	try {
-	    	fi = new FileInputStream(new File(fn));
+	    		fi = new FileInputStream(new File(fn));
 	    	} catch(java.io.FileNotFoundException ex) {
 	    		System.out.println("Midi file not found!");
 	    		ex.printStackTrace();
@@ -164,7 +166,7 @@ public class RadicalMidi {
     	try {
     		// create a stream from a file
     		is = new BufferedInputStream(fi);
-    	
+    		
     		loaded = true;
     		
     	} catch (Exception ex) {
@@ -175,54 +177,173 @@ public class RadicalMidi {
     
     public void resumeMidi(double gain, int loops) {
     	try {
-        	fi = new FileInputStream(new File(s));
-        	} catch(java.io.FileNotFoundException ex) {
+        	//fi = new FileInputStream(new File(s));
+    		fi = new FileInputStream(new File(s));
+    		is = new BufferedInputStream(fi);
+    		//fi.skip(pos);
+    		
+    	} catch(IOException ex) {
         		System.out.println("Midi file not found!");
         		ex.printStackTrace();
-        }
-    	try {
-    		// create a stream from a file
-    		is = new BufferedInputStream(fi);
-    	} catch (Exception ex) {
+        } catch (Exception ex) {
     		System.out.println("Error buffering Midi file:");
     		ex.printStackTrace();
     	}
-    	playMidi(gain, loops);
+    	playMidi(gain, loops, pos);
     }
     
     public void resumeMidi(double gain) {
     	try {
-        	fi = new FileInputStream(new File(s));
-        	} catch(java.io.FileNotFoundException ex) {
+        	//fi = new FileInputStream(new File(s));
+    		fi = new FileInputStream(new File(s));
+    		is = new BufferedInputStream(fi);
+    		//fi.skip(pos);
+    		
+    	} catch(IOException ex) {
         		System.out.println("Midi file not found!");
         		ex.printStackTrace();
-        }
-    	try {
-    		// create a stream from a file
-    		is = new BufferedInputStream(fi);
-    	} catch (Exception ex) {
+        } catch (Exception ex) {
     		System.out.println("Error buffering Midi file:");
     		ex.printStackTrace();
     	}
-    	playMidi(gain);
+    	playMidi(gain, pos);
     }
     
     public void resumeMidi() {
     	try {
-        	fi = new FileInputStream(new File(s));
-        	} catch(java.io.FileNotFoundException ex) {
+        	//fi = new FileInputStream(new File(s));
+    		fi = new FileInputStream(new File(s));
+    		is = new BufferedInputStream(fi);
+    		//fi.skip(pos);
+    		
+    	} catch(IOException ex) {
         		System.out.println("Midi file not found!");
         		ex.printStackTrace();
-        }
-    	try {
-    		// create a stream from a file
-    		is = new BufferedInputStream(fi);
-    	} catch (Exception ex) {
+        } catch (Exception ex) {
     		System.out.println("Error buffering Midi file:");
     		ex.printStackTrace();
     	}
-    	playMidi();
+    	playMidi(pos);
     }
+    
+    public void playMidi(double gain, int loops, long pos) {
+
+		try {
+			// Sets the current sequence on which the sequencer operates.
+			// The stream must point to MIDI file data.
+			sequencer.setSequence(is);
+
+			// loop forever
+			sequencer.setLoopCount(loops);
+			
+			if (sequencer instanceof Synthesizer) {
+			      Synthesizer synthesizer = (Synthesizer) sequencer;
+			      MidiChannel[] channels = synthesizer.getChannels();
+
+			      // gain is a value between 0 and 1 (loudest)
+			      for (int i = 0; i < channels.length; i++) {
+			    	  channels[i].controlChange(7, (int) (gain * 127.0));
+			      }
+			}
+			
+	    	// Starts playback of the MIDI data in the currently loaded sequence.
+	    	sequencer.start();
+	    	sequencer.setTickPosition(pos);
+	    
+	    	playing = true;
+		} catch(IllegalArgumentException ex) {
+			System.out.println("There is a mistake in your Midi code,");
+			System.out.println("please re-check!");
+			ex.printStackTrace();
+		} catch (java.lang.IllegalStateException ex) {
+    		System.out.println("Error playing Midi file " + s + ", check if the file exists!");
+    		ex.printStackTrace();
+    	} catch (java.io.EOFException ex) {
+			System.out.println("Error playing Midi file:");
+			System.out.println("Playback has finished");
+			System.out.println("or file \"" + s + "\" is missing!"); //escape using \
+			playMidi(gain, loops);
+    	} catch (Exception ex) {
+    		System.out.println("Error playing Midi file:");
+    		ex.printStackTrace();
+    	}
+	}
+    
+    public void playMidi(double gain, long pos) {
+
+		try {
+			// Sets the current sequence on which the sequencer operates.
+			// The stream must point to MIDI file data.
+			sequencer.setSequence(is);
+
+			// loop forever
+			sequencer.setLoopCount(9999);
+			
+			if (sequencer instanceof Synthesizer) {
+			      Synthesizer synthesizer = (Synthesizer) sequencer;
+			      MidiChannel[] channels = synthesizer.getChannels();
+
+			      // gain is a value between 0 and 1 (loudest)
+			      for (int i = 0; i < channels.length; i++) {
+			    	  channels[i].controlChange(7, (int) (gain * 127.0));
+			      }
+			}
+
+	    	// Starts playback of the MIDI data in the currently loaded sequence.
+	    	sequencer.start();
+	    	sequencer.setTickPosition(pos);
+	    
+	    	playing = true;
+		} catch(IllegalArgumentException ex) {
+			System.out.println("There is a mistake in your Midi code,");
+			System.out.println("please re-check!");
+			ex.printStackTrace();
+		} catch (java.lang.IllegalStateException ex) {
+    		System.out.println("Error playing Midi file " + s + ", check if the file exists!");
+    		ex.printStackTrace();
+    	} catch (java.io.EOFException ex) {
+			System.out.println("Error playing Midi file:");
+			System.out.println("Playback has finished");
+			System.out.println("or file \"" + s + "\" is missing!"); //escape using \
+			playMidi(gain);
+    	} catch (Exception ex) {
+    		System.out.println("Error playing Midi file:");
+    		ex.printStackTrace();
+    	}
+	}
+	
+	public void playMidi(long pos) {
+
+		try {
+			// Sets the current sequence on which the sequencer operates.
+			// The stream must point to MIDI file data.
+			sequencer.setSequence(is);
+
+			// loop forever
+			sequencer.setLoopCount(9999);
+			
+	    	// Starts playback of the MIDI data in the currently loaded sequence.
+	    	sequencer.start();
+	    	sequencer.setTickPosition(pos);
+	    
+	    	playing = true;
+		} catch(IllegalArgumentException ex) {
+			System.out.println("There is a mistake in your Midi code,");
+			System.out.println("please re-check!");
+			ex.printStackTrace();
+		} catch (java.lang.IllegalStateException ex) {
+    		System.out.println("Error playing Midi file " + s + ", check if the file exists!");
+    		ex.printStackTrace();
+		} catch (java.io.EOFException ex) {
+			System.out.println("Error playing Midi file:");
+			System.out.println("Playback has finished");
+			System.out.println("or file \"" + s + "\" is missing!"); //escape using \
+			playMidi();
+    	} catch (Exception ex) {
+    		System.out.println("Error playing Midi file:");
+    		ex.printStackTrace();
+    	}
+	}
     
     public void playMidi(double gain, int loops) {
 
@@ -328,6 +449,8 @@ public class RadicalMidi {
 	public void stopMidi() {
 		System.out.println("Stopping Midi file...");
 		try {
+			pos = sequencer.getTickPosition();
+			//pos = fi.getPosition();
 			sequencer.stop();
 			playing = false;
 		} catch (Exception ex) {
