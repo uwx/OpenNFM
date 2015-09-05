@@ -368,6 +368,8 @@ public class xtGraphics extends Panel
 //=======
     Settings gameSettings;
 //>>>>>>> nfm2desktop
+    final int nTracks = 100;
+    final int nCars = 50;
     
     public void makeFont()
     {
@@ -4182,7 +4184,7 @@ public class xtGraphics extends Panel
         {
             if(checkpoints.stage == unlocked)
             {
-                if(checkpoints.stage != 51)
+                if(checkpoints.stage != nTracks)
                 {
                     rd.drawImage(congrd, 200, 30, null);
                     drawcs(80, "Stage " + checkpoints.stage + " Completed!", 170, 170, 170, 3);
@@ -4256,7 +4258,7 @@ public class xtGraphics extends Panel
                     pin = 0;
                     sc[0] = 16;
                 }
-                if(checkpoints.stage != 51)
+                if(checkpoints.stage != nTracks)
                 {
                     rd.setFont(adventure13);
                     ftm = rd.getFontMetrics();
@@ -4436,7 +4438,7 @@ public class xtGraphics extends Panel
             		stracks[checkpoints.stage - 1].stop();
             	}
             }
-            if(checkpoints.stage == unlocked && winner && unlocked != 51)
+            if(checkpoints.stage == unlocked && winner && unlocked != nTracks)
             {
                 checkpoints.stage++;
                 unlocked++;
@@ -4491,7 +4493,7 @@ public class xtGraphics extends Panel
             {
                 i -= 10;
                 flag = true;
-                if(sc[0] != 7 + (i + 1) / 2 && i != 17)
+                if(sc[0] != 7 + (i + 1) / 2 && i != nTracks)
                 {
                     sc[6] = 7 + (i + 1) / 2;
                     byte0 = 6;
@@ -4509,7 +4511,7 @@ public class xtGraphics extends Panel
                         break;
                     float f = 10F;
                     if(flag)
-                        f = 17F;
+                        f = (float)nTracks;
                     sc[j1] = (int)(Math.random() * (double)(24F + 8F * ((float)i / f)));
                     if(sc[j1] >= 16)
                         sc[j1] -= 16;
@@ -4520,7 +4522,7 @@ public class xtGraphics extends Panel
 
                     if(flag)
                         f = 16F;
-                    float f1 = ((float)(15 - sc[j1]) / 15F) * ((float)i / f);
+                    float f1 = ((float)((nCars - 1) - sc[j1]) / (float)(nCars - 1)) * ((float)i / f);
                     if((double)f1 > 0.80000000000000004D)
                         f1 = 0.8F;
                     if(i == 17 && (double)f1 > 0.5D)
@@ -4621,6 +4623,27 @@ public class xtGraphics extends Panel
                     sc[i1] = 12;
             }
         }
+
+        // REALLY DIRTY HACK
+        for(int j = 1; j < 7; j++)
+        	if(sc[j] > nCars - 1)
+        		sc[j] = nCars - 1;
+    }
+    
+    public int irandom(int min, int max) {
+    	return (Math.round((float)Math.random()) * max) + min;
+    }
+    
+    public int irandom(int max) {
+    	return Math.round((float)Math.random()) * max;
+    }
+    
+    public int irandom() {
+    	return Math.round((float)Math.random());
+    }
+    
+    public boolean fiftyFifty() {
+    	return irandom() > irandom();
     }
     
     public void sortcarsold(int i) //needs new cars
@@ -4633,7 +4656,7 @@ public class xtGraphics extends Panel
                 sc[j] = -1;
             } while(++j < 7);
             boolean aflag[] = new boolean[7];
-            if(unlocked == i && unlocked != 51)
+            if(unlocked == i && unlocked != nTracks)
             {
                 sc[6] = 7 + (i + 1) / 2;
                 int k = 1;
@@ -4927,7 +4950,7 @@ public class xtGraphics extends Panel
             } else
             {
                 byte byte0 = 7;
-                if(sc[0] != 7 + (i + 1) / 2 && i != 51)
+                if(sc[0] != 7 + (i + 1) / 2 && i != nTracks)
                 {
                     sc[6] = 7 + (i + 1) / 2;
                     byte0 = 6;
@@ -4937,7 +4960,7 @@ public class xtGraphics extends Panel
                     for(aflag[k2] = false; !aflag[k2];)
                     {
                         int i3 = unlocked;
-                        if(i3 == 51)
+                        if(i3 == nTracks)
                         {
                             i3 = 16;
                         }
@@ -4953,7 +4976,7 @@ public class xtGraphics extends Panel
                             }
                         } while(++f < 7);
                         f = proba[sc[k2]];
-                        if(i - sc[k2] > 4 && i != 51)
+                        if(i - sc[k2] > 4 && i != nTracks)
                         {
                             f += (float)(i - sc[k2] - 4) / 10F;
                             if((double)f > 0.90000000000000002D)
@@ -5181,7 +5204,7 @@ public class xtGraphics extends Panel
         {
             rd.drawImage(back[pback], 50, 110, null);
         }
-        if(checkpoints.stage != 51)
+        if(checkpoints.stage != nTracks)
         {
             rd.drawImage(next[pnext], 560, 110, null);
         }
@@ -5191,7 +5214,7 @@ public class xtGraphics extends Panel
         if(checkpoints.stage == 17)
         {
             drawcs(80, "Party Stage  >", 255, 255, 255, 3);
-        } else if(checkpoints.stage != 51)
+        } else if(checkpoints.stage != nTracks)
         {
             drawcs(80, "Stage " + checkpoints.stage + "  >", 255, 255, 255, 3);
         } else
@@ -5215,7 +5238,7 @@ public class xtGraphics extends Panel
             stages.stop();
             stages.unloadMod();
         }
-        if(control.right && checkpoints.stage != 51)
+        if(control.right && checkpoints.stage != nTracks)
         {
             if(checkpoints.stage != unlocked)
             {
@@ -5615,10 +5638,10 @@ public class xtGraphics extends Panel
         skid = new AudioClip[3];
         dustskid = new AudioClip[3];
         mutes = false;
-        stracks = new RadicalMod[51];
-        mtracks = new RadicalMidi[51];
-        loadedt = new boolean[51];
-        isMidi = new boolean[51];
+        stracks = new RadicalMod[nTracks];
+        mtracks = new RadicalMidi[nTracks];
+        loadedt = new boolean[nTracks];
+        isMidi = new boolean[nTracks];
         lastload = -1;
         mutem = false;
         sunny = false;
@@ -5693,7 +5716,11 @@ public class xtGraphics extends Panel
 //<<<<<<< HEAD
 //        hello = app.getImage(app.getCodeBase(), path + "hello.gif");
 //=======
-        hello = Toolkit.getDefaultToolkit().getImage(path + "hello.gif");
+        try {
+        	hello = Toolkit.getDefaultToolkit().getImage(path + "hello.gif");
+        } catch (Exception ex) {
+        	hello = app.getImage(app.getCodeBase(), path + "hello.gif");
+        }
 //>>>>>>> nfm2desktop
         mediatracker.addImage(hello, 0);
         try
@@ -5704,7 +5731,11 @@ public class xtGraphics extends Panel
 //<<<<<<< HEAD
 //        sign = app.getImage(app.getCodeBase(), path + "sign.gif");
 //=======
-        sign = Toolkit.getDefaultToolkit().getImage(path + "sign.gif");
+        try {
+        	sign = Toolkit.getDefaultToolkit().getImage(path + "sign.gif");
+        } catch (Exception ex) {
+        	sign = app.getImage(app.getCodeBase(), path + "sign.gif");
+        }
 //>>>>>>> nfm2desktop
         mediatracker.addImage(sign, 0);
         try
@@ -5715,7 +5746,11 @@ public class xtGraphics extends Panel
 //<<<<<<< HEAD
 //        loadbar = app.getImage(app.getCodeBase(), path + "loadbar.gif");
 //=======
-        loadbar = Toolkit.getDefaultToolkit().getImage(path + "loadbar.gif");
+        try {
+        	loadbar = Toolkit.getDefaultToolkit().getImage(path + "loadbar.gif");
+        } catch (Exception ex) {
+        	loadbar = app.getImage(app.getCodeBase(), path + "loadbar.gif");
+        }
 //>>>>>>> nfm2desktop
         mediatracker.addImage(loadbar, 0);
         try
@@ -5728,7 +5763,7 @@ public class xtGraphics extends Panel
         {
             loadedt[i] = false;
             isMidi[i] = false;
-        } while(++i < 51);
+        } while(++i < nTracks);
     }
 
     public void maini(Control control)
@@ -6573,7 +6608,7 @@ public class xtGraphics extends Panel
             {
                 rd.drawImage(back[pback], 30, 250, null);
             }
-            if(sc[0] != 50) //minus one
+            if(sc[0] != nCars - 1) //minus one
             {
                 rd.drawImage(next[pnext], 580, 250, null);
             }
@@ -6728,7 +6763,7 @@ public class xtGraphics extends Panel
         if(control.right)
         {
             control.right = false;
-            if(sc[0] < 51 - 1) //number of cars
+            if(sc[0] < nCars - 1) //number of cars
             	sc[0]++;
         }
         if(control.left)
@@ -7039,7 +7074,7 @@ public class xtGraphics extends Panel
     {
         while(runtyp != 0) 
         {
-            if(runtyp >= 1 && runtyp <= 51)
+            if(runtyp >= 1 && runtyp <= nTracks)
             {
                 hipnoload(runtyp, false);
             }
