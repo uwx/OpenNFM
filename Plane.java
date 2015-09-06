@@ -45,6 +45,7 @@ public class Plane
     int pa;
     int pb;
     int flx;
+    boolean rainbow;
 
     public void loadprojf()
     {
@@ -72,11 +73,12 @@ public class Plane
         }
         return ((j - m.focus_point) * (m.cy - i)) / j + i;
     }
-
+    
     public Plane(Medium medium, Trackers trackers, int ai[], int ai1[], int ai2[], int i, int ai3[], 
             boolean flag, int j, int k, int l, int i1, int j1, int k1, 
-            int l1, boolean flag1, int i2)
+            int l1, boolean flag1, int i2, boolean rainbow)
     {
+    	this.rainbow = rainbow;
         c = new int[3];
         oc = new int[3];
         hsb = new float[3];
@@ -201,7 +203,192 @@ public class Plane
         disline = k1;
         bfase = l1;
         glass = flag;
-        Color.RGBtoHSB(c[0], c[1], c[2], hsb);
+        if (rainbow) Color.RGBtoHSB((int)Math.floor(Math.random()*255), (int)Math.floor(Math.random()*255), (int)Math.floor(Math.random()*255), hsb);
+        else Color.RGBtoHSB(c[0], c[1], c[2], hsb);
+        if(!nocol && !glass)
+        {
+            if(bfase > 20 && (double)hsb[1] > 0.25D)
+            {
+                hsb[1] = 0.25F;
+            }
+            if(bfase > 25 && (double)hsb[2] > 0.69999999999999996D)
+            {
+                hsb[2] = 0.7F;
+            }
+            if(bfase > 30 && (double)hsb[1] > 0.14999999999999999D)
+            {
+                hsb[1] = 0.15F;
+            }
+            if(bfase > 35 && (double)hsb[2] > 0.59999999999999998D)
+            {
+                hsb[2] = 0.6F;
+            }
+            if(bfase > 40)
+            {
+                hsb[0] = 0.075F;
+            }
+            if(bfase > 50 && (double)hsb[2] > 0.5D)
+            {
+                hsb[2] = 0.5F;
+            }
+            if(bfase > 60)
+            {
+                hsb[0] = 0.05F;
+            }
+        }
+        road = flag1;
+        light = i2;
+        gr = j;
+        fs = k;
+        wx = l;
+        wy = i1;
+        wz = j1;
+        j3 = 0;
+        do
+        {
+            int l3 = 0;
+            do
+            {
+                if(l3 != j3)
+                {
+                    deltaf *= (float)(Math.sqrt((ox[l3] - ox[j3]) * (ox[l3] - ox[j3]) + (oy[l3] - oy[j3]) * (oy[l3] - oy[j3]) + (oz[l3] - oz[j3]) * (oz[l3] - oz[j3])) / 100D);
+                }
+            } while(++l3 < 3);
+        } while(++j3 < 3);
+        deltaf = deltaf / 3F;
+    }
+
+    public Plane(Medium medium, Trackers trackers, int ai[], int ai1[], int ai2[], int i, int ai3[], 
+            boolean flag, int j, int k, int l, int i1, int j1, int k1, 
+            int l1, boolean flag1, int i2)
+    {
+    	rainbow = false;
+        c = new int[3];
+        oc = new int[3];
+        hsb = new float[3];
+        glass = false;
+        gr = 0;
+        fs = 0;
+        disline = 7;
+        road = false;
+        light = 0;
+        master = 0;
+        wx = 0;
+        wz = 0;
+        wy = 0;
+        deltaf = 1.0F;
+        projf = 1.0F;
+        av = 0;
+        bfase = 0;
+        nocol = false;
+        chip = 0;
+        ctmag = 0.0F;
+        cxz = 0;
+        cxy = 0;
+        czy = 0;
+        cox = new int[3];
+        coz = new int[3];
+        coy = new int[3];
+        dx = 0;
+        dy = 0;
+        dz = 0;
+        vx = 0;
+        vy = 0;
+        vz = 0;
+        embos = 0;
+        typ = 0;
+        pa = 0;
+        pb = 0;
+        flx = 0;
+        m = medium;
+        t = trackers;
+        n = i;
+        ox = new int[n];
+        oz = new int[n];
+        oy = new int[n];
+        for(int j2 = 0; j2 < n; j2++)
+        {
+            ox[j2] = ai[j2];
+            oy[j2] = ai2[j2];
+            oz[j2] = ai1[j2];
+        }
+
+        int k2 = Math.abs(ox[2] - ox[1]);
+        int l2 = Math.abs(oy[2] - oy[1]);
+        int i3 = Math.abs(oz[2] - oz[1]);
+        if(l2 <= k2 && l2 <= i3)
+        {
+            typ = 2;
+        }
+        if(k2 <= l2 && k2 <= i3)
+        {
+            typ = 1;
+        }
+        if(i3 <= k2 && i3 <= l2)
+        {
+            typ = 3;
+        }
+        int j3 = 0;
+        do
+        {
+            oc[j3] = ai3[j3];
+        } while(++j3 < 3);
+        if(j == -15)
+        {
+            j3 = (int)(185D + Math.random() * 30D);
+            ai3[0] = (217 + j3) / 2;
+            ai3[1] = (189 + j3) / 2;
+            ai3[2] = (132 + j3) / 2;
+            for(int k3 = 0; k3 < n; k3++)
+            {
+                if(Math.random() > Math.random())
+                {
+                    ox[k3] += (int)(8D * Math.random() - 4D);
+                }
+                if(Math.random() > Math.random())
+                {
+                    oy[k3] += (int)(8D * Math.random() - 4D);
+                }
+                if(Math.random() > Math.random())
+                {
+                    oz[k3] += (int)(8D * Math.random() - 4D);
+                }
+            }
+
+        }
+        if(ai3[0] == ai3[1] && ai3[1] == ai3[2])
+        {
+            nocol = true;
+        }
+        if(!flag)
+        {
+            j3 = 0;
+            do
+            {
+                c[j3] = (int)((float)ai3[j3] + (float)ai3[j3] * ((float)m.snap[j3] / 100F));
+                if(c[j3] > 255)
+                {
+                    c[j3] = 255;
+                }
+                if(c[j3] < 0)
+                {
+                    c[j3] = 0;
+                }
+            } while(++j3 < 3);
+        }
+        if(flag)
+        {
+            j3 = 0;
+            do
+            {
+                c[j3] = (m.csky[j3] * m.fade[0] * 2 + m.cfade[j3] * 3000) / (m.fade[0] * 2 + 3000);
+            } while(++j3 < 3);
+        }
+        disline = k1;
+        bfase = l1;
+        glass = flag;
+        if (rainbow) Color.RGBtoHSB((int)Math.floor(Math.random()*255), (int)Math.floor(Math.random()*255), (int)Math.floor(Math.random()*255), hsb);
+        else Color.RGBtoHSB(c[0], c[1], c[2], hsb);
         if(!nocol && !glass)
         {
             if(bfase > 20 && (double)hsb[1] > 0.25D)
@@ -314,7 +501,8 @@ public class Plane
                     ai5[i4] = ys(ai2[i4], ai1[i4]);
                 }
 
-                rd.setColor(new Color(230, 230, 230));
+                if (rainbow) rd.setColor(new Color((int)Math.floor(Math.random()*255), (int)Math.floor(Math.random()*255), (int)Math.floor(Math.random()*255)));
+                else rd.setColor(new Color(230, 230, 230));
                 rd.fillPolygon(ai3, ai5, n);
             }
             float f = 1.0F;
@@ -459,7 +647,8 @@ public class Plane
                 {
                     k9 = 0;
                 }
-                rd.setColor(new Color(k8, i9, k9));
+                if (rainbow) rd.setColor(new Color((int)Math.floor(Math.random()*255), (int)Math.floor(Math.random()*255), (int)Math.floor(Math.random()*255)));
+                else rd.setColor(new Color(k8, i9, k9));
                 rd.fillPolygon(ai12, ai13, 3);
                 ai[0] = ox[pa] + i;
                 ai2[0] = oy[pa] + j;
@@ -532,7 +721,8 @@ public class Plane
                 {
                     k9 = 0;
                 }
-                rd.setColor(new Color(k8, i9, k9));
+                if (rainbow) rd.setColor(new Color((int)Math.floor(Math.random()*255), (int)Math.floor(Math.random()*255), (int)Math.floor(Math.random()*255)));
+                else rd.setColor(new Color(k8, i9, k9));
                 rd.fillPolygon(ai12, ai13, 3);
             }
             for(int k3 = 0; k3 < n; k3++)
@@ -672,19 +862,27 @@ public class Plane
             {
                 if(l5 == 0)
                 {
-                    rd.setColor((new Color(c[0], c[1], c[2])).darker());
+                    if (rainbow) rd.setColor(new Color((int)Math.floor(Math.random()*255), (int)Math.floor(Math.random()*255), (int)Math.floor(Math.random()*255)));
+                    else if (glass) rd.setColor(new Color(c[0], c[1], c[2], 200).darker());
+                    else rd.setColor((new Color(c[0], c[1], c[2])).darker());
                 }
                 if(l5 == 1)
                 {
-                    rd.setColor(new Color(c[0], c[1], c[2]));
+                	if (rainbow) rd.setColor(new Color((int)Math.floor(Math.random()*255), (int)Math.floor(Math.random()*255), (int)Math.floor(Math.random()*255)));
+                    else if (glass) rd.setColor(new Color(c[0], c[1], c[2], 200));
+                    else rd.setColor(new Color(c[0], c[1], c[2]));
                 }
                 if(l5 == 2)
                 {
-                    rd.setColor((new Color(c[0], c[1], c[2])).brighter());
+                	if (rainbow) rd.setColor(new Color((int)Math.floor(Math.random()*255), (int)Math.floor(Math.random()*255), (int)Math.floor(Math.random()*255)));
+                    else if (glass) rd.setColor(new Color(c[0], c[1], c[2], 200).brighter());
+                    else rd.setColor((new Color(c[0], c[1], c[2])).brighter());
                 }
             } else
             {
-                rd.setColor(Color.getHSBColor(hsb[0], hsb[1], hsb[2]));
+            	if (rainbow) rd.setColor(new Color((int)Math.floor(Math.random()*255), (int)Math.floor(Math.random()*255), (int)Math.floor(Math.random()*255)));
+                else if (glass) rd.setColor(new Color(c[0], c[1], c[2], 200));
+                else rd.setColor(Color.getHSBColor(hsb[0], hsb[1], hsb[2]));
             }
             rd.fillPolygon(ai10, ai11, 3);
             chip++;
@@ -1098,7 +1296,7 @@ public class Plane
             Color color;
             if(!m.trk)
             {
-                color = Color.getHSBColor(hsb[0], hsb[1], hsb[2] * f1);
+                 color = Color.getHSBColor(hsb[0], hsb[1], hsb[2] * f1);
             } else
             {
                 float af[] = new float[3];
@@ -1151,7 +1349,9 @@ public class Plane
                     }
                 } while(++l15 < 8);
             }
-            rd.setColor(new Color(l11, j13, k14));
+            if (rainbow) rd.setColor(new Color((int)Math.floor(Math.random()*255), (int)Math.floor(Math.random()*255), (int)Math.floor(Math.random()*255)));
+            else rd.setColor(new Color(l11, j13, k14));
+            
             rd.fillPolygon(ai14, ai15, n);
             if(m.trk && gr == -10)
             {
@@ -1194,13 +1394,15 @@ public class Plane
                             k14 = 0;
                         }
                     }
-                    rd.setColor(new Color(l11, j13, k14));
+                    if (rainbow) rd.setColor(new Color((int)Math.floor(Math.random()*255), (int)Math.floor(Math.random()*255), (int)Math.floor(Math.random()*255)));
+                    else rd.setColor(new Color(l11, j13, k14));
                     rd.drawPolygon(ai14, ai15, n);
                 } else
                 {
                     if(flx == 2)
                     {
-                        rd.setColor(new Color(0, 0, 0));
+                        if (rainbow) rd.setColor(new Color((int)Math.floor(Math.random()*255), (int)Math.floor(Math.random()*255), (int)Math.floor(Math.random()*255)));
+                        else rd.setColor(new Color(0, 0, 0));
                         rd.drawPolygon(ai14, ai15, n);
                     }
                     if(flx == 1)
@@ -1224,7 +1426,8 @@ public class Plane
                         {
                             k14 = 0;
                         }
-                        rd.setColor(new Color(l11, j13, k14));
+                        if (rainbow) rd.setColor(new Color((int)Math.floor(Math.random()*255), (int)Math.floor(Math.random()*255), (int)Math.floor(Math.random()*255)));
+                        else rd.setColor(new Color(l11, j13, k14));
                         rd.drawPolygon(ai14, ai15, n);
                         flx = 2;
                     }
@@ -1249,7 +1452,8 @@ public class Plane
                         {
                             k14 = 0;
                         }
-                        rd.setColor(new Color(l11, j13, k14));
+                        if (rainbow) rd.setColor(new Color((int)Math.floor(Math.random()*255), (int)Math.floor(Math.random()*255), (int)Math.floor(Math.random()*255)));
+                        else rd.setColor(new Color(l11, j13, k14));
                         rd.drawPolygon(ai14, ai15, n);
                         flx = 2;
                     }
@@ -1269,7 +1473,8 @@ public class Plane
                 {
                     k14 = 0;
                 }
-                rd.setColor(new Color(l11, j13, k14));
+                if (rainbow) rd.setColor(new Color((int)Math.floor(Math.random()*255), (int)Math.floor(Math.random()*255), (int)Math.floor(Math.random()*255)));
+                else rd.setColor(new Color(l11, j13, k14));
                 rd.drawPolygon(ai14, ai15, n);
             }
             if(gr == -10)
@@ -1328,7 +1533,8 @@ public class Plane
                             l14 = (l14 * m.fogd + m.cfade[2]) / (m.fogd + 1);
                         }
                     } while(++i16 < 8);
-                    rd.setColor(new Color(i12, k13, l14));
+                    if (rainbow) rd.setColor(new Color((int)Math.floor(Math.random()*255), (int)Math.floor(Math.random()*255), (int)Math.floor(Math.random()*255)));
+                    else rd.setColor(new Color(l11, j13, k14));
                     rd.drawPolygon(ai14, ai15, n);
                 } else
                 if(m.cpflik && m.hit == 5000)
@@ -1360,7 +1566,8 @@ public class Plane
                     {
                         l13 = 255;
                     }
-                    rd.setColor(new Color(j12, l13, i15));
+                    if (rainbow) rd.setColor(new Color((int)Math.floor(Math.random()*255), (int)Math.floor(Math.random()*255), (int)Math.floor(Math.random()*255)));
+                    else rd.setColor(new Color(j12, l13, i15));
                     rd.drawPolygon(ai14, ai15, n);
                 }
             }
@@ -1393,7 +1600,8 @@ public class Plane
                         j15 = (j15 * m.fogd + m.cfade[2]) / (m.fogd + 1);
                     }
                 } while(++j16 < 8);
-                rd.setColor(new Color(k12, i14, j15));
+                if (rainbow) rd.setColor(new Color((int)Math.floor(Math.random()*255), (int)Math.floor(Math.random()*255), (int)Math.floor(Math.random()*255)));
+                else rd.setColor(new Color(k12, i14, j15));
                 rd.drawPolygon(ai14, ai15, n);
             }
         }
@@ -1600,7 +1808,8 @@ public class Plane
                     k2 = (k2 * m.fogd + m.cfade[2]) / (m.fogd + 1);
                 }
             } while(++k4 < 8);
-            rd.setColor(new Color(i2, j2, k2));
+            if (rainbow) rd.setColor(new Color((int)Math.floor(Math.random()*255), (int)Math.floor(Math.random()*255), (int)Math.floor(Math.random()*255)));
+            else rd.setColor(new Color(i2, j2, k2));
             rd.fillPolygon(ai3, ai4, n);
         }
     }
