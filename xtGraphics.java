@@ -1622,7 +1622,7 @@ public class xtGraphics extends Panel
                     if(loadedt[i - 1])
                     {
                     	if(isMidi[i - 1]) {
-                    		mtracks[i - 1].stopMidi();
+                    		mtracks[i - 1].setPaused(true);
                     	} else {
                     		stracks[i - 1].stop();
                     	}
@@ -1633,7 +1633,7 @@ public class xtGraphics extends Panel
                 	System.out.println("We've reached an unmute check...");
                 	if(isMidi[i - 1]) {
                 		System.out.println("Unmute check > play midi...");
-                		mtracks[i - 1].resumeMidi();
+                		mtracks[i - 1].setPaused(false);
                 	} else {
                 		System.out.println("Unmute check > play mod...");
                 		stracks[i - 1].resume();
@@ -1961,22 +1961,28 @@ public class xtGraphics extends Panel
         {
         	System.out.println("Loading music...");
         	File f = new File("music/stage" + i + ".mid");
+        	File f2 = new File("music/stage" + i + ".mp3");
+        	File f3 = new File("music/stage" + i + ".ogg");
         	// this also serves as a check so radicalmidi doesn't throw an error
         	if (f.exists()) { 
         		System.out.println("Initializing midi...");
         		isMidi[i - 1] = true;
         		mtracks[i - 1] = new RadicalMidi("music/stage" + i + ".mid");
         		System.out.println("Loading midi...");
-            	mtracks[i - 1].loadMidi();
+            	mtracks[i - 1].load();
             	loadedt[i - 1] = true;
-            	//mtracks[i - 1].playMidi();
-        		// also applicable: 
-        		//mtracks[i - 1].playMidi(0.5D);
-        		// would play it at half volume
-        		//mtracks[i - 1].playMidi(0.5D, 1);
-        		// would play it 1 time 
-        		// (or 2? i don't know and don't care)
-        		// and at half volume
+        	} else if (f2.exists()) {
+        		System.out.println("Initializing mp3...");
+        		isMidi[i - 1] = true;
+        		mtracks[i - 1] = new RadicalMidi("music/stage" + i + ".mp3");
+        		System.out.println("Loading mp3...");
+            	mtracks[i - 1].load();
+            	loadedt[i - 1] = true;
+        	} else if (f3.exists()) {
+        		System.out.println("Initializing/loading ogg...");
+        		isMidi[i - 1] = true;
+        		mtracks[i - 1] = new RadicalMidi("music/stage" + i + ".ogg");
+            	loadedt[i - 1] = true;
         	} else {
         		System.out.println("Initializing mod...");
         		isMidi[i - 1] = false;
@@ -2077,7 +2083,7 @@ public class xtGraphics extends Panel
             	if (isMidi[i - 1]) {
             		// why can't we ever reach this??? dragshot help pls
             		System.out.println("Playing midi...");
-            		mtracks[i - 1].playMidi();
+            		mtracks[i - 1].play();
             	} else {
             		// but this is totes fine!!!
             		System.out.println("Playing mod...");
@@ -2525,7 +2531,7 @@ public class xtGraphics extends Panel
                 	System.out.println("We've reached an unmute check...");
                 	if(isMidi[i - 1]) {
                 		System.out.println("Unmute check > play midi...");
-                		mtracks[i - 1].resumeMidi();
+                		mtracks[i - 1].setPaused(false);
                 	} else {
                 		System.out.println("Unmute check > play mod...");
                 		stracks[i - 1].resume();
@@ -2542,7 +2548,7 @@ public class xtGraphics extends Panel
                     	System.out.println("We've reached an unmute check...");
                     	if(isMidi[i - 1]) {
                     		System.out.println("Unmute check > play midi...");
-                    		mtracks[i - 1].resumeMidi();
+                    		mtracks[i - 1].setPaused(false);
                     	} else {
                     		System.out.println("Unmute check > play mod...");
                     		stracks[i - 1].resume();
@@ -2559,7 +2565,7 @@ public class xtGraphics extends Panel
                 if(loadedt[i - 1])
                 {
                 	if(isMidi[i - 1]) {
-                		mtracks[i - 1].stopMidi();
+                		mtracks[i - 1].setPaused(true); // or stop?
                 	} else {
                 		stracks[i - 1].stop();
                 	}
@@ -2572,7 +2578,7 @@ public class xtGraphics extends Panel
                 if(loadedt[i - 1])
                 {
                 	if(isMidi[i - 1]) {
-                		mtracks[i - 1].stopMidi();
+                		mtracks[i - 1].setPaused(true); // or stop?
                 	} else {
                 		stracks[i - 1].stop();
                 	}
@@ -2602,10 +2608,16 @@ public class xtGraphics extends Panel
 
     public void credits(Control control)
     {
-    	if(flipo == 0)
+    	/*
+    	 * TODO: make settings using java swing shit
+    	 * (probably unnecessary)
+    	 * i'm just gonna end up
+    	 * using the toolbar stuff
+    	 * 
+		if(flipo == 0)
     	{
     		settings(control);
-    	}
+    	}*/
         if(flipo == 1)
         {
             powerup.play();
@@ -3302,7 +3314,7 @@ public class xtGraphics extends Panel
                 if(loadedt[checkpoints.stage - 1])
                 {
                 	if(isMidi[checkpoints.stage - 1]) {
-                		mtracks[checkpoints.stage - 1].stopMidi();
+                		mtracks[checkpoints.stage - 1].setPaused(true);
                 	} else {
                 		stracks[checkpoints.stage - 1].stop();
                 	}
@@ -4413,7 +4425,7 @@ public class xtGraphics extends Panel
             if(loadedt[checkpoints.stage - 1])
             {
             	if(isMidi[checkpoints.stage - 1]) {
-            		mtracks[checkpoints.stage - 1].stopMidi();
+            		mtracks[checkpoints.stage - 1].setPaused(true);
             	} else {
             		stracks[checkpoints.stage - 1].stop();
             	}
@@ -5177,6 +5189,12 @@ public class xtGraphics extends Panel
 
     public void stageselect(CheckPoints checkpoints, Control control)
     {
+    	for (int i = 0; i < nTracks; i++) {
+    		mtracks[i] = null;
+    		stracks[i] = null;
+    		isMidi[i] = false;
+    		loadedt[i] = false;
+    	}
         stages.play();
         rd.drawImage(br, 0, 0, null);
         rd.drawImage(select, 273, 45, null);
@@ -5751,7 +5769,7 @@ public class xtGraphics extends Panel
         if(lastload >= 0 && loadedt[lastload])
         {
             if (isMidi[lastload]) {
-            	mtracks[lastload].unloadMidi();
+            	mtracks[lastload].unload();
             } else {
             	stracks[lastload].unloadMod();
         	}
@@ -6491,7 +6509,7 @@ public class xtGraphics extends Panel
             if(loadedt[i])
             {
             	if (isMidi[i]) {
-            		mtracks[i].unloadMidi();
+            		mtracks[i].unload();
             	} else {
             		stracks[i].unloadAll();
                 	stracks[i] = null;
