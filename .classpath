@@ -6,5 +6,7 @@
 	<classpathentry kind="lib" path="libraries/plugin.jar"/>
 	<classpathentry kind="lib" path="libraries/easyogg/easyogg.jar"/>
 	<classpathentry kind="lib" path="libraries/jl1.0.1.jar"/>
+	<classpathentry kind="lib" path="libraries/easyogg/jogg-0.0.7.jar"/>
+	<classpathentry kind="lib" path="libraries/easyogg/jorbis-0.0.15.jar"/>
 	<classpathentry kind="output" path=""/>
 </classpath>

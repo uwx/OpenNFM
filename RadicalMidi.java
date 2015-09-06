@@ -3,7 +3,6 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.InputStream;
 
 import javax.sound.midi.MidiChannel;
 import javax.sound.midi.MidiSystem;
@@ -32,6 +31,16 @@ public class RadicalMidi {
 	PausablePlayer player;
 	String filePath;
 
+	/**
+	 * Sets up the RadicalMidi for playback.
+	 * Use load() to load the file;
+	 * Use play() to play (and loop) the file;
+	 * use setPaused(true/false) to pause/resume the file;
+	 * Use unload() to unload the file, then set RadicalMidi to null;
+	 * Use playMidi() or playMidi(int gain) or playMidi(int gain, int loops) to manuall play a midi file.
+	 * 
+	 * @param fn the file name of the file to load.
+	 */
 	public RadicalMidi(String fn) {
 		loaded = false;
 		playing = false;
@@ -84,34 +93,55 @@ public class RadicalMidi {
 		}
 	}
 
+	/**
+	 * Sets up the midi loader.
+	 */
 	public void load() {
 		if (!isOgg && !isMp3) loadMidi();
 	}
 
 	public void play() {
 		if (isMp3) playMp3();
-		else if (isOgg) playOgg();
+		else if (isOgg) ogg.loop();
 		else playMidi();
 	}
 
+	@Deprecated
+	/**
+	 * Pauses the midi/mp3/ogg playback.
+	 * Deprecated: Use setPaused instead.
+	 */
 	public void resume() {
-		if (isMp3) resumeMp3();
-		else if (isOgg) resumeOgg();
+		if (isMp3) player.resume();
+		else if (isOgg) ogg.resume();
 		else resumeMidi();
 	}
 
+	@Deprecated
+	/**
+	 * Pauses the midi/mp3/ogg playback.
+	 * Deprecated: Use setPaused instead.
+	 */
 	public void stop() {
-		if (isMp3) stopMp3();
-		else if (isOgg) stopOgg();
+		if (isMp3) player.pause();
+		else if (isOgg) ogg.pause();
 		else stopMidi();
 	}
 
+	/**
+	 * Unloads the midi and forcefully stops playback.
+	 */
 	public void unload() {
-		if (isMp3) closeMp3();
+		if (isMp3) player.close();
 		else if (isOgg) unloadOgg();
 		else unloadMidi();
 	}
 
+	/**
+	 * Loads the midi file.
+	 * Should never be used directly.
+	 * Use load() instead.
+	 */
 	public void loadMidi() {
 		try {
 			// create a stream from a file
@@ -124,7 +154,15 @@ public class RadicalMidi {
 		}
 	}
 
-	public void resumeMidi(double gain, int loops) {
+	@Deprecated
+	/**
+	 * Resumes playback of the midi.
+	 * 
+	 * @param	gain	the sound volume in percent
+	 * @param	loops	amount of times to loop the midi
+	 * 
+	 */
+	public void resumeMidi(int gain, int loops) {
 		try {
 			fi = new FileInputStream(new File(s));
 			is = new BufferedInputStream(fi);
@@ -138,7 +176,14 @@ public class RadicalMidi {
 		playMidi(gain, loops);
 	}
 
-	public void resumeMidi(double gain) {
+	@Deprecated
+	/**
+	 * Resumes playback of the midi.
+	 * 
+	 * @param	gain	the sound volume in percent
+	 * 
+	 */
+	public void resumeMidi(int gain) {
 		try {
 			fi = new FileInputStream(new File(s));
 			is = new BufferedInputStream(fi);
@@ -152,6 +197,10 @@ public class RadicalMidi {
 		playMidi(gain);
 	}
 
+	@Deprecated
+	/**
+	 * Resumes playback of the midi.
+	 */
 	public void resumeMidi() {
 		try {
 			fi = new FileInputStream(new File(s));
@@ -166,7 +215,14 @@ public class RadicalMidi {
 		playMidi();
 	}
 
-	public void playMidi(double gain, int loops) {
+	/**
+	 * Begins playing the midi.
+	 * 
+	 * @param	gain	the sound volume in percent
+	 * @param	loops	amount of times to loop the midi
+	 * 
+	 */
+	public void playMidi(int gain, int loops) {
 
 		try {
 			// Sets the current sequence on which the sequencer operates.
@@ -181,7 +237,7 @@ public class RadicalMidi {
 
 				// gain is a value between 0 and 1 (loudest)
 				for (int i = 0; i < channels.length; i++) {
-					channels[i].controlChange(7, (int)(gain * 127.0));
+					channels[i].controlChange(7, (int)((float)gain * 1.27));
 				}
 			}
 
@@ -202,7 +258,13 @@ public class RadicalMidi {
 		}
 	}
 
-	public void playMidi(double gain) {
+	/**
+	 * Begins playing the midi.
+	 * 
+	 * @param	gain	the sound volume in percent
+	 * 
+	 */
+	public void playMidi(int gain) {
 
 		try {
 			// Sets the current sequence on which the sequencer operates.
@@ -218,7 +280,7 @@ public class RadicalMidi {
 
 				// gain is a value between 0 and 1 (loudest)
 				for (int i = 0; i < channels.length; i++) {
-					channels[i].controlChange(7, (int) (gain * 127.0));
+					channels[i].controlChange(7, (int) ((float)gain * 1.27));
 				}
 			}
 
@@ -239,7 +301,10 @@ public class RadicalMidi {
 			ex.printStackTrace();
 		}
 	}
-
+	
+	/**
+	 * Begins playing the midi.
+	 */
 	public void playMidi() {
 
 		try {
@@ -272,7 +337,15 @@ public class RadicalMidi {
 	 * Sets the paused state. Music may not immediately pause.
 	 */
 	public void setPaused(boolean paused) {
-		if (this.paused != paused && sequencer != null && sequencer.isOpen()) {
+		if (isOgg || isMp3) {
+			if (paused) {
+				if (isMp3) player.pause();
+				else if (isOgg) ogg.pause();
+			} else {
+				if (isMp3) player.resume();
+				else if (isOgg) ogg.resume();
+			}
+		} else if (this.paused != paused && sequencer != null && sequencer.isOpen()) {
 			this.paused = paused;
 			if (paused) {
 				sequencer.stop();
@@ -289,6 +362,9 @@ public class RadicalMidi {
 		return paused;
 	}
 
+	/**
+	 * Stops the midi sequencer.
+	 */
 	public void stopMidi() {
 		System.out.println("Stopping Midi file...");
 		try {
@@ -299,7 +375,10 @@ public class RadicalMidi {
 			ex.printStackTrace();
 		}
 	}
-
+	
+	/**
+	 * Closes the midi sequencer.
+	 */
 	public void unloadMidi() {
 		try {
 			is.close();
@@ -309,42 +388,24 @@ public class RadicalMidi {
 			ex.printStackTrace();
 		}
 	}
-
-	public void playMp3() { //// http://stackoverflow.com/a/16893482
+	
+	/**
+	 * Begins playing an MP3.
+	 */
+	public void playMp3() {
 		try {
 			player.play();
 		} catch (JavaLayerException e) {
 			e.printStackTrace();
 		}
 	}
-
-	public void resumeMp3() { //// http://stackoverflow.com/a/16893482
-		player.resume();
-	}
-
-	public void stopMp3() { // stops, but notifies the pause thingy
-		player.pause();
-	}
-
-	public void closeMp3() { //stops but doesn't notify shit
-		player.close();
-	}
-
-	public void playOgg() {
-		ogg.loop();
-	}
-
-	public void stopOgg() {
-		ogg.pause();
-	}
-
+	
+	/**
+	 * Closes the OGG player.
+	 */
 	public void unloadOgg() {
 		ogg.stop();
 		ogg.close();
-	}
-
-	public void resumeOgg() {
-		ogg.resume();
 	}
 
 }		

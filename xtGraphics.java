@@ -2573,7 +2573,7 @@ public class xtGraphics extends Panel
                 if(loadedt[i - 1])
                 {
                 	if(isMidi[i - 1]) {
-                		mtracks[i - 1].stop();
+                		mtracks[i - 1].setPaused(true); // or stop?
                 	} else {
                 		stracks[i - 1].stop();
                 	}
@@ -2586,7 +2586,7 @@ public class xtGraphics extends Panel
                 if(loadedt[i - 1])
                 {
                 	if(isMidi[i - 1]) {
-                		mtracks[i - 1].stop();
+                		mtracks[i - 1].setPaused(true); // or stop?
                 	} else {
                 		stracks[i - 1].stop();
                 	}
