@@ -329,8 +329,7 @@ public class GameSparker extends Applet
         int i98_ = 100;
         int i99_ = 0;
         int i100_ = 100;
-        if(!trackers.tracksReady)
-            TracksSetup(trackers);
+        TracksSetup(trackers);
         String s1 = "";
         try
         {
@@ -369,7 +368,7 @@ public class GameSparker extends Applet
                 if(s1.startsWith("fadefrom"))
                 {
                     medium.fadfrom(getint("fadefrom", s1, 0));
-                    medium.origfade = medium.fade[0];
+                    //medium.origfade = medium.fade[0];
                 }
                 if(s1.startsWith("lightson"))
                     medium.lightson = true;
@@ -634,7 +633,7 @@ public class GameSparker extends Applet
             medium.hit = 45000;
             medium.fallen = 0;
             medium.nrnd = 0;
-            medium.trk = true;
+            medium.trk = 1; //
             xtgraphics.fase = 1;
             mouses = 0;
         }
@@ -1109,8 +1108,8 @@ public class GameSparker extends Applet
                         amadness[l12].drive(u[l12], aconto1[l12], trackers, checkpoints);
                     while(++l12 < 7);
                     l12 = 0;
-                    do
-                        record.rec(aconto1[l12], l12, amadness[l12].squash, amadness[l12].lastcolido, amadness[l12].cntdest);
+                    //do
+                    //    record.rec(aconto1[l12], l12, amadness[l12].squash, amadness[l12].lastcolido, amadness[l12].cntdest);
                     while(++l12 < 7);
                     checkpoints.checkstat(amadness, aconto1, record);
                     l12 = 1;
@@ -1152,13 +1151,13 @@ public class GameSparker extends Applet
                     }
                     if(view == 3)
                     {
-                        medium.eagle(aconto1[0], aconto1[0].xz);
+                        //medium.eagle(aconto1[0], aconto1[0].xz);
                         xtgraphics.stat(amadness, checkpoints, u[0], aconto1, false);
                         xtgraphics.stat2(amadness, checkpoints, u[0], false);
                     }
                     if(view == 4)
                     {
-                        medium.gopro(amadness[0], aconto1[0], aconto1[0].xz);
+                        //medium.gopro(amadness[0], aconto1[0], aconto1[0].xz);
                         xtgraphics.stat(amadness, checkpoints, u[0], aconto1, false);
                         xtgraphics.stat2(amadness, checkpoints, u[0], false);
                     }
@@ -1386,7 +1385,7 @@ public class GameSparker extends Applet
                         aconto1[l10] = new ContO(aconto[amadness[l10].cn], 0, 0, 0, 0);
                         record.cntdest[l10] = 0;
                     }
-                    record.playh(aconto1[l10], amadness[l10], l10, k1);
+                    //record.playh(aconto1[l10], amadness[l10], l10, k1);
                 } while(++l10 < 7);
                 if(j2 == 2 && k1 == 299)
                     u[0].enter = true;
@@ -1601,8 +1600,8 @@ public class GameSparker extends Applet
                         if(f1 < 5F)
                             f1 = 5F;
                     }
-                    if(xtgraphics.starcnt == 0)
-                        medium.adjstfade(f1);
+                    //if(xtgraphics.starcnt == 0)
+                        //medium.adjstfade(f1);
                     l3 = l5;
                     j1 = 0;
                 } else

@@ -1,90 +1,26 @@
+// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
+// Jad home page: http://www.kpdus.com/jad.html
+// Decompiler options: packimports(3) 
+// Source File Name:   Plane.java
+
 import java.awt.*;
 
 public class Plane
 {
-    Medium m;
-    Trackers t;
-    int ox[];
-    int oy[];
-    int oz[];
-    int n;
-    int c[];
-    int oc[];
-    float hsb[];
-    boolean glass;
-    int gr;
-    int fs;
-    int disline;
-    boolean road;
-    int light;
-    int master;
-    int wx;
-    int wz;
-    int wy;
-    float deltaf;
-    float projf;
-    int av;
-    int bfase;
-    boolean nocol;
-    int chip;
-    float ctmag;
-    int cxz;
-    int cxy;
-    int czy;
-    int cox[];
-    int coz[];
-    int coy[];
-    int dx;
-    int dy;
-    int dz;
-    int vx;
-    int vy;
-    int vz;
-    int embos;
-    int typ;
-    int pa;
-    int pb;
-    int flx;
 
-    public void loadprojf()
-    {
-        projf = 1.0F;
-        int i = 0;
-        do
-        {
-            int j = 0;
-            do
-            {
-                if(j != i)
-                {
-                    projf *= (float)(Math.sqrt((ox[i] - ox[j]) * (ox[i] - ox[j]) + (oz[i] - oz[j]) * (oz[i] - oz[j])) / 100D);
-                }
-            } while(++j < 3);
-        } while(++i < 3);
-        projf = projf / 3F;
-    }
-
-    public int ys(int i, int j)
-    {
-        if(j < m.cz)
-        {
-            j = m.cz;
-        }
-        return ((j - m.focus_point) * (m.cy - i)) / j + i;
-    }
-
-    public Plane(Medium medium, Trackers trackers, int ai[], int ai1[], int ai2[], int i, int ai3[], 
-            boolean flag, int j, int k, int l, int i1, int j1, int k1, 
-            int l1, boolean flag1, int i2)
+    public Plane(Medium medium, Trackers trackers, int is[], int is_0[], int is_1[], int i, int is_2[], 
+            int i_3, int i_4, int i_5, int i_6, int i_7, int i_8, int i_9, 
+            int i_10, boolean bool, int i_11, boolean bool_12)
     {
         c = new int[3];
         oc = new int[3];
         hsb = new float[3];
-        glass = false;
+        glass = 0;
         gr = 0;
         fs = 0;
         disline = 7;
         road = false;
+        solo = false;
         light = 0;
         master = 0;
         wx = 0;
@@ -114,495 +50,417 @@ public class Plane
         pa = 0;
         pb = 0;
         flx = 0;
+        colnum = 0;
         m = medium;
         t = trackers;
         n = i;
         ox = new int[n];
         oz = new int[n];
         oy = new int[n];
-        for(int j2 = 0; j2 < n; j2++)
+        for(int i_13 = 0; i_13 < n; i_13++)
         {
-            ox[j2] = ai[j2];
-            oy[j2] = ai2[j2];
-            oz[j2] = ai1[j2];
+            ox[i_13] = is[i_13];
+            oy[i_13] = is_1[i_13];
+            oz[i_13] = is_0[i_13];
         }
 
-        int k2 = Math.abs(ox[2] - ox[1]);
-        int l2 = Math.abs(oy[2] - oy[1]);
-        int i3 = Math.abs(oz[2] - oz[1]);
-        if(l2 <= k2 && l2 <= i3)
+        for(int i_14 = 0; i_14 < 3; i_14++)
+            oc[i_14] = is_2[i_14];
+
+        if(i_4 == -15)
         {
-            typ = 2;
-        }
-        if(k2 <= l2 && k2 <= i3)
-        {
-            typ = 1;
-        }
-        if(i3 <= k2 && i3 <= l2)
-        {
-            typ = 3;
-        }
-        int j3 = 0;
-        do
-        {
-            oc[j3] = ai3[j3];
-        } while(++j3 < 3);
-        if(j == -15)
-        {
-            j3 = (int)(185D + Math.random() * 30D);
-            ai3[0] = (217 + j3) / 2;
-            ai3[1] = (189 + j3) / 2;
-            ai3[2] = (132 + j3) / 2;
-            for(int k3 = 0; k3 < n; k3++)
+            if(is_2[0] == 211)
+            {
+                int i_15 = (int)(Math.random() * 40D - 20D);
+                int i_16 = (int)(Math.random() * 40D - 20D);
+                for(int i_17 = 0; i_17 < n; i_17++)
+                {
+                    ox[i_17] += i_15;
+                    oz[i_17] += i_16;
+                }
+
+            }
+            int i_18 = (int)(185D + Math.random() * 20D);
+            is_2[0] = (217 + i_18) / 2;
+            if(is_2[0] == 211)
+                is_2[0] = 210;
+            is_2[1] = (189 + i_18) / 2;
+            is_2[2] = (132 + i_18) / 2;
+            for(int i_19 = 0; i_19 < n; i_19++)
             {
                 if(Math.random() > Math.random())
-                {
-                    ox[k3] += (int)(8D * Math.random() - 4D);
-                }
+                    ox[i_19] += (int)(8D * Math.random() - 4D);
                 if(Math.random() > Math.random())
-                {
-                    oy[k3] += (int)(8D * Math.random() - 4D);
-                }
+                    oy[i_19] += (int)(8D * Math.random() - 4D);
                 if(Math.random() > Math.random())
-                {
-                    oz[k3] += (int)(8D * Math.random() - 4D);
-                }
+                    oz[i_19] += (int)(8D * Math.random() - 4D);
             }
 
         }
-        if(ai3[0] == ai3[1] && ai3[1] == ai3[2])
-        {
+        if(is_2[0] == is_2[1] && is_2[1] == is_2[2])
             nocol = true;
-        }
-        if(!flag)
+        if(i_3 == 0)
         {
-            j3 = 0;
-            do
+            for(int i_20 = 0; i_20 < 3; i_20++)
             {
-                c[j3] = (int)((float)ai3[j3] + (float)ai3[j3] * ((float)m.snap[j3] / 100F));
-                if(c[j3] > 255)
-                {
-                    c[j3] = 255;
-                }
-                if(c[j3] < 0)
-                {
-                    c[j3] = 0;
-                }
-            } while(++j3 < 3);
+                c[i_20] = (int)((float)is_2[i_20] + (float)is_2[i_20] * ((float)m.snap[i_20] / 100F));
+                if(c[i_20] > 255)
+                    c[i_20] = 255;
+                if(c[i_20] < 0)
+                    c[i_20] = 0;
+            }
+
         }
-        if(flag)
+        if(i_3 == 1)
         {
-            j3 = 0;
-            do
-            {
-                c[j3] = (m.csky[j3] * m.fade[0] * 2 + m.cfade[j3] * 3000) / (m.fade[0] * 2 + 3000);
-            } while(++j3 < 3);
+            for(int i_21 = 0; i_21 < 3; i_21++)
+                c[i_21] = (m.csky[i_21] * m.fade[0] * 2 + m.cfade[i_21] * 3000) / (m.fade[0] * 2 + 3000);
+
         }
-        disline = k1;
-        bfase = l1;
-        glass = flag;
+        if(i_3 == 2)
+        {
+            for(int i_22 = 0; i_22 < 3; i_22++)
+                c[i_22] = (int)((float)m.crgrnd[i_22] * 0.925F);
+
+        }
+        if(i_3 == 3)
+        {
+            for(int i_23 = 0; i_23 < 3; i_23++)
+                c[i_23] = is_2[i_23];
+
+        }
+        disline = i_9;
+        bfase = i_10;
+        glass = i_3;
         Color.RGBtoHSB(c[0], c[1], c[2], hsb);
-        if(!nocol && !glass)
+        if(i_3 == 3 && m.trk != 2)
+        {
+            hsb[1] += 0.05F;
+            if(hsb[1] > 1.0F)
+                hsb[1] = 1.0F;
+        }
+        if(!nocol && glass != 1)
         {
             if(bfase > 20 && (double)hsb[1] > 0.25D)
-            {
                 hsb[1] = 0.25F;
-            }
             if(bfase > 25 && (double)hsb[2] > 0.69999999999999996D)
-            {
                 hsb[2] = 0.7F;
-            }
             if(bfase > 30 && (double)hsb[1] > 0.14999999999999999D)
-            {
                 hsb[1] = 0.15F;
-            }
             if(bfase > 35 && (double)hsb[2] > 0.59999999999999998D)
-            {
                 hsb[2] = 0.6F;
-            }
             if(bfase > 40)
-            {
                 hsb[0] = 0.075F;
-            }
             if(bfase > 50 && (double)hsb[2] > 0.5D)
-            {
                 hsb[2] = 0.5F;
-            }
             if(bfase > 60)
-            {
                 hsb[0] = 0.05F;
-            }
         }
-        road = flag1;
-        light = i2;
-        gr = j;
-        fs = k;
-        wx = l;
-        wy = i1;
-        wz = j1;
-        j3 = 0;
-        do
+        road = bool;
+        light = i_11;
+        solo = bool_12;
+        gr = i_4;
+        fs = i_5;
+        wx = i_6;
+        wy = i_7;
+        wz = i_8;
+        deltafntyp();
+    }
+
+    public void deltafntyp()
+    {
+        int i = Math.abs(ox[2] - ox[1]);
+        int i_24 = Math.abs(oy[2] - oy[1]);
+        int i_25 = Math.abs(oz[2] - oz[1]);
+        if(i_24 <= i && i_24 <= i_25)
+            typ = 2;
+        if(i <= i_24 && i <= i_25)
+            typ = 1;
+        if(i_25 <= i && i_25 <= i_24)
+            typ = 3;
+        deltaf = 1.0F;
+        for(int i_26 = 0; i_26 < 3; i_26++)
         {
-            int l3 = 0;
-            do
-            {
-                if(l3 != j3)
-                {
-                    deltaf *= (float)(Math.sqrt((ox[l3] - ox[j3]) * (ox[l3] - ox[j3]) + (oy[l3] - oy[j3]) * (oy[l3] - oy[j3]) + (oz[l3] - oz[j3]) * (oz[l3] - oz[j3])) / 100D);
-                }
-            } while(++l3 < 3);
-        } while(++j3 < 3);
+            for(int i_27 = 0; i_27 < 3; i_27++)
+                if(i_27 != i_26)
+                    deltaf *= (float)(Math.sqrt((ox[i_27] - ox[i_26]) * (ox[i_27] - ox[i_26]) + (oy[i_27] - oy[i_26]) * (oy[i_27] - oy[i_26]) + (oz[i_27] - oz[i_26]) * (oz[i_27] - oz[i_26])) / 100D);
+
+        }
+
         deltaf = deltaf / 3F;
     }
 
-    public void d(Graphics2D rd, int i, int j, int k, int l, int i1, int j1, 
-            int k1, int l1, boolean flag, int i2)
+    public void loadprojf()
     {
-        if(master != 0)
+        projf = 1.0F;
+        for(int i = 0; i < 3; i++)
         {
-            if(av > 1500)
-            {
-                n = 8;
-            } else
-            {
-                n = 16;
-            }
+            for(int i_28 = 0; i_28 < 3; i_28++)
+                if(i_28 != i)
+                    projf *= (float)(Math.sqrt((ox[i] - ox[i_28]) * (ox[i] - ox[i_28]) + (oz[i] - oz[i_28]) * (oz[i] - oz[i_28])) / 100D);
+
         }
-        int ai[] = new int[n];
-        int ai1[] = new int[n];
-        int ai2[] = new int[n];
+
+        projf = projf / 3F;
+    }
+
+    public void d(Graphics2D graphics2d, int i, int i_29, int i_30, int i_31, int i_32, int i_33, 
+            int i_34, int i_35, boolean bool, int i_36)
+    {
+        if(master == 1)
+            if(av > 1500 && !m.crs)
+                n = 12;
+            else
+                n = 20;
+        int is[] = new int[n];
+        int is_37[] = new int[n];
+        int is_38[] = new int[n];
         if(embos == 0)
         {
-            for(int j2 = 0; j2 < n; j2++)
+            for(int i_39 = 0; i_39 < n; i_39++)
             {
-                ai[j2] = ox[j2] + i;
-                ai2[j2] = oy[j2] + j;
-                ai1[j2] = oz[j2] + k;
+                is[i_39] = ox[i_39] + i;
+                is_38[i_39] = oy[i_39] + i_29;
+                is_37[i_39] = oz[i_39] + i_30;
             }
 
-            if((gr == -11 || gr == -13) && m.lastmaf == 1)
+            if((gr == -11 || gr == -12 || gr == -13) && m.lastmaf == 1)
             {
-                for(int k2 = 0; k2 < n; k2++)
+                for(int i_40 = 0; i_40 < n; i_40++)
                 {
-                    ai[k2] = -ox[k2] + i;
-                    ai2[k2] = oy[k2] + j;
-                    ai1[k2] = -oz[k2] + k;
+                    is[i_40] = -ox[i_40] + i;
+                    is_38[i_40] = oy[i_40] + i_29;
+                    is_37[i_40] = -oz[i_40] + i_30;
                 }
 
             }
         } else
         {
-            if(embos <= 11 && (double)m.random() > 0.5D && !glass)
+            if(embos <= 11 && (double)m.random() > 0.5D && glass != 1)
             {
-                for(int l2 = 0; l2 < n; l2++)
+                for(int i_41 = 0; i_41 < n; i_41++)
                 {
-                    ai[l2] = (int)((float)(ox[l2] + i) + (15F - m.random() * 30F));
-                    ai2[l2] = (int)((float)(oy[l2] + j) + (15F - m.random() * 30F));
-                    ai1[l2] = (int)((float)(oz[l2] + k) + (15F - m.random() * 30F));
+                    is[i_41] = (int)((float)(ox[i_41] + i) + (15F - m.random() * 30F));
+                    is_38[i_41] = (int)((float)(oy[i_41] + i_29) + (15F - m.random() * 30F));
+                    is_37[i_41] = (int)((float)(oz[i_41] + i_30) + (15F - m.random() * 30F));
                 }
 
-                rot(ai, ai2, i, j, i1, n);
-                rot(ai2, ai1, j, k, j1, n);
-                rot(ai, ai1, i, k, l, n);
-                rot(ai, ai1, m.cx, m.cz, m.xz, n);
-                rot(ai2, ai1, m.cy, m.cz, m.zy, n);
-                int ai3[] = new int[n];
-                int ai5[] = new int[n];
-                for(int i4 = 0; i4 < n; i4++)
+                rot(is, is_38, i, i_29, i_32, n);
+                rot(is_38, is_37, i_29, i_30, i_33, n);
+                rot(is, is_37, i, i_30, i_31, n);
+                rot(is, is_37, m.cx, m.cz, m.xz, n);
+                rot(is_38, is_37, m.cy, m.cz, m.zy, n);
+                int is_42[] = new int[n];
+                int is_43[] = new int[n];
+                for(int i_44 = 0; i_44 < n; i_44++)
                 {
-                    ai3[i4] = xs(ai[i4], ai1[i4]);
-                    ai5[i4] = ys(ai2[i4], ai1[i4]);
+                    is_42[i_44] = xs(is[i_44], is_37[i_44]);
+                    is_43[i_44] = ys(is_38[i_44], is_37[i_44]);
                 }
 
-                rd.setColor(new Color(230, 230, 230));
-                rd.fillPolygon(ai3, ai5, n);
+                graphics2d.setColor(new Color(230, 230, 230));
+                graphics2d.fillPolygon(is_42, is_43, n);
             }
             float f = 1.0F;
-            if(embos <= 4)/// explode outward a little + white flame
-            {
+            if(embos <= 4)
                 f = 1.0F + m.random() / 5F;
-            }
-            if(embos > 4 && embos <= 7)/// explode outward a little + white flame a bit bigger than previous
-            {
+            if(embos > 4 && embos <= 7)
                 f = 1.0F + m.random() / 4F;
-            }
-            if(embos > 7 && embos <= 9)/////// /// explode outward a little + white flame a bit bigger than previous + polys start to darken
+            if(embos > 7 && embos <= 9)
             {
                 f = 1.0F + m.random() / 3F;
                 if((double)hsb[2] > 0.69999999999999996D)
-                {
                     hsb[2] = 0.7F;
-                }
             }
-            if(embos > 9 && embos <= 10)/////// /// explode outward a little + white flame a bit bigger than previous + maor darkening
+            if(embos > 9 && embos <= 10)
             {
                 f = 1.0F + m.random() / 2.0F;
                 if((double)hsb[2] > 0.59999999999999998D)
-                {
                     hsb[2] = 0.6F;
-                }
             }
-            if(embos > 10 && embos <= 12)/////// /// explode outward a little + white flame a bit bigger than previous + more darkkkk liek coffee beans
+            if(embos > 10 && embos <= 12)
             {
                 f = 1.0F + m.random() / 1.0F;
                 if((double)hsb[2] > 0.5D)
-                {
                     hsb[2] = 0.5F;
-                }
             }
-            if(embos == 12)///////polys explode outward
+            if(embos == 12)
             {
                 chip = 1;
                 ctmag = 2.0F;
                 bfase = -7;
             }
-            if(embos == 13)/////// dark polys
+            if(embos == 13)
             {
                 hsb[1] = 0.2F;
                 hsb[2] = 0.4F;
             }
-            if(embos == 16)//// flames
+            if(embos == 16)
             {
                 pa = (int)(m.random() * (float)n);
-                for(pb = (int)(m.random() * (float)n); pa == pb; pb = (int)(m.random() * (float)n)) { }
+                for(pb = (int)(m.random() * (float)n); pa == pb; pb = (int)(m.random() * (float)n));
             }
-            if(embos >= 16) /////flames as well
+            if(embos >= 16)
             {
-                byte byte0 = 1;
-                byte byte1 = 1;
-                int j4;
-                for(j4 = Math.abs(j1); j4 > 270; j4 -= 360) { }
-                j4 = Math.abs(j4);
-                if(j4 > 90)
+                int i_45 = 1;
+                int i_46 = 1;
+                int i_47;
+                for(i_47 = Math.abs(i_33); i_47 > 270; i_47 -= 360);
+                i_47 = Math.abs(i_47);
+                if(i_47 > 90)
+                    i_45 = -1;
+                int i_48;
+                for(i_48 = Math.abs(i_32); i_48 > 270; i_48 -= 360);
+                i_48 = Math.abs(i_48);
+                if(i_48 > 90)
+                    i_46 = -1;
+                int is_49[] = new int[3];
+                int is_50[] = new int[3];
+                is[0] = ox[pa] + i;
+                is_38[0] = oy[pa] + i_29;
+                is_37[0] = oz[pa] + i_30;
+                is[1] = ox[pb] + i;
+                is_38[1] = oy[pb] + i_29;
+                for(is_37[1] = oz[pb] + i_30; Math.abs(is[0] - is[1]) > 100;)
+                    if(is[1] > is[0])
+                        is[1] -= 30;
+                    else
+                        is[1] += 30;
+
+                while(Math.abs(is_37[0] - is_37[1]) > 100) 
+                    if(is_37[1] > is_37[0])
+                        is_37[1] -= 30;
+                    else
+                        is_37[1] += 30;
+                int i_51 = (int)((double)(Math.abs(is[0] - is[1]) / 3) * (0.5D - (double)m.random()));
+                int i_52 = (int)((double)(Math.abs(is_37[0] - is_37[1]) / 3) * (0.5D - (double)m.random()));
+                is[2] = (is[0] + is[1]) / 2 + i_51;
+                is_37[2] = (is_37[0] + is_37[1]) / 2 + i_52;
+                int i_53 = (int)(((double)(Math.abs(is[0] - is[1]) + Math.abs(is_37[0] - is_37[1])) / 1.5D) * ((double)(m.random() / 2.0F) + 0.5D));
+                is_38[2] = (is_38[0] + is_38[1]) / 2 - i_45 * i_46 * i_53;
+                rot(is, is_38, i, i_29, i_32, 3);
+                rot(is_38, is_37, i_29, i_30, i_33, 3);
+                rot(is, is_37, i, i_30, i_31, 3);
+                rot(is, is_37, m.cx, m.cz, m.xz, 3);
+                rot(is_38, is_37, m.cy, m.cz, m.zy, 3);
+                for(int i_54 = 0; i_54 < 3; i_54++)
                 {
-                    byte0 = -1;
-                }
-                int i5;
-                for(i5 = Math.abs(i1); i5 > 270; i5 -= 360) { }
-                i5 = Math.abs(i5);
-                if(i5 > 90)
-                {
-                    byte1 = -1;
-                }
-                int ai12[] = new int[3];
-                int ai13[] = new int[3];
-                ai[0] = ox[pa] + i;
-                ai2[0] = oy[pa] + j;
-                ai1[0] = oz[pa] + k;
-                ai[1] = ox[pb] + i;
-                ai2[1] = oy[pb] + j;
-                for(ai1[1] = oz[pb] + k; Math.abs(ai[0] - ai[1]) > 100;)
-                {
-                    if(ai[1] > ai[0])
-                    {
-                        ai[1] -= 30;
-                    } else
-                    {
-                        ai[1] += 30;
-                    }
+                    is_49[i_54] = xs(is[i_54], is_37[i_54]);
+                    is_50[i_54] = ys(is_38[i_54], is_37[i_54]);
                 }
 
-                while(Math.abs(ai1[0] - ai1[1]) > 100) 
+                int i_55 = (int)(255F + 255F * ((float)m.snap[0] / 400F));
+                if(i_55 > 255)
+                    i_55 = 255;
+                if(i_55 < 0)
+                    i_55 = 0;
+                int i_56 = (int)(169F + 169F * ((float)m.snap[1] / 300F));
+                if(i_56 > 255)
+                    i_56 = 255;
+                if(i_56 < 0)
+                    i_56 = 0;
+                int i_57 = (int)(89F + 89F * ((float)m.snap[2] / 200F));
+                if(i_57 > 255)
+                    i_57 = 255;
+                if(i_57 < 0)
+                    i_57 = 0;
+                graphics2d.setColor(new Color(i_55, i_56, i_57));
+                graphics2d.fillPolygon(is_49, is_50, 3);
+                is[0] = ox[pa] + i;
+                is_38[0] = oy[pa] + i_29;
+                is_37[0] = oz[pa] + i_30;
+                is[1] = ox[pb] + i;
+                is_38[1] = oy[pb] + i_29;
+                for(is_37[1] = oz[pb] + i_30; Math.abs(is[0] - is[1]) > 100;)
+                    if(is[1] > is[0])
+                        is[1] -= 30;
+                    else
+                        is[1] += 30;
+
+                while(Math.abs(is_37[0] - is_37[1]) > 100) 
+                    if(is_37[1] > is_37[0])
+                        is_37[1] -= 30;
+                    else
+                        is_37[1] += 30;
+                is[2] = (is[0] + is[1]) / 2 + i_51;
+                is_37[2] = (is_37[0] + is_37[1]) / 2 + i_52;
+                i_53 = (int)((double)i_53 * 0.80000000000000004D);
+                is_38[2] = (is_38[0] + is_38[1]) / 2 - i_45 * i_46 * i_53;
+                rot(is, is_38, i, i_29, i_32, 3);
+                rot(is_38, is_37, i_29, i_30, i_33, 3);
+                rot(is, is_37, i, i_30, i_31, 3);
+                rot(is, is_37, m.cx, m.cz, m.xz, 3);
+                rot(is_38, is_37, m.cy, m.cz, m.zy, 3);
+                for(int i_58 = 0; i_58 < 3; i_58++)
                 {
-                    if(ai1[1] > ai1[0])
-                    {
-                        ai1[1] -= 30;
-                    } else
-                    {
-                        ai1[1] += 30;
-                    }
-                }
-                int i7 = (int)((double)(Math.abs(ai[0] - ai[1]) / 3) * (0.5D - (double)m.random()));
-                int l7 = (int)((double)(Math.abs(ai1[0] - ai1[1]) / 3) * (0.5D - (double)m.random()));
-                ai[2] = (ai[0] + ai[1]) / 2 + i7;
-                ai1[2] = (ai1[0] + ai1[1]) / 2 + l7;
-                int i8 = (int)(((double)(Math.abs(ai[0] - ai[1]) + Math.abs(ai1[0] - ai1[1])) / 1.5D) * ((double)(m.random() / 2.0F) + 0.5D));
-                ai2[2] = (ai2[0] + ai2[1]) / 2 - byte0 * byte1 * i8;
-                rot(ai, ai2, i, j, i1, 3);
-                rot(ai2, ai1, j, k, j1, 3);
-                rot(ai, ai1, i, k, l, 3);
-                rot(ai, ai1, m.cx, m.cz, m.xz, 3);
-                rot(ai2, ai1, m.cy, m.cz, m.zy, 3);
-                int k8 = 0;
-                do
-                {
-                    ai12[k8] = xs(ai[k8], ai1[k8]);
-                    ai13[k8] = ys(ai2[k8], ai1[k8]);
-                } while(++k8 < 3);
-                 //Flame color. Outer Flame Red Value
-                k8 = (int)(255F + 255F * ((float)m.snap[0] / 400F));
-                if(k8 > 255)
-                {
-                    k8 = 255;
-                }
-                if(k8 < 0)
-                {
-                    k8 = 0;
-                }
-                //Flame color. Outer Flame Green Value
-                int i9 = (int)(169F + 169F * ((float)m.snap[1] / 300F));
-                if(i9 > 255)
-                {
-                    i9 = 255;
-                }
-                if(i9 < 0)
-                {
-                    i9 = 0;
-                }
-                //Flame color. Outer Flame Blue Value
-                int k9 = (int)(89F + 89F * ((float)m.snap[2] / 200F));
-                if(k9 > 255)
-                {
-                    k9 = 255;
-                }
-                if(k9 < 0)
-                {
-                    k9 = 0;
-                }
-                rd.setColor(new Color(k8, i9, k9));
-                rd.fillPolygon(ai12, ai13, 3);
-                ai[0] = ox[pa] + i;
-                ai2[0] = oy[pa] + j;
-                ai1[0] = oz[pa] + k;
-                ai[1] = ox[pb] + i;
-                ai2[1] = oy[pb] + j;
-                for(ai1[1] = oz[pb] + k; Math.abs(ai[0] - ai[1]) > 100;)
-                {
-                    if(ai[1] > ai[0])
-                    {
-                        ai[1] -= 30;
-                    } else
-                    {
-                        ai[1] += 30;
-                    }
+                    is_49[i_58] = xs(is[i_58], is_37[i_58]);
+                    is_50[i_58] = ys(is_38[i_58], is_37[i_58]);
                 }
 
-                while(Math.abs(ai1[0] - ai1[1]) > 100) 
-                {
-                    if(ai1[1] > ai1[0])
-                    {
-                        ai1[1] -= 30;
-                    } else
-                    {
-                        ai1[1] += 30;
-                    }
-                }
-                ai[2] = (ai[0] + ai[1]) / 2 + i7;
-                ai1[2] = (ai1[0] + ai1[1]) / 2 + l7;
-                i8 = (int)((double)i8 * 0.80000000000000004D);
-                ai2[2] = (ai2[0] + ai2[1]) / 2 - byte0 * byte1 * i8;
-                rot(ai, ai2, i, j, i1, 3);
-                rot(ai2, ai1, j, k, j1, 3);
-                rot(ai, ai1, i, k, l, 3);
-                rot(ai, ai1, m.cx, m.cz, m.xz, 3);
-                rot(ai2, ai1, m.cy, m.cz, m.zy, 3);
-                int i10 = 0;
-                do
-                {
-                    ai12[i10] = xs(ai[i10], ai1[i10]);
-                    ai13[i10] = ys(ai2[i10], ai1[i10]);
-                } while(++i10 < 3);
-                //Flame color. Inner Flame Red Value
-                k8 = (int)(255F + 255F * ((float)m.snap[0] / 400F));
-                if(k8 > 255)
-                {
-                    k8 = 255;
-                }
-                if(k8 < 0)
-                {
-                    k8 = 0;
-                }
-                //Flame color. Inner Flame Green Value
-                i9 = (int)(207F + 207F * ((float)m.snap[1] / 300F));
-                if(i9 > 255)
-                {
-                    i9 = 255;
-                }
-                if(i9 < 0)
-                {
-                    i9 = 0;
-                }
-                //Flame color. Inner Flame Blue Value
-                k9 = (int)(136F + 136F * ((float)m.snap[2] / 200F));
-                if(k9 > 255)
-                {
-                    k9 = 255;
-                }
-                if(k9 < 0)
-                {
-                    k9 = 0;
-                }
-                rd.setColor(new Color(k8, i9, k9));
-                rd.fillPolygon(ai12, ai13, 3);
+                i_55 = (int)(255F + 255F * ((float)m.snap[0] / 400F));
+                if(i_55 > 255)
+                    i_55 = 255;
+                if(i_55 < 0)
+                    i_55 = 0;
+                i_56 = (int)(207F + 207F * ((float)m.snap[1] / 300F));
+                if(i_56 > 255)
+                    i_56 = 255;
+                if(i_56 < 0)
+                    i_56 = 0;
+                i_57 = (int)(136F + 136F * ((float)m.snap[2] / 200F));
+                if(i_57 > 255)
+                    i_57 = 255;
+                if(i_57 < 0)
+                    i_57 = 0;
+                graphics2d.setColor(new Color(i_55, i_56, i_57));
+                graphics2d.fillPolygon(is_49, is_50, 3);
             }
-            for(int k3 = 0; k3 < n; k3++)
+            for(int i_59 = 0; i_59 < n; i_59++)
             {
                 if(typ == 1)
-                {
-                    ai[k3] = (int)((float)ox[k3] * f + (float)i);
-                } else
-                {
-                    ai[k3] = ox[k3] + i;
-                }
+                    is[i_59] = (int)((float)ox[i_59] * f + (float)i);
+                else
+                    is[i_59] = ox[i_59] + i;
                 if(typ == 2)
-                {
-                    ai2[k3] = (int)((float)oy[k3] * f + (float)j);
-                } else
-                {
-                    ai2[k3] = oy[k3] + j;
-                }
+                    is_38[i_59] = (int)((float)oy[i_59] * f + (float)i_29);
+                else
+                    is_38[i_59] = oy[i_59] + i_29;
                 if(typ == 3)
-                {
-                    ai1[k3] = (int)((float)oz[k3] * f + (float)k);
-                } else
-                {
-                    ai1[k3] = oz[k3] + k;
-                }
+                    is_37[i_59] = (int)((float)oz[i_59] * f + (float)i_30);
+                else
+                    is_37[i_59] = oz[i_59] + i_30;
             }
 
             if(embos != 70)
-            {
                 embos++;
-            } else
-            {
+            else
                 embos = 16;
-            }
         }
         if(wz != 0)
-        {
-            rot(ai2, ai1, wy + j, wz + k, l1, n);
-        }
+            rot(is_38, is_37, wy + i_29, wz + i_30, i_35, n);
         if(wx != 0)
-        {
-            rot(ai, ai1, wx + i, wz + k, k1, n);
-        }
+            rot(is, is_37, wx + i, wz + i_30, i_34, n);
         if(chip == 1 && ((double)m.random() > 0.59999999999999998D || bfase == 0))
         {
             chip = 0;
             if(bfase == 0 && nocol)
-            {
                 bfase = 1;
-            }
         }
         if(chip != 0)
         {
             if(chip == 1)
             {
-                cxz = l;
-                cxy = i1;
-                czy = j1;
-                int i3 = (int)(m.random() * (float)n);
-                cox[0] = ox[i3];
-                coz[0] = oz[i3];
-                coy[0] = oy[i3];
+                cxz = i_31;
+                cxy = i_32;
+                czy = i_33;
+                int i_60 = (int)(m.random() * (float)n);
+                cox[0] = ox[i_60];
+                coz[0] = oz[i_60];
+                coy[0] = oy[i_60];
                 if(ctmag > 3F)
-                {
                     ctmag = 3F;
-                }
                 if(ctmag < -3F)
-                {
                     ctmag = -3F;
-                }
                 cox[1] = (int)((float)cox[0] + ctmag * (10F - m.random() * 20F));
                 cox[2] = (int)((float)cox[0] + ctmag * (10F - m.random() * 20F));
                 coy[1] = (int)((float)coy[0] + ctmag * (10F - m.random() * 20F));
@@ -625,988 +483,781 @@ public class Plane
                 }
                 chip = 2;
             }
-            int ai4[] = new int[3];
-            int ai6[] = new int[3];
-            int ai8[] = new int[3];
-            int k4 = 0;
-            do
+            int is_61[] = new int[3];
+            int is_62[] = new int[3];
+            int is_63[] = new int[3];
+            for(int i_64 = 0; i_64 < 3; i_64++)
             {
-                ai4[k4] = cox[k4] + i;
-                ai8[k4] = coy[k4] + j;
-                ai6[k4] = coz[k4] + k;
-            } while(++k4 < 3);
-            rot(ai4, ai8, i, j, cxy, 3);
-            rot(ai8, ai6, j, k, czy, 3);
-            rot(ai4, ai6, i, k, cxz, 3);
-            k4 = 0;
-            do
+                is_61[i_64] = cox[i_64] + i;
+                is_63[i_64] = coy[i_64] + i_29;
+                is_62[i_64] = coz[i_64] + i_30;
+            }
+
+            rot(is_61, is_63, i, i_29, cxy, 3);
+            rot(is_63, is_62, i_29, i_30, czy, 3);
+            rot(is_61, is_62, i, i_30, cxz, 3);
+            for(int i_65 = 0; i_65 < 3; i_65++)
             {
-                ai4[k4] += dx;
-                ai8[k4] += dy;
-                ai6[k4] += dz;
-            } while(++k4 < 3);
+                is_61[i_65] += dx;
+                is_63[i_65] += dy;
+                is_62[i_65] += dz;
+            }
+
             dx += vx;
             dz += vz;
             dy += vy;
             vy += 7;
-            if(ai8[0] > m.ground)
-            {
+            if(is_63[0] > m.ground)
                 chip = 19;
-            }
-            rot(ai4, ai6, m.cx, m.cz, m.xz, 3);
-            rot(ai8, ai6, m.cy, m.cz, m.zy, 3);
-            int ai10[] = new int[3];
-            int ai11[] = new int[3];
-            int l5 = 0;
-            do
+            rot(is_61, is_62, m.cx, m.cz, m.xz, 3);
+            rot(is_63, is_62, m.cy, m.cz, m.zy, 3);
+            int is_66[] = new int[3];
+            int is_67[] = new int[3];
+            for(int i_68 = 0; i_68 < 3; i_68++)
             {
-                ai10[l5] = xs(ai4[l5], ai6[l5]);
-                ai11[l5] = ys(ai8[l5], ai6[l5]);
-                if(ai11[l5] < 45 && m.flex != 0)
-                {
-                    m.flex = 0;
-                }
-            } while(++l5 < 3);
-            l5 = (int)(m.random() * 3F);
+                is_66[i_68] = xs(is_61[i_68], is_62[i_68]);
+                is_67[i_68] = ys(is_63[i_68], is_62[i_68]);
+            }
+
+            int i_69 = (int)(m.random() * 3F);
             if(bfase != -7)
             {
-                if(l5 == 0)
-                {
-                    rd.setColor((new Color(c[0], c[1], c[2])).darker());
-                }
-                if(l5 == 1)
-                {
-                    rd.setColor(new Color(c[0], c[1], c[2]));
-                }
-                if(l5 == 2)
-                {
-                    rd.setColor((new Color(c[0], c[1], c[2])).brighter());
-                }
+                if(i_69 == 0)
+                    graphics2d.setColor((new Color(c[0], c[1], c[2])).darker());
+                if(i_69 == 1)
+                    graphics2d.setColor(new Color(c[0], c[1], c[2]));
+                if(i_69 == 2)
+                    graphics2d.setColor((new Color(c[0], c[1], c[2])).brighter());
             } else
             {
-                rd.setColor(Color.getHSBColor(hsb[0], hsb[1], hsb[2]));
+                graphics2d.setColor(Color.getHSBColor(hsb[0], hsb[1], hsb[2]));
             }
-            rd.fillPolygon(ai10, ai11, 3);
+            graphics2d.fillPolygon(is_66, is_67, 3);
             chip++;
             if(chip == 20)
-            {
                 chip = 0;
-            }
         }
-        rot(ai, ai2, i, j, i1, n);
-        rot(ai2, ai1, j, k, j1, n);
-        rot(ai, ai1, i, k, l, n);
-        if(i1 != 0 || j1 != 0 || l != 0)
+        rot(is, is_38, i, i_29, i_32, n);
+        rot(is_38, is_37, i_29, i_30, i_33, n);
+        rot(is, is_37, i, i_30, i_31, n);
+        if((i_32 != 0 || i_33 != 0 || i_31 != 0) && m.trk != 2)
         {
             projf = 1.0F;
-            int j3 = 0;
-            do
+            for(int i_70 = 0; i_70 < 3; i_70++)
             {
-                int l3 = 0;
-                do
-                {
-                    if(l3 != j3)
-                    {
-                        projf *= (float)(Math.sqrt((ai[j3] - ai[l3]) * (ai[j3] - ai[l3]) + (ai1[j3] - ai1[l3]) * (ai1[j3] - ai1[l3])) / 100D);
-                    }
-                } while(++l3 < 3);
-            } while(++j3 < 3);
+                for(int i_71 = 0; i_71 < 3; i_71++)
+                    if(i_71 != i_70)
+                        projf *= (float)(Math.sqrt((is[i_70] - is[i_71]) * (is[i_70] - is[i_71]) + (is_37[i_70] - is_37[i_71]) * (is_37[i_70] - is_37[i_71])) / 100D);
+
+            }
+
             projf = projf / 3F;
         }
-        rot(ai, ai1, m.cx, m.cz, m.xz, n);
-        boolean flag1 = false;
-        int ai7[] = new int[n];
-        int ai9[] = new int[n];
-        int l4 = 500;
-        for(int j5 = 0; j5 < n; j5++)
+        rot(is, is_37, m.cx, m.cz, m.xz, n);
+        boolean bool_72 = false;
+        int is_73[] = new int[n];
+        int is_74[] = new int[n];
+        int i_75 = 500;
+        for(int i_76 = 0; i_76 < n; i_76++)
         {
-            ai7[j5] = xs(ai[j5], ai1[j5]);
-            ai9[j5] = ys(ai2[j5], ai1[j5]);
+            is_73[i_76] = xs(is[i_76], is_37[i_76]);
+            is_74[i_76] = ys(is_38[i_76], is_37[i_76]);
         }
 
-        int k5 = 0;
-        int i6 = 1;
-        for(int j6 = 0; j6 < n; j6++)
+        int i_77 = 0;
+        int i_78 = 1;
+        for(int i_79 = 0; i_79 < n; i_79++)
         {
-            for(int j7 = 0; j7 < n; j7++)
-            {
-                if(j6 != j7 && Math.abs(ai7[j6] - ai7[j7]) - Math.abs(ai9[j6] - ai9[j7]) < l4)
+            for(int i_80 = i_79; i_80 < n; i_80++)
+                if(i_79 != i_80 && Math.abs(is_73[i_79] - is_73[i_80]) - Math.abs(is_74[i_79] - is_74[i_80]) < i_75)
                 {
-                    i6 = j6;
-                    k5 = j7;
-                    l4 = Math.abs(ai7[j6] - ai7[j7]) - Math.abs(ai9[j6] - ai9[j7]);
+                    i_78 = i_79;
+                    i_77 = i_80;
+                    i_75 = Math.abs(is_73[i_79] - is_73[i_80]) - Math.abs(is_74[i_79] - is_74[i_80]);
                 }
-            }
 
         }
 
-        if(ai9[k5] < ai9[i6])
+        if(is_74[i_77] < is_74[i_78])
         {
-            int k6 = k5;
-            k5 = i6;
-            i6 = k6;
+            int i_81 = i_77;
+            i_77 = i_78;
+            i_78 = i_81;
         }
-        if(spy(ai[k5], ai1[k5]) > spy(ai[i6], ai1[i6]))
+        if(spy(is[i_77], is_37[i_77]) > spy(is[i_78], is_37[i_78]))
         {
-            flag1 = true;
-            int l6 = 0;
-            for(int k7 = 0; k7 < n; k7++)
+            bool_72 = true;
+            int i_82 = 0;
+            for(int i_83 = 0; i_83 < n; i_83++)
             {
-                if(ai1[k7] < 50 && ai2[k7] > m.cy)
+                if(is_37[i_83] < 50 && is_38[i_83] > m.cy)
                 {
-                    flag1 = false;
-                } else
-                if(ai2[k7] == ai2[0])
-                {
-                    l6++;
+                    bool_72 = false;
+                    continue;
                 }
+                if(is_38[i_83] == is_38[0])
+                    i_82++;
             }
 
-            if(l6 == n && ai2[0] > m.cy)
-            {
-                flag1 = false;
-            }
+            if(i_82 == n && is_38[0] > m.cy)
+                bool_72 = false;
         }
-        rot(ai2, ai1, m.cy, m.cz, m.zy, n);
-        boolean flag2 = true;
-        int ai14[] = new int[n];
-        int ai15[] = new int[n];
-        int j8 = 0;
-        int l8 = 0;
-        int j9 = 0;
-        int l9 = 0;
-        int j10 = 0;
-        for(int k10 = 0; k10 < n; k10++)
+        rot(is_38, is_37, m.cy, m.cz, m.zy, n);
+        boolean bool_84 = true;
+        int is_85[] = new int[n];
+        int is_86[] = new int[n];
+        int i_87 = 0;
+        int i_88 = 0;
+        int i_89 = 0;
+        int i_90 = 0;
+        int i_91 = 0;
+        for(int i_92 = 0; i_92 < n; i_92++)
         {
-            ai14[k10] = xs(ai[k10], ai1[k10]);
-            ai15[k10] = ys(ai2[k10], ai1[k10]);
-            if(ai15[k10] < 0 || ai1[k10] < 10)
-            {
-                j8++;
-            }
-            if(ai15[k10] > m.h || ai1[k10] < 10)
-            {
-                l8++;
-            }
-            if(ai14[k10] < 0 || ai1[k10] < 10)
-            {
-                j9++;
-            }
-            if(ai14[k10] > m.w || ai1[k10] < 10)
-            {
-                l9++;
-            }
-            if(ai15[k10] < 45 && m.flex != 0)
-            {
-                m.flex = 0;
-            }
-            if(ai1[k10] < 10)
-            {
-                j10++;
-            }
+            is_85[i_92] = xs(is[i_92], is_37[i_92]);
+            is_86[i_92] = ys(is_38[i_92], is_37[i_92]);
+            if(is_86[i_92] < m.ih || is_37[i_92] < 10)
+                i_87++;
+            if(is_86[i_92] > m.h || is_37[i_92] < 10)
+                i_88++;
+            if(is_85[i_92] < m.iw || is_37[i_92] < 10)
+                i_89++;
+            if(is_85[i_92] > m.w || is_37[i_92] < 10)
+                i_90++;
+            if(is_37[i_92] < 10)
+                i_91++;
         }
 
-        if(i2 != -1)
+        if(i_89 == n || i_87 == n || i_88 == n || i_90 == n)
+            bool_84 = false;
+        if(m.trk == 1 && (i_89 != 0 || i_87 != 0 || i_88 != 0 || i_90 != 0))
+            bool_84 = false;
+        if(m.trk == 3 && i_91 != 0)
+            bool_84 = false;
+        if(i_91 != 0)
+            bool = true;
+        if(bool_84 && i_36 != -1)
         {
-            int l10 = 0;
-            int j11 = 0;
-            for(int k11 = 0; k11 < n; k11++)
+            int i_93 = 0;
+            int i_94 = 0;
+            for(int i_95 = 0; i_95 < n; i_95++)
             {
-                for(int l12 = k11; l12 < n; l12++)
+                for(int i_96 = i_95; i_96 < n; i_96++)
                 {
-                    if(k11 != l12)
-                    {
-                        if(Math.abs(ai14[k11] - ai14[l12]) > l10)
-                        {
-                            l10 = Math.abs(ai14[k11] - ai14[l12]);
-                        }
-                        if(Math.abs(ai15[k11] - ai15[l12]) > j11)
-                        {
-                            j11 = Math.abs(ai15[k11] - ai15[l12]);
-                        }
-                    }
+                    if(i_95 == i_96)
+                        continue;
+                    if(Math.abs(is_85[i_95] - is_85[i_96]) > i_93)
+                        i_93 = Math.abs(is_85[i_95] - is_85[i_96]);
+                    if(Math.abs(is_86[i_95] - is_86[i_96]) > i_94)
+                        i_94 = Math.abs(is_86[i_95] - is_86[i_96]);
                 }
 
             }
 
-            if(l10 == 0 || j11 == 0)
-            {
-                flag2 = false;
-            } else
-            if(l10 < 3 && j11 < 3 && i2 / l10 > 15 && i2 / j11 > 15)
-            {
-                flag2 = false;
-            }
+            if(i_93 == 0 || i_94 == 0)
+                bool_84 = false;
+            else
+            if(i_93 < 3 && i_94 < 3 && (i_36 / i_93 > 15 && i_36 / i_94 > 15 || bool) && (!m.lightson || light == 0))
+                bool_84 = false;
         }
-        if(j9 == n || j8 == n || l8 == n || l9 == n)
+        if(bool_84)
         {
-            flag2 = false;
-        }
-        if(m.trk && (j9 != 0 || j8 != 0 || l8 != 0 || l9 != 0))
-        {
-            flag2 = false;
-        }
-        if(j10 != 0)
-        {
-            flag = true;
-        }
-        if(flag2)
-        {
-            int i11 = 1;
-            byte byte2 = 1;
-            byte byte3 = 1;
-            if(Math.abs(ai15[0] - ai15[1]) > Math.abs(ai15[2] - ai15[1]))
-            {
-                byte2 = 0;
-                byte3 = 2;
-            } else
-            {
-                byte2 = 2;
-                byte3 = 0;
-                i11 *= -1;
-            }
-            if(ai15[1] > ai15[byte2])
-            {
-                i11 *= -1;
-            }
-            if(ai14[1] > ai14[byte3])
-            {
-                i11 *= -1;
-            }
-            int i13 = gr;
-            if(i13 < 0 && i13 >= -17)
-            {
-                i13 = 0;
-            }
+            int i_97 = 1;
+            int i_98 = gr;
+            if(i_98 < 0 && i_98 >= -15)
+                i_98 = 0;
             if(gr == -11)
-            {
-                i13 = -90;
-            }
+                i_98 = -90;
+            if(gr == -12)
+                i_98 = -75;
             if(gr == -14 || gr == -15)
+                i_98 = -50;
+            if(glass == 2)
+                i_98 = 200;
+            if(this.fs != 0)
             {
-                i13 = -50;
-            }
-            if(gr == -16)
-            {
-                i13 = 35;
-            }
-            if(fs != 0)
-            {
-                i11 *= fs;
-                if(i11 == -1)
+                boolean bool_99 = true;
+                boolean bool_100 = true;
+                int i_101;
+                int i_102;
+                if(Math.abs(is_86[0] - is_86[1]) > Math.abs(is_86[2] - is_86[1]))
                 {
-                    i13 += 40;
-                    if(!road)
+                    i_101 = 0;
+                    i_102 = 2;
+                } else
+                {
+                    i_101 = 2;
+                    i_102 = 0;
+                    i_97 *= -1;
+                }
+                if(is_86[1] > is_86[i_101])
+                    i_97 *= -1;
+                if(is_85[1] > is_85[i_102])
+                    i_97 *= -1;
+                if(this.fs != 22)
+                {
+                    i_97 *= this.fs;
+                    if(i_97 == -1)
                     {
-                        i11 = -111;
+                        i_98 += 40;
+                        i_97 = -111;
                     }
                 }
             }
             if(m.lightson && light == 2)
+                i_98 -= 40;
+            int i_103 = is_38[0];
+            int i_104 = is_38[0];
+            int i_105 = is[0];
+            int i_106 = is[0];
+            int i_107 = is_37[0];
+            int i_108 = is_37[0];
+            for(int i_109 = 0; i_109 < n; i_109++)
             {
-                i13 -= 40;
-            }
-            int j14 = 0;
-            int k15 = 0;
-            int k16 = 0;
-            int l16 = 0;
-            int i17 = 0;
-            int j17 = 0;
-            for(int k17 = 0; k17 < n; k17++)
-            {
-                int i18 = 0;
-                int k18 = 0;
-                int i19 = 0;
-                int j19 = 0;
-                int k19 = 0;
-                int l19 = 0;
-                for(int i20 = 0; i20 < n; i20++)
-                {
-                    if(ai2[k17] >= ai2[i20])
-                    {
-                        i18++;
-                    }
-                    if(ai2[k17] <= ai2[i20])
-                    {
-                        k18++;
-                    }
-                    if(ai[k17] >= ai[i20])
-                    {
-                        i19++;
-                    }
-                    if(ai[k17] <= ai[i20])
-                    {
-                        j19++;
-                    }
-                    if(ai1[k17] >= ai1[i20])
-                    {
-                        k19++;
-                    }
-                    if(ai1[k17] <= ai1[i20])
-                    {
-                        l19++;
-                    }
-                }
-
-                if(i18 == n)
-                {
-                    j14 = ai2[k17];
-                }
-                if(k18 == n)
-                {
-                    k15 = ai2[k17];
-                }
-                if(i19 == n)
-                {
-                    k16 = ai[k17];
-                }
-                if(j19 == n)
-                {
-                    l16 = ai[k17];
-                }
-                if(k19 == n)
-                {
-                    i17 = ai1[k17];
-                }
-                if(l19 == n)
-                {
-                    j17 = ai1[k17];
-                }
+                if(is_38[i_109] > i_103)
+                    i_103 = is_38[i_109];
+                if(is_38[i_109] < i_104)
+                    i_104 = is_38[i_109];
+                if(is[i_109] > i_105)
+                    i_105 = is[i_109];
+                if(is[i_109] < i_106)
+                    i_106 = is[i_109];
+                if(is_37[i_109] > i_107)
+                    i_107 = is_37[i_109];
+                if(is_37[i_109] < i_108)
+                    i_108 = is_37[i_109];
             }
 
-            int l17 = (j14 + k15) / 2;
-            int j18 = (k16 + l16) / 2;
-            int l18 = (i17 + j17) / 2;
-            av = (int)Math.sqrt((m.cy - l17) * (m.cy - l17) + (m.cx - j18) * (m.cx - j18) + l18 * l18 + i13 * i13 * i13);
-            if(!m.trk && (av > m.fade[disline] || av == 0))
-            {
-                flag2 = false;
-            }
-            if(i11 == -111 && av > 4500)
-            {
-                flag2 = false;
-            }
-            if(i11 == -111 && av > 1500)
-            {
-                flag = true;
-            }
+            int i_110 = (i_103 + i_104) / 2;
+            int i_111 = (i_105 + i_106) / 2;
+            int i_112 = (i_107 + i_108) / 2;
+            av = (int)Math.sqrt((m.cy - i_110) * (m.cy - i_110) + (m.cx - i_111) * (m.cx - i_111) + i_112 * i_112 + i_98 * i_98 * i_98);
+            if(m.trk == 0 && (av > m.fade[disline] || av == 0))
+                bool_84 = false;
+            if(i_97 == -111 && av > 4500 && !road)
+                bool_84 = false;
+            if(i_97 == -111 && av > 1500)
+                bool = true;
             if(av > 3000 && m.adv <= 900)
-            {
-                flag = true;
-            }
-            if(gr == -12 && av < 11200)
-            {
-                m.lastmaf = i11;
-            }
-            if(gr == -13 && (!m.lastcheck || i2 != -1))
-            {
-                flag2 = false;
-            }
-            if(gr == -16 && av > 1500)
-            {
-                flag2 = false;
-            }
-            if(flx != 0 && (double)m.random() > 0.29999999999999999D)
-            {
-                flag2 = false;
-            }
+                bool = true;
+            if(this.fs == 22 && av < 11200)
+                m.lastmaf = i_97;
+            if(gr == -13 && (!m.lastcheck || i_36 != -1))
+                bool_84 = false;
+            if(master == 2 && av > 1500 && !m.crs)
+                bool_84 = false;
+            if((gr == -14 || gr == -15 || gr == -12) && (av > 11000 || bool_72 || i_97 == -111 || m.resdown == 2) && m.trk != 2 && m.trk != 3)
+                bool_84 = false;
+            if(gr == -11 && av > 11000 && m.trk != 2 && m.trk != 3)
+                bool_84 = false;
+            if(glass == 2 && (m.trk != 0 || av > 6700))
+                bool_84 = false;
+            if(flx != 0 && (double)m.random() > 0.29999999999999999D && flx != 77)
+                bool_84 = false;
         }
-        if(flag2)
+        if(bool_84)
         {
-            float f1 = (float)((double)(projf / deltaf) + 0.29999999999999999D);
-            if(flag)
+            float f = (float)((double)(projf / deltaf) + 0.29999999999999999D);
+            if(bool && !solo)
             {
-                boolean flag3 = false;
-                if(f1 > 1.0F)
+                boolean bool_113 = false;
+                if(f > 1.0F)
                 {
-                    if((double)f1 >= 1.27D)
-                    {
-                        flag3 = true;
-                    }
-                    f1 = 1.0F;
+                    if((double)f >= 1.27D)
+                        bool_113 = true;
+                    f = 1.0F;
                 }
-                if(flag3)
-                {
-                    f1 = (float)((double)f1 * 0.89000000000000001D);
-                } else
-                {
-                    f1 = (float)((double)f1 * 0.85999999999999999D);
-                }
-                if((double)f1 < 0.37D)
-                {
-                    f1 = 0.37F;
-                }
+                if(bool_113)
+                    f = (float)((double)f * 0.89000000000000001D);
+                else
+                    f = (float)((double)f * 0.85999999999999999D);
+                if((double)f < 0.37D)
+                    f = 0.37F;
                 if(gr == -9)
-                {
-                    f1 = 0.7F;
-                }
+                    f = 0.7F;
                 if(gr == -4)
-                {
-                    f1 = 0.74F;
-                }
-                if(gr != -7 && flag1)
-                {
-                    f1 = 0.32F;
-                }
+                    f = 0.74F;
+                if(gr != -7 && m.trk == 0 && bool_72)
+                    f = 0.32F;
                 if(gr == -8 || gr == -14 || gr == -15)
+                    f = 1.0F;
+                if(gr == -11 || gr == -12)
                 {
-                    f1 = 1.0F;
-                }
-                if(gr == -11)
-                {
-                    f1 = 0.67F;
-                    if(i2 == -1)
-                    {
+                    f = 0.6F;
+                    if(i_36 == -1)
                         if(m.cpflik || m.nochekflk && !m.lastcheck)
-                        {
-                            f1 = 1.0F;
-                        } else
-                        {
-                            f1 = 0.76F;
-                        }
-                    }
+                            f = 1.0F;
+                        else
+                            f = 0.76F;
                 }
-                if(gr == -13 && i2 == -1)
-                {
+                if(gr == -13 && i_36 == -1)
                     if(m.cpflik)
-                    {
-                        f1 = 0.0F;
-                    } else
-                    {
-                        f1 = 0.76F;
-                    }
-                }
+                        f = 0.0F;
+                    else
+                        f = 0.76F;
                 if(gr == -6)
-                {
-                    f1 = 0.62F;
-                }
+                    f = 0.62F;
                 if(gr == -5)
-                {
-                    f1 = 0.55F;
-                }
+                    f = 0.55F;
             } else
             {
-                if(f1 > 1.0F)
-                {
-                    f1 = 1.0F;
-                }
-                if((double)f1 < 0.59999999999999998D || flag1)
-                {
-                    f1 = 0.6F;
-                }
+                if(f > 1.0F)
+                    f = 1.0F;
+                if((double)f < 0.59999999999999998D || bool_72)
+                    f = 0.6F;
             }
-            Color color;
-            if(!m.trk)
+            Color color = Color.getHSBColor(hsb[0], hsb[1], hsb[2] * f);
+            if(m.trk == 1)
             {
-                color = Color.getHSBColor(hsb[0], hsb[1], hsb[2] * f1);
-            } else
-            {
-                float af[] = new float[3];
-                Color.RGBtoHSB(oc[0], oc[1], oc[2], af);
-                color = Color.getHSBColor(0.0F, 0.0F, af[2] * f1);
+                float fs[] = new float[3];
+                Color.RGBtoHSB(oc[0], oc[1], oc[2], fs);
+                fs[0] = 0.15F;
+                fs[1] = 0.3F;
+                color = Color.getHSBColor(fs[0], fs[1], fs[2] * f + 0.0F);
             }
-            int l11 = color.getRed();
-            int j13 = color.getGreen();
-            int k14 = color.getBlue();
-            if(m.lightson && light != 0)
+            if(m.trk == 3)
             {
-                l11 = oc[0];
-                if(l11 > 255)
-                {
-                    l11 = 255;
-                }
-                if(l11 < 0)
-                {
-                    l11 = 0;
-                }
-                j13 = oc[1];
-                if(j13 > 255)
-                {
-                    j13 = 255;
-                }
-                if(j13 < 0)
-                {
-                    j13 = 0;
-                }
-                k14 = oc[2];
-                if(k14 > 255)
-                {
-                    k14 = 255;
-                }
-                if(k14 < 0)
-                {
-                    k14 = 0;
-                }           
-            }            
-            if(!m.trk)
+                float fs[] = new float[3];
+                Color.RGBtoHSB(oc[0], oc[1], oc[2], fs);
+                fs[0] = 0.6F;
+                fs[1] = 0.14F;
+                color = Color.getHSBColor(fs[0], fs[1], fs[2] * f + 0.0F);
+            }
+            int i_114 = color.getRed();
+            int i_115 = color.getGreen();
+            int i_116 = color.getBlue();
+            if(m.lightson && (light != 0 || (gr == -11 || gr == -12) && i_36 == -1))
             {
-                int l15 = 0;
-                do
-                {
-                    if(av > m.fade[l15])
+                i_114 = oc[0];
+                if(i_114 > 255)
+                    i_114 = 255;
+                if(i_114 < 0)
+                    i_114 = 0;
+                i_115 = oc[1];
+                if(i_115 > 255)
+                    i_115 = 255;
+                if(i_115 < 0)
+                    i_115 = 0;
+                i_116 = oc[2];
+                if(i_116 > 255)
+                    i_116 = 255;
+                if(i_116 < 0)
+                    i_116 = 0;
+            }
+            if(m.trk == 0)
+            {
+                for(int i_117 = 0; i_117 < 16; i_117++)
+                    if(av > m.fade[i_117])
                     {
-                        l11 = (l11 * m.fogd + m.cfade[0]) / (m.fogd + 1);
-                        j13 = (j13 * m.fogd + m.cfade[1]) / (m.fogd + 1);
-                        k14 = (k14 * m.fogd + m.cfade[2]) / (m.fogd + 1);
+                        i_114 = (i_114 * m.fogd + m.cfade[0]) / (m.fogd + 1);
+                        i_115 = (i_115 * m.fogd + m.cfade[1]) / (m.fogd + 1);
+                        i_116 = (i_116 * m.fogd + m.cfade[2]) / (m.fogd + 1);
                     }
-                } while(++l15 < 8);
+
             }
-            rd.setColor(new Color(l11, j13, k14));
-            rd.fillPolygon(ai14, ai15, n);
-            if(m.trk && gr == -10)
-            {
-                flag = false;
-            }
-            if(!flag)
+            graphics2d.setColor(new Color(i_114, i_115, i_116, glass != 1 || m.resdown != 0 ? 255 : 175));
+            graphics2d.fillPolygon(is_85, is_86, n);
+            if(m.trk != 0 && gr == -10)
+                bool = false;
+            if(!bool)
             {
                 if(flx == 0)
                 {
-                    l11 = 0;
-                    j13 = 0;
-                    k14 = 0;
-                    if(m.lightson && light != 0)
+                    if(!solo)
                     {
-                        l11 = oc[0] / 2;
-                        if(l11 > 255)
+                        i_114 = 0;
+                        i_115 = 0;
+                        i_116 = 0;
+                        if(m.lightson && light != 0)
                         {
-                            l11 = 255;
+                            i_114 = oc[0] / 2;
+                            if(i_114 > 255)
+                                i_114 = 255;
+                            if(i_114 < 0)
+                                i_114 = 0;
+                            i_115 = oc[1] / 2;
+                            if(i_115 > 255)
+                                i_115 = 255;
+                            if(i_115 < 0)
+                                i_115 = 0;
+                            i_116 = oc[2] / 2;
+                            if(i_116 > 255)
+                                i_116 = 255;
+                            if(i_116 < 0)
+                                i_116 = 0;
                         }
-                        if(l11 < 0)
-                        {
-                            l11 = 0;
-                        }
-                        j13 = oc[1] / 2;
-                        if(j13 > 255)
-                        {
-                            j13 = 255;
-                        }
-                        if(j13 < 0)
-                        {
-                            j13 = 0;
-                        }
-                        k14 = oc[2] / 2;
-                        if(k14 > 255)
-                        {
-                            k14 = 255;
-                        }
-                        if(k14 < 0)
-                        {
-                            k14 = 0;
-                        }
+                        graphics2d.setColor(new Color(i_114, i_115, i_116));
+                        graphics2d.drawPolygon(is_85, is_86, n);
                     }
-                    rd.setColor(new Color(l11, j13, k14));
-                    rd.drawPolygon(ai14, ai15, n);
                 } else
                 {
                     if(flx == 2)
                     {
-                        rd.setColor(new Color(0, 0, 0));
-                        rd.drawPolygon(ai14, ai15, n);
+                        graphics2d.setColor(new Color(0, 0, 0));
+                        graphics2d.drawPolygon(is_85, is_86, n);
                     }
                     if(flx == 1)
                     {
-                        l11 = 0;
-                        j13 = (int)(223F + 223F * ((float)m.snap[1] / 100F));
-                        if(j13 > 255)
-                        {
-                            j13 = 255;
-                        }
-                        if(j13 < 0)
-                        {
-                            j13 = 0;
-                        }
-                        k14 = (int)(255F + 255F * ((float)m.snap[2] / 100F));
-                        if(k14 > 255)
-                        {
-                            k14 = 255;
-                        }
-                        if(k14 < 0)
-                        {
-                            k14 = 0;
-                        }
-                        rd.setColor(new Color(l11, j13, k14));
-                        rd.drawPolygon(ai14, ai15, n);
+                        i_114 = 0;
+                        i_115 = (int)(223F + 223F * ((float)m.snap[1] / 100F));
+                        if(i_115 > 255)
+                            i_115 = 255;
+                        if(i_115 < 0)
+                            i_115 = 0;
+                        i_116 = (int)(255F + 255F * ((float)m.snap[2] / 100F));
+                        if(i_116 > 255)
+                            i_116 = 255;
+                        if(i_116 < 0)
+                            i_116 = 0;
+                        graphics2d.setColor(new Color(i_114, i_115, i_116));
+                        graphics2d.drawPolygon(is_85, is_86, n);
                         flx = 2;
                     }
                     if(flx == 3)
                     {
-                        l11 = 0;
-                        j13 = (int)(255F + 255F * ((float)m.snap[1] / 100F));
-                        if(j13 > 255)
-                        {
-                            j13 = 255;
-                        }
-                        if(j13 < 0)
-                        {
-                            j13 = 0;
-                        }
-                        k14 = (int)(223F + 223F * ((float)m.snap[2] / 100F));
-                        if(k14 > 255)
-                        {
-                            k14 = 255;
-                        }
-                        if(k14 < 0)
-                        {
-                            k14 = 0;
-                        }
-                        rd.setColor(new Color(l11, j13, k14));
-                        rd.drawPolygon(ai14, ai15, n);
+                        i_114 = 0;
+                        i_115 = (int)(255F + 255F * ((float)m.snap[1] / 100F));
+                        if(i_115 > 255)
+                            i_115 = 255;
+                        if(i_115 < 0)
+                            i_115 = 0;
+                        i_116 = (int)(223F + 223F * ((float)m.snap[2] / 100F));
+                        if(i_116 > 255)
+                            i_116 = 255;
+                        if(i_116 < 0)
+                            i_116 = 0;
+                        graphics2d.setColor(new Color(i_114, i_115, i_116));
+                        graphics2d.drawPolygon(is_85, is_86, n);
                         flx = 2;
+                    }
+                    if(flx == 77)
+                    {
+                        graphics2d.setColor(new Color(16, 198, 255));
+                        graphics2d.drawPolygon(is_85, is_86, n);
+                        flx = 0;
                     }
                 }
             } else
-            if(road && av <= 3000 && !m.trk && m.fade[0] > 4000)
+            if(road && av <= 3000 && m.trk == 0 && m.fade[0] > 4000)
             {
-                if((l11 -= 10) < 0)
-                {
-                    l11 = 0;
-                }
-                if((j13 -= 10) < 0)
-                {
-                    j13 = 0;
-                }
-                if((k14 -= 10) < 0)
-                {
-                    k14 = 0;
-                }
-                rd.setColor(new Color(l11, j13, k14));
-                rd.drawPolygon(ai14, ai15, n);
+                if((i_114 -= 10) < 0)
+                    i_114 = 0;
+                if((i_115 -= 10) < 0)
+                    i_115 = 0;
+                if((i_116 -= 10) < 0)
+                    i_116 = 0;
+                graphics2d.setColor(new Color(i_114, i_115, i_116));
+                graphics2d.drawPolygon(is_85, is_86, n);
             }
             if(gr == -10)
-            {
-                if(!m.trk)
+                if(m.trk == 0)
                 {
-                    int i12 = c[0];
-                    int k13 = c[1];
-                    int l14 = c[2];
-                    if(i2 == -1)
+                    i_114 = c[0];
+                    i_115 = c[1];
+                    i_116 = c[2];
+                    if(i_36 == -1 && m.cpflik)
                     {
-                        if(m.nochekflk && !m.lastcheck)
-                        {
-                            i12 = (int)((double)i12 * 1.25D);
-                            if(i12 > 255)
-                            {
-                                i12 = 255;
-                            }
-                            k13 = (int)((double)k13 * 1.25D);
-                            if(k13 > 255)
-                            {
-                                k13 = 255;
-                            }
-                            l14 = (int)((double)l14 * 1.25D);
-                            if(l14 > 255)
-                            {
-                                l14 = 255;
-                            }
-                        } else
-                        if(m.cpflik)
-                        {
-                            i12 = (int)((double)i12 * 1.5D);
-                            if(i12 > 255)
-                            {
-                                i12 = 255;
-                            }
-                            k13 = (int)((double)k13 * 1.5D);
-                            if(k13 > 255)
-                            {
-                                k13 = 255;
-                            }
-                            l14 = (int)((double)l14 * 1.5D);
-                            if(l14 > 255)
-                            {
-                                l14 = 255;
-                            }
-                        }
+                        i_114 = (int)((double)i_114 * 1.6000000000000001D);
+                        if(i_114 > 255)
+                            i_114 = 255;
+                        i_115 = (int)((double)i_115 * 1.6000000000000001D);
+                        if(i_115 > 255)
+                            i_115 = 255;
+                        i_116 = (int)((double)i_116 * 1.6000000000000001D);
+                        if(i_116 > 255)
+                            i_116 = 255;
                     }
-                    int i16 = 0;
-                    do
-                    {
-                        if(av > m.fade[i16])
+                    for(int i_118 = 0; i_118 < 16; i_118++)
+                        if(av > m.fade[i_118])
                         {
-                            i12 = (i12 * m.fogd + m.cfade[0]) / (m.fogd + 1);
-                            k13 = (k13 * m.fogd + m.cfade[1]) / (m.fogd + 1);
-                            l14 = (l14 * m.fogd + m.cfade[2]) / (m.fogd + 1);
+                            i_114 = (i_114 * m.fogd + m.cfade[0]) / (m.fogd + 1);
+                            i_115 = (i_115 * m.fogd + m.cfade[1]) / (m.fogd + 1);
+                            i_116 = (i_116 * m.fogd + m.cfade[2]) / (m.fogd + 1);
                         }
-                    } while(++i16 < 8);
-                    rd.setColor(new Color(i12, k13, l14));
-                    rd.drawPolygon(ai14, ai15, n);
+
+                    graphics2d.setColor(new Color(i_114, i_115, i_116));
+                    graphics2d.drawPolygon(is_85, is_86, n);
                 } else
                 if(m.cpflik && m.hit == 5000)
                 {
-                    int l13 = (int)(Math.random() * 115D);
-                    int j12 = l13 * 2 - 54;
-                    if(j12 < 0)
-                    {
-                        j12 = 0;
-                    }
-                    if(j12 > 255)
-                    {
-                        j12 = 255;
-                    }
-                    int i15 = 202 + l13 * 2;
-                    if(i15 < 0)
-                    {
-                        i15 = 0;
-                    }
-                    if(i15 > 255)
-                    {
-                        i15 = 255;
-                    }
-                    if((l13 += 101) < 0)
-                    {
-                        l13 = 0;
-                    }
-                    if(l13 > 255)
-                    {
-                        l13 = 255;
-                    }
-                    rd.setColor(new Color(j12, l13, i15));
-                    rd.drawPolygon(ai14, ai15, n);
+                    i_115 = (int)(Math.random() * 115D);
+                    i_114 = i_115 * 2 - 54;
+                    if(i_114 < 0)
+                        i_114 = 0;
+                    if(i_114 > 255)
+                        i_114 = 255;
+                    i_116 = 202 + i_115 * 2;
+                    if(i_116 < 0)
+                        i_116 = 0;
+                    if(i_116 > 255)
+                        i_116 = 255;
+                    if((i_115 += 101) < 0)
+                        i_115 = 0;
+                    if(i_115 > 255)
+                        i_115 = 255;
+                    graphics2d.setColor(new Color(i_114, i_115, i_116));
+                    graphics2d.drawPolygon(is_85, is_86, n);
                 }
-            }
-            if(gr == -18 && !m.trk)
+            if(gr == -18 && m.trk == 0)
             {
-                int k12 = c[0];
-                int i14 = c[1];
-                int j15 = c[2];
+                i_114 = c[0];
+                i_115 = c[1];
+                i_116 = c[2];
                 if(m.cpflik && m.elecr >= 0.0F)
                 {
-                    k12 = (int)(25.5F * m.elecr);
-                    if(k12 > 255)
-                    {
-                        k12 = 255;
-                    }
-                    i14 = (int)(128F + 12.8F * m.elecr);
-                    if(i14 > 255)
-                    {
-                        i14 = 255;
-                    }
-                    j15 = 255;
+                    i_114 = (int)(25.5F * m.elecr);
+                    if(i_114 > 255)
+                        i_114 = 255;
+                    i_115 = (int)(128F + 12.8F * m.elecr);
+                    if(i_115 > 255)
+                        i_115 = 255;
+                    i_116 = 255;
                 }
-                int j16 = 0;
-                do
-                {
-                    if(av > m.fade[j16])
+                for(int i_119 = 0; i_119 < 16; i_119++)
+                    if(av > m.fade[i_119])
                     {
-                        k12 = (k12 * m.fogd + m.cfade[0]) / (m.fogd + 1);
-                        i14 = (i14 * m.fogd + m.cfade[1]) / (m.fogd + 1);
-                        j15 = (j15 * m.fogd + m.cfade[2]) / (m.fogd + 1);
+                        i_114 = (i_114 * m.fogd + m.cfade[0]) / (m.fogd + 1);
+                        i_115 = (i_115 * m.fogd + m.cfade[1]) / (m.fogd + 1);
+                        i_116 = (i_116 * m.fogd + m.cfade[2]) / (m.fogd + 1);
                     }
-                } while(++j16 < 8);
-                rd.setColor(new Color(k12, i14, j15));
-                rd.drawPolygon(ai14, ai15, n);
+
+                graphics2d.setColor(new Color(i_114, i_115, i_116));
+                graphics2d.drawPolygon(is_85, is_86, n);
             }
         }
     }
 
-    public void rot(int ai[], int ai1[], int i, int j, int k, int l)
+    public void s(Graphics2D graphics2d, int i, int i_120, int i_121, int i_122, int i_123, int i_124, 
+            int i_125)
     {
-        if(k != 0)
+        int is[] = new int[n];
+        int is_126[] = new int[n];
+        int is_127[] = new int[n];
+        for(int i_128 = 0; i_128 < n; i_128++)
         {
-            for(int i1 = 0; i1 < l; i1++)
+            is[i_128] = ox[i_128] + i;
+            is_127[i_128] = oy[i_128] + i_120;
+            is_126[i_128] = oz[i_128] + i_121;
+        }
+
+        rot(is, is_127, i, i_120, i_123, n);
+        rot(is_127, is_126, i_120, i_121, i_124, n);
+        rot(is, is_126, i, i_121, i_122, n);
+        int i_129 = (int)((double)(float)m.crgrnd[0] / 1.5D);
+        int i_130 = (int)((double)(float)m.crgrnd[1] / 1.5D);
+        int i_131 = (int)((double)(float)m.crgrnd[2] / 1.5D);
+        for(int i_132 = 0; i_132 < n; i_132++)
+            is_127[i_132] = m.ground;
+
+        if(i_125 == 0)
+        {
+            int i_133 = 0;
+            int i_134 = 0;
+            int i_135 = 0;
+            int i_136 = 0;
+            for(int i_137 = 0; i_137 < n; i_137++)
             {
-                int j1 = ai[i1];
-                int k1 = ai1[i1];
-                ai[i1] = i + (int)((float)(j1 - i) * m.cos(k) - (float)(k1 - j) * m.sin(k));
-                ai1[i1] = j + (int)((float)(j1 - i) * m.sin(k) + (float)(k1 - j) * m.cos(k));
+                int i_138 = 0;
+                int i_139 = 0;
+                int i_140 = 0;
+                int i_141 = 0;
+                for(int i_142 = 0; i_142 < n; i_142++)
+                {
+                    if(is[i_137] >= is[i_142])
+                        i_138++;
+                    if(is[i_137] <= is[i_142])
+                        i_139++;
+                    if(is_126[i_137] >= is_126[i_142])
+                        i_140++;
+                    if(is_126[i_137] <= is_126[i_142])
+                        i_141++;
+                }
+
+                if(i_138 == n)
+                    i_133 = is[i_137];
+                if(i_139 == n)
+                    i_134 = is[i_137];
+                if(i_140 == n)
+                    i_135 = is_126[i_137];
+                if(i_141 == n)
+                    i_136 = is_126[i_137];
             }
 
-        }
-    }
-
-    public int xs(int i, int j)
-    {
-        if(j < m.cz)
-        {
-            j = m.cz;
-        }
-        return ((j - m.focus_point) * (m.cx - i)) / j + i;
-    }
-
-    public void s(Graphics2D rd, int i, int j, int k, int l, int i1, int j1, 
-            int k1)
-    {
-        int ai[] = new int[n];
-        int ai1[] = new int[n];
-        int ai2[] = new int[n];
-        for(int l1 = 0; l1 < n; l1++)
-        {
-            ai[l1] = ox[l1] + i;
-            ai2[l1] = oy[l1] + j;
-            ai1[l1] = oz[l1] + k;
-        }
-
-        rot(ai, ai2, i, j, i1, n);
-        rot(ai2, ai1, j, k, j1, n);
-        rot(ai, ai1, i, k, l, n);
-        int i2 = (int)((double)(float)m.cgrnd[0] / 1.5D);
-        int j2 = (int)((double)(float)m.cgrnd[1] / 1.5D);
-        int k2 = (int)((double)(float)m.cgrnd[2] / 1.5D);
-        for(int l2 = 0; l2 < n; l2++)
-        {
-            ai2[l2] = m.ground;
-        }
-
-        if(k1 == 0)
-        {
-            int i3 = 0;
-            int j3 = 0;
-            int k3 = 0;
-            int l3 = 0;
-            for(int l4 = 0; l4 < n; l4++)
-            {
-                int l5 = 0;
-                int k6 = 0;
-                int j7 = 0;
-                int i8 = 0;
-                for(int k8 = 0; k8 < n; k8++)
-                {
-                    if(ai[l4] >= ai[k8])
-                    {
-                        l5++;
-                    }
-                    if(ai[l4] <= ai[k8])
-                    {
-                        k6++;
-                    }
-                    if(ai1[l4] >= ai1[k8])
-                    {
-                        j7++;
-                    }
-                    if(ai1[l4] <= ai1[k8])
-                    {
-                        i8++;
-                    }
-                }
-
-                if(l5 == n)
-                {
-                    i3 = ai[l4];
-                }
-                if(k6 == n)
-                {
-                    j3 = ai[l4];
-                }
-                if(j7 == n)
-                {
-                    k3 = ai1[l4];
-                }
-                if(i8 == n)
-                {
-                    l3 = ai1[l4];
-                }
-            }
-
-            int i5 = (i3 + j3) / 2;
-            int i6 = (k3 + l3) / 2;
-            for(int l6 = t.nt - 1; l6 >= 0; l6--)
-            {
-                int k7 = 0;
-                if(Math.abs(t.zy[l6]) != 90 && Math.abs(t.xy[l6]) != 90 && Math.abs(i5 - (t.x[l6] - m.x)) < t.radx[l6] && Math.abs(i6 - (t.z[l6] - m.z)) < t.radz[l6])
-                {
-                    k7++;
-                }
-                if(k7 == 0)
-                {
-                    continue;
-                }
-                for(int j8 = 0; j8 < n; j8++)
-                {
-                    ai2[j8] = t.y[l6] - m.y;
-                    if(t.zy[l6] != 0)
-                    {
-                        ai2[j8] += ((float)(ai1[j8] - (t.z[l6] - m.z - t.radz[l6])) * m.sin(t.zy[l6])) / m.sin(90 - t.zy[l6]) - ((float)t.radz[l6] * m.sin(t.zy[l6])) / m.sin(90 - t.zy[l6]);
-                    }
-                    if(t.xy[l6] != 0)
-                    {
-                        ai2[j8] += ((float)(ai[j8] - (t.x[l6] - m.x - t.radx[l6])) * m.sin(t.xy[l6])) / m.sin(90 - t.xy[l6]) - ((float)t.radx[l6] * m.sin(t.xy[l6])) / m.sin(90 - t.xy[l6]);
-                    }
-                }
-
-                i2 = (int)((double)(float)t.c[l6][0] / 1.5D);
-                j2 = (int)((double)(float)t.c[l6][1] / 1.5D);
-                k2 = (int)((double)(float)t.c[l6][2] / 1.5D);
-                break;
-            }
-
-        }
-        boolean flag = true;
-        int ai3[] = new int[n];
-        int ai4[] = new int[n];
-        if(k1 == 2)
-        {
-            i2 = 80;
-            j2 = 80;
-            k2 = 80;
-        } else
-        {
-            for(int i4 = 0; i4 < m.nsp; i4++)
-            {
-                for(int j5 = 0; j5 < n; j5++)
-                {
-                    if(Math.abs(ai[j5] - m.spx[i4]) < m.sprad[i4] && Math.abs(ai1[j5] - m.spz[i4]) < m.sprad[i4])
-                    {
-                        flag = false;
-                    }
-                }
-
-            }
-
-        }
-        if(flag)
-        {
-            rot(ai, ai1, m.cx, m.cz, m.xz, n);
-            rot(ai2, ai1, m.cy, m.cz, m.zy, n);
-            int j4 = 0;
-            int k5 = 0;
-            int j6 = 0;
-            int i7 = 0;
-            for(int l7 = 0; l7 < n; l7++)
-            {
-                ai3[l7] = xs(ai[l7], ai1[l7]);
-                ai4[l7] = ys(ai2[l7], ai1[l7]);
-                if(ai4[l7] < 0 || ai1[l7] < 10)
-                {
-                    j4++;
-                }
-                if(ai4[l7] > m.h || ai1[l7] < 10)
-                {
-                    k5++;
-                }
-                if(ai3[l7] < 0 || ai1[l7] < 10)
-                {
-                    j6++;
-                }
-                if(ai3[l7] > m.w || ai1[l7] < 10)
-                {
-                    i7++;
-                }
-            }
-
-            if(j6 == n || j4 == n || k5 == n || i7 == n)
-            {
-                flag = false;
-            }
-        }
-        if(flag)
-        {
-            int k4 = 0;
+            int i_143 = (i_133 + i_134) / 2;
+            int i_144 = (i_135 + i_136) / 2;
+            int i_145 = ((i_143 - t.sx) + m.x) / 3000;
+            if(i_145 > t.ncx)
+                i_145 = t.ncx;
+            if(i_145 < 0)
+                i_145 = 0;
+            int i_146 = ((i_144 - t.sz) + m.z) / 3000;
+            if(i_146 > t.ncz)
+                i_146 = t.ncz;
+            if(i_146 < 0)
+                i_146 = 0;
+            int i_147 = t.sect[i_145][i_146].length - 1;
             do
             {
-                if(av > m.fade[k4])
+                if(i_147 < 0)
+                    break;
+                int i_148 = t.sect[i_145][i_146][i_147];
+                int i_149 = 0;
+                if(Math.abs(t.zy[i_148]) != 90 && Math.abs(t.xy[i_148]) != 90 && t.rady[i_148] != 801 && Math.abs(i_143 - (t.x[i_148] - m.x)) < t.radx[i_148] && Math.abs(i_144 - (t.z[i_148] - m.z)) < t.radz[i_148] && (!t.decor[i_148] || m.resdown != 2))
+                    i_149++;
+                if(i_149 != 0)
                 {
-                    i2 = (i2 * m.fogd + m.cfade[0]) / (m.fogd + 1);
-                    j2 = (j2 * m.fogd + m.cfade[1]) / (m.fogd + 1);
-                    k2 = (k2 * m.fogd + m.cfade[2]) / (m.fogd + 1);
+                    for(int i_150 = 0; i_150 < n; i_150++)
+                    {
+                        is_127[i_150] = t.y[i_148] - m.y;
+                        if(t.zy[i_148] != 0)
+                            is_127[i_150] += ((float)(is_126[i_150] - (t.z[i_148] - m.z - t.radz[i_148])) * m.sin(t.zy[i_148])) / m.sin(90 - t.zy[i_148]) - ((float)t.radz[i_148] * m.sin(t.zy[i_148])) / m.sin(90 - t.zy[i_148]);
+                        if(t.xy[i_148] != 0)
+                            is_127[i_150] += ((float)(is[i_150] - (t.x[i_148] - m.x - t.radx[i_148])) * m.sin(t.xy[i_148])) / m.sin(90 - t.xy[i_148]) - ((float)t.radx[i_148] * m.sin(t.xy[i_148])) / m.sin(90 - t.xy[i_148]);
+                    }
+
+                    i_129 = (int)((double)(float)t.c[i_148][0] / 1.5D);
+                    i_130 = (int)((double)(float)t.c[i_148][1] / 1.5D);
+                    i_131 = (int)((double)(float)t.c[i_148][2] / 1.5D);
+                    break;
                 }
-            } while(++k4 < 8);
-            rd.setColor(new Color(i2, j2, k2));
-            rd.fillPolygon(ai3, ai4, n);
+                i_147--;
+            } while(true);
+        }
+        boolean bool = true;
+        int is_151[] = new int[n];
+        int is_152[] = new int[n];
+        if(i_125 == 2)
+        {
+            i_129 = 87;
+            i_130 = 85;
+            i_131 = 57;
+        } else
+        {
+            for(int i_153 = 0; i_153 < m.nsp; i_153++)
+            {
+                for(int i_154 = 0; i_154 < n; i_154++)
+                    if(Math.abs(is[i_154] - m.spx[i_153]) < m.sprad[i_153] && Math.abs(is_126[i_154] - m.spz[i_153]) < m.sprad[i_153])
+                        bool = false;
+
+            }
+
+        }
+        if(bool)
+        {
+            rot(is, is_126, m.cx, m.cz, m.xz, n);
+            rot(is_127, is_126, m.cy, m.cz, m.zy, n);
+            int i_155 = 0;
+            int i_156 = 0;
+            int i_157 = 0;
+            int i_158 = 0;
+            for(int i_159 = 0; i_159 < n; i_159++)
+            {
+                is_151[i_159] = xs(is[i_159], is_126[i_159]);
+                is_152[i_159] = ys(is_127[i_159], is_126[i_159]);
+                if(is_152[i_159] < m.ih || is_126[i_159] < 10)
+                    i_155++;
+                if(is_152[i_159] > m.h || is_126[i_159] < 10)
+                    i_156++;
+                if(is_151[i_159] < m.iw || is_126[i_159] < 10)
+                    i_157++;
+                if(is_151[i_159] > m.w || is_126[i_159] < 10)
+                    i_158++;
+            }
+
+            if(i_157 == n || i_155 == n || i_156 == n || i_158 == n)
+                bool = false;
+        }
+        if(bool)
+        {
+            for(int i_160 = 0; i_160 < 16; i_160++)
+                if(av > m.fade[i_160])
+                {
+                    i_129 = (i_129 * m.fogd + m.cfade[0]) / (m.fogd + 1);
+                    i_130 = (i_130 * m.fogd + m.cfade[1]) / (m.fogd + 1);
+                    i_131 = (i_131 * m.fogd + m.cfade[2]) / (m.fogd + 1);
+                }
+
+            graphics2d.setColor(new Color(i_129, i_130, i_131));
+            graphics2d.fillPolygon(is_151, is_152, n);
         }
     }
 
-    public int spy(int i, int j)
+    public int xs(int i, int i_161)
     {
-        return (int)Math.sqrt((i - m.cx) * (i - m.cx) + j * j);
+        if(i_161 < m.cz)
+            i_161 = m.cz;
+        return ((i_161 - m.focus_point) * (m.cx - i)) / i_161 + i;
     }
+
+    public int ys(int i, int i_162)
+    {
+        if(i_162 < m.cz)
+            i_162 = m.cz;
+        return ((i_162 - m.focus_point) * (m.cy - i)) / i_162 + i;
+    }
+
+    public void rot(int is[], int is_163[], int i, int i_164, int i_165, int i_166)
+    {
+        if(i_165 != 0)
+        {
+            for(int i_167 = 0; i_167 < i_166; i_167++)
+            {
+                int i_168 = is[i_167];
+                int i_169 = is_163[i_167];
+                is[i_167] = i + (int)((float)(i_168 - i) * m.cos(i_165) - (float)(i_169 - i_164) * m.sin(i_165));
+                is_163[i_167] = i_164 + (int)((float)(i_168 - i) * m.sin(i_165) + (float)(i_169 - i_164) * m.cos(i_165));
+            }
+
+        }
+    }
+
+    public int spy(int i, int i_170)
+    {
+        return (int)Math.sqrt((i - m.cx) * (i - m.cx) + i_170 * i_170);
+    }
+
+    Medium m;
+    Trackers t;
+    int ox[];
+    int oy[];
+    int oz[];
+    int n;
+    int c[];
+    int oc[];
+    float hsb[];
+    int glass;
+    int gr;
+    int fs;
+    int disline;
+    boolean road;
+    boolean solo;
+    int light;
+    int master;
+    int wx;
+    int wz;
+    int wy;
+    float deltaf;
+    float projf;
+    int av;
+    int bfase;
+    boolean nocol;
+    int chip;
+    float ctmag;
+    int cxz;
+    int cxy;
+    int czy;
+    int cox[];
+    int coz[];
+    int coy[];
+    int dx;
+    int dy;
+    int dz;
+    int vx;
+    int vy;
+    int vz;
+    int embos;
+    int typ;
+    int pa;
+    int pb;
+    int flx;
+    int colnum;
 }

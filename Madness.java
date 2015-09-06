@@ -117,7 +117,7 @@ public class Madness
                             conto.p[l].chip = 1;
                             conto.p[l].ctmag = f1;
                         }
-                        if(!conto.p[l].nocol && !conto.p[l].glass)
+                        if(!conto.p[l].nocol/* && !conto.p[l].glass*/)
                         {
                             if(conto.p[l].bfase > 20 && (double)conto.p[l].hsb[1] > 0.25D)
                                 conto.p[l].hsb[1] = 0.25F;
@@ -140,7 +140,7 @@ public class Madness
                             conto.p[l].c[1] = color.getGreen();
                             conto.p[l].c[2] = color.getBlue();
                         }
-                        if(conto.p[l].glass)
+                        if(false/* conto.p[l].glass*/)
                             conto.p[l].gr += Math.abs((double)f1 * 1.5D);
                     }
                 }
@@ -167,7 +167,7 @@ public class Madness
                                 }
                             }
 
-                        if(conto.p[l1].glass)
+                        if(false/* conto.p[l1].glass*/)
                             conto.p[l1].gr += 5;
                         else
                         if(f2 != 0.0F)
@@ -298,7 +298,7 @@ public class Madness
                         conto.p[j].chip = 1;
                         conto.p[j].ctmag = f1;
                     }
-                    if(!conto.p[j].nocol && !conto.p[j].glass)
+                    if(!conto.p[j].nocol/* && !conto.p[j].glass*/)
                     {
                         if(conto.p[j].bfase > 20 && (double)conto.p[j].hsb[1] > 0.25D)
                             conto.p[j].hsb[1] = 0.25F;
@@ -321,7 +321,7 @@ public class Madness
                         conto.p[j].c[1] = color.getGreen();
                         conto.p[j].c[2] = color.getBlue();
                     }
-                    if(conto.p[j].glass)
+                    //if(conto.p[j].glass)
                         conto.p[j].gr += Math.abs((double)f1 * 1.5D);
                 }
             }
@@ -613,7 +613,7 @@ public class Madness
                         conto.p[j].chip = 1;
                         conto.p[j].ctmag = f1;
                     }
-                    if(!conto.p[j].nocol && !conto.p[j].glass)
+                    if(!conto.p[j].nocol/* && !conto.p[j].glass*/)
                     {
                         if(conto.p[j].bfase > 20 && (double)conto.p[j].hsb[1] > 0.25D)
                             conto.p[j].hsb[1] = 0.25F;
@@ -636,7 +636,7 @@ public class Madness
                         conto.p[j].c[1] = color.getGreen();
                         conto.p[j].c[2] = color.getBlue();
                     }
-                    if(conto.p[j].glass)
+                    //if(conto.p[j].glass)
                         conto.p[j].gr += Math.abs((double)f1 * 1.5D);
                 }
             }
@@ -1135,16 +1135,16 @@ public class Madness
                             f11 = 1.2F;
                         if((double)m.random() > 0.75D)
                         {
-                            conto.dust(l6, af[l6], af2[l6], af1[l6], scx[l6], scz[l6], f11 * simag[cn], true, (int)tilt);
+                            //conto.dust(l6, af[l6], af2[l6], af1[l6], scx[l6], scz[l6], f11 * simag[cn], true, (int)tilt);
                             if(im == 0 && !capsized)
                                 xt.skid(k3, (float)Math.sqrt(scx[l6] * scx[l6] + scz[l6] * scz[l6]));
                         }
                     } else
                     {
-                        if(k3 == 1 && (double)m.random() > 0.84999999999999998D)
-                            conto.dust(l6, af[l6], af2[l6], af1[l6], scx[l6], scz[l6], 1.1F * simag[cn], false, (int)tilt);
-                        if((k3 == 2 || k3 == 3) && (double)m.random() > 0.69999999999999996D)
-                            conto.dust(l6, af[l6], af2[l6], af1[l6], scx[l6], scz[l6], 1.15F * simag[cn], false, (int)tilt);
+                        //if(k3 == 1 && (double)m.random() > 0.84999999999999998D)
+                            //conto.dust(l6, af[l6], af2[l6], af1[l6], scx[l6], scz[l6], 1.1F * simag[cn], false, (int)tilt);
+                        //if((k3 == 2 || k3 == 3) && (double)m.random() > 0.69999999999999996D)
+                            //conto.dust(l6, af[l6], af2[l6], af1[l6], scx[l6], scz[l6], 1.15F * simag[cn], false, (int)tilt);
                     }
                 } else
                 if(dcnt != 0)
@@ -1212,7 +1212,7 @@ public class Madness
                         f7 = (float)((double)f7 + 1.1000000000000001D);
                     else
                         f7 = (float)((double)f7 + 1.2D);
-                    conto.dust(l4, af[l4], af2[l4], af1[l4], scx[l4], scz[l4], f7 * simag[cn], true, 0);
+                    //conto.dust(l4, af[l4], af2[l4], af1[l4], scx[l4], scz[l4], f7 * simag[cn], true, 0);
                 }
                 af2[l4] = 250F;
                 float f8 = 0.0F;
@@ -1256,7 +1256,7 @@ public class Madness
                                 f12 = (float)((double)f12 + 1.1000000000000001D);
                             else
                                 f12 = (float)((double)f12 + 1.2D);
-                            conto.dust(i7, af[i7], af2[i7], af1[i7], scx[i7], scz[i7], f12 * simag[cn], true, 0);
+                            //conto.dust(i7, af[i7], af2[i7], af1[i7], scx[i7], scz[i7], f12 * simag[cn], true, 0);
                         }
                         af2[i7] = trackers.y[j5];
                         float f13 = 0.0F;
@@ -1396,7 +1396,7 @@ public class Madness
                             if(!flag4 && k3 != 0)
                             {
                                 float f25 = 1.4F;
-                                conto.dust(i7, af[i7], af2[i7], af1[i7], scx[i7], scz[i7], f25 * simag[cn], true, 0);
+                                //conto.dust(i7, af[i7], af2[i7], af1[i7], scx[i7], scz[i7], f25 * simag[cn], true, 0);
                             }
                         }
                         af2[i7] = (float)trackers.y[j5] + ((f21 - (float)trackers.y[j5]) * m.cos(-l7) - (f23 - (float)trackers.z[j5]) * m.sin(-l7));
@@ -1427,7 +1427,7 @@ public class Madness
                             if(!flag4 && k3 != 0)
                             {
                                 float f26 = 1.4F;
-                                conto.dust(i7, af[i7], af2[i7], af1[i7], scx[i7], scz[i7], f26 * simag[cn], true, 0);
+                                //conto.dust(i7, af[i7], af2[i7], af1[i7], scx[i7], scz[i7], f26 * simag[cn], true, 0);
                             }
                         }
                         af2[i7] = (float)trackers.y[j5] + ((f22 - (float)trackers.y[j5]) * m.cos(-i8) - (f24 - (float)trackers.x[j5]) * m.sin(-i8));

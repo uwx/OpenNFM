@@ -1947,7 +1947,7 @@ public class xtGraphics extends Panel
         } while(++i1 < 0x416e0);
         fleximg = createImage(new MemoryImageSource(670, 400, flexpix, 0, 670));
         rd.drawImage(fleximg, 0, 0, null);
-        m.flex = 0;
+        //m.flex = 0;
     }
 
     public void loadmusic(int i, int j)
@@ -3614,10 +3614,10 @@ public class xtGraphics extends Panel
         if(holdit)
         {
             holdcnt++;
-            if(m.flex != 0)
+            /*if(m.flex != 0)
             {
                 m.flex = 0;
-            }
+            }*/
             if(control.enter || holdcnt > 250)
             {
                 fase = -2;
@@ -3648,13 +3648,13 @@ public class xtGraphics extends Panel
             holdit = false;
             if(checkpoints.wasted == 6)
             {
-                if(m.flex != 2)
-                {
+                //if(m.flex != 2)
+                //{
                     rd.setColor(new Color(m.csky[0], m.csky[1], m.csky[2]));
                     rd.fillRect(226, 70, youwastedem.getWidth(ob), youwastedem.getHeight(ob));
                     rd.setColor(new Color(m.cfade[0], m.cfade[1], m.cfade[2]));
                     rd.drawRect(226, 70, youwastedem.getWidth(ob), youwastedem.getHeight(ob));
-                }
+                //}
                 rd.drawImage(youwastedem, 226, 70, null);
                 if(aflk)
                 {
@@ -3672,13 +3672,13 @@ public class xtGraphics extends Panel
             }
             if(!holdit && madness[0].dest && cntwis == 8)
             {
-                if(m.flex != 2)
-                {
+                //if(m.flex != 2)
+                //{
                     rd.setColor(new Color(m.csky[0], m.csky[1], m.csky[2]));
                     rd.fillRect(232, 70, yourwasted.getWidth(ob), yourwasted.getHeight(ob));
                     rd.setColor(new Color(m.cfade[0], m.cfade[1], m.cfade[2]));
                     rd.drawRect(232, 70, yourwasted.getWidth(ob), yourwasted.getHeight(ob));
-                }
+                //}
                 rd.drawImage(yourwasted, 232, 70, null);
                 drawcs(350, "Press  [ Enter ]  to continue", 0, 0, 0, 0);
                 holdit = true;
@@ -3693,13 +3693,13 @@ public class xtGraphics extends Panel
                     {
                         if(i == 0)
                         {
-                            if(m.flex != 2)
-                            {
+                            //if(m.flex != 2)
+                            //{
                                 rd.setColor(new Color(m.csky[0], m.csky[1], m.csky[2]));
                                 rd.fillRect(268, 70, youwon.getWidth(ob), youwon.getHeight(ob));
                                 rd.setColor(new Color(m.cfade[0], m.cfade[1], m.cfade[2]));
                                 rd.drawRect(268, 70, youwon.getWidth(ob), youwon.getHeight(ob));
-                            }
+                            //}
                             rd.drawImage(youwon, 268, 70, null);
                             if(aflk)
                             {
@@ -3713,13 +3713,13 @@ public class xtGraphics extends Panel
                             winner = true;
                         } else
                         {
-                            if(m.flex != 2)
-                            {
+                            //if(m.flex != 2)
+                            //{
                                 rd.setColor(new Color(m.csky[0], m.csky[1], m.csky[2]));
                                 rd.fillRect(271, 70, youlost.getWidth(ob), youlost.getHeight(ob));
                                 rd.setColor(new Color(m.cfade[0], m.cfade[1], m.cfade[2]));
                                 rd.drawRect(271, 70, youlost.getWidth(ob), youlost.getHeight(ob));
-                            }
+                            //}
                             rd.drawImage(youlost, 271, 70, null);
                             if(aflk)
                             {
@@ -3827,7 +3827,7 @@ public class xtGraphics extends Panel
                         }
                     }
                 }
-                if(m.flex != 2 || m.flex == 2)
+                if(true)
                 {
                     rd.setColor(new Color(m.csky[0], m.csky[1], m.csky[2]));
                     rd.fillRect(472, 9, 54, 14);
@@ -3869,7 +3869,7 @@ public class xtGraphics extends Panel
                     }
                     
                     radarstat(madness[0], conto[sc[0]], checkpoints);
-                    m.flex++;
+                    //m.flex++;
                 } else
                 {
                 	if (isloadoldstatus) { //old nfm status
@@ -3947,7 +3947,7 @@ public class xtGraphics extends Panel
                     if(starcnt <= 4)
                     {
                         duds = 2;
-                        m.flex = 0;
+                        //m.flex = 0;
                     }
                     if(dudo != -1)
                     {
@@ -5551,7 +5551,7 @@ public class xtGraphics extends Panel
         {
             asay = "Stage " + checkpoints.stage + ":  " + checkpoints.name + " ";
             dudo = 150;
-            m.trk = false;
+            //m.trk = false;
             m.focus_point = 400;
             fase = 5;
             control.handb = false;
@@ -5835,7 +5835,7 @@ public class xtGraphics extends Panel
         }
         rd.setColor(new Color(l, i1, j1));
         rd.fillPolygon(ai, ai1, 4);
-        if(m.flex == 2 && f != 98F)
+        if(f != 98F)
         {
             ai[0] = (int)(532F + f);
             ai1[0] = 31;

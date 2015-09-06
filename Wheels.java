@@ -1,253 +1,333 @@
+// Decompiled by Jad v1.5.8g. Copyright 2001 Pavel Kouznetsov.
+// Jad home page: http://www.kpdus.com/jad.html
+// Decompiler options: packimports(3) 
+// Source File Name:   Wheels.java
+
 
 public class Wheels
 {
 
+    public Wheels()
+    {
+        ground = 0;
+        mast = 0;
+        sparkat = 0;
+        size = 2.0F;
+        depth = 3F;
+        sparkat = 0;
+        ground = 0;
+    }
+
+    public void setrims(int i, int i_0, int i_1, int i_2, int i_3)
+    {
+        rc[0] = i;
+        rc[1] = i_0;
+        rc[2] = i_1;
+        size = (float)i_2 / 10F;
+        if(size < 0.0F)
+            size = 0.0F;
+        depth = (float)i_3 / 10F;
+        if(depth / size > 41F)
+            depth = size * 41F;
+        if(depth / size < -25F)
+            depth = -(size * 25F);
+    }
+
+    public void make(Medium medium, Trackers trackers, Plane planes[], int i, int i_4, int i_5, int i_6, 
+            int i_7, int i_8, int i_9, int i_10)
+    {
+        int is[] = new int[20];
+        int is_11[] = new int[20];
+        int is_12[] = new int[20];
+        int is_13[] = {
+            45, 45, 45
+        };
+        int i_14 = 0;
+        float f = (float)i_8 / 10F;
+        float f_15 = (float)i_9 / 10F;
+        if(i_7 == 11)
+            i_14 = (int)((float)i_4 + 4F * f);
+        sparkat = (int)(f_15 * 24F);
+        ground = (int)((float)i_5 + 13F * f_15);
+        int i_16 = -1;
+        if(i_4 < 0)
+            i_16 = 1;
+        for(int i_17 = 0; i_17 < 20; i_17++)
+            is[i_17] = (int)((float)i_4 - 4F * f);
+
+        is_11[0] = (int)((float)i_5 - 9.1923F * f_15);
+        is_12[0] = (int)((float)i_6 + 9.1923F * f_15);
+        is_11[1] = (int)((float)i_5 - 12.557F * f_15);
+        is_12[1] = (int)((float)i_6 + 3.3646F * f_15);
+        is_11[2] = (int)((float)i_5 - 12.557F * f_15);
+        is_12[2] = (int)((float)i_6 - 3.3646F * f_15);
+        is_11[3] = (int)((float)i_5 - 9.1923F * f_15);
+        is_12[3] = (int)((float)i_6 - 9.1923F * f_15);
+        is_11[4] = (int)((float)i_5 - 3.3646F * f_15);
+        is_12[4] = (int)((float)i_6 - 12.557F * f_15);
+        is_11[5] = (int)((float)i_5 + 3.3646F * f_15);
+        is_12[5] = (int)((float)i_6 - 12.557F * f_15);
+        is_11[6] = (int)((float)i_5 + 9.1923F * f_15);
+        is_12[6] = (int)((float)i_6 - 9.1923F * f_15);
+        is_11[7] = (int)((float)i_5 + 12.557F * f_15);
+        is_12[7] = (int)((float)i_6 - 3.3646F * f_15);
+        is_11[8] = (int)((float)i_5 + 12.557F * f_15);
+        is_12[8] = (int)((float)i_6 + 3.3646F * f_15);
+        is_11[9] = (int)((float)i_5 + 9.1923F * f_15);
+        is_12[9] = (int)((float)i_6 + 9.1923F * f_15);
+        is_11[10] = (int)((float)i_5 + 3.3646F * f_15);
+        is_12[10] = (int)((float)i_6 + 12.557F * f_15);
+        is_11[11] = (int)((float)i_5 - 3.3646F * f_15);
+        is_12[11] = (int)((float)i_6 + 12.557F * f_15);
+        is_11[12] = i_5;
+        is_12[12] = (int)((float)i_6 + 10F * size);
+        is_11[13] = (int)((double)i_5 + 8.6600000000000001D * (double)size);
+        is_12[13] = (int)((float)i_6 + 5F * size);
+        is_11[14] = (int)((double)i_5 + 8.6600000000000001D * (double)size);
+        is_12[14] = (int)((float)i_6 - 5F * size);
+        is_11[15] = i_5;
+        is_12[15] = (int)((float)i_6 - 10F * size);
+        is_11[16] = (int)((double)i_5 - 8.6600000000000001D * (double)size);
+        is_12[16] = (int)((float)i_6 - 5F * size);
+        is_11[17] = (int)((double)i_5 - 8.6600000000000001D * (double)size);
+        is_12[17] = (int)((float)i_6 + 5F * size);
+        is_11[18] = i_5;
+        is_12[18] = (int)((float)i_6 + 10F * size);
+        is_11[19] = (int)((float)i_5 - 3.3646F * f_15);
+        is_12[19] = (int)((float)i_6 + 12.557F * f_15);
+        planes[i] = new Plane(medium, trackers, is, is_12, is_11, 20, is_13, 0, i_10, 0, i_14, i_5, i_6, 7, 0, false, 0, false);
+        planes[i].master = 1;
+        i++;
+        is[2] = (int)((float)i_4 - depth * f);
+        is_11[2] = i_5;
+        is_12[2] = i_6;
+        int i_18 = (int)((float)i_10 - (depth / size) * 4F);
+        if(i_18 < -16)
+            i_18 = -16;
+        is_11[0] = i_5;
+        is_12[0] = (int)((float)i_6 + 10F * size);
+        is_11[1] = (int)((double)i_5 + 8.6600000000000001D * (double)size);
+        is_12[1] = (int)((float)i_6 + 5F * size);
+        planes[i] = new Plane(medium, trackers, is, is_12, is_11, 3, rc, 0, i_18, 0, i_14, i_5, i_6, 7, 0, false, 0, false);
+        if(depth / size < 7F)
+            planes[i].master = 2;
+        i++;
+        is_11[0] = (int)((double)i_5 + 8.6600000000000001D * (double)size);
+        is_12[0] = (int)((float)i_6 + 5F * size);
+        is_11[1] = (int)((double)i_5 + 8.6600000000000001D * (double)size);
+        is_12[1] = (int)((float)i_6 - 5F * size);
+        planes[i] = new Plane(medium, trackers, is, is_12, is_11, 3, rc, 0, i_18, 0, i_14, i_5, i_6, 7, 0, false, 0, false);
+        if(depth / size < 7F)
+            planes[i].master = 2;
+        i++;
+        is_11[0] = (int)((double)i_5 + 8.6600000000000001D * (double)size);
+        is_12[0] = (int)((float)i_6 - 5F * size);
+        is_11[1] = i_5;
+        is_12[1] = (int)((float)i_6 - 10F * size);
+        planes[i] = new Plane(medium, trackers, is, is_12, is_11, 3, rc, 0, i_18, 0, i_14, i_5, i_6, 7, 0, false, 0, false);
+        if(depth / size < 7F)
+            planes[i].master = 2;
+        i++;
+        is_11[0] = i_5;
+        is_12[0] = (int)((float)i_6 - 10F * size);
+        is_11[1] = (int)((double)i_5 - 8.6600000000000001D * (double)size);
+        is_12[1] = (int)((float)i_6 - 5F * size);
+        planes[i] = new Plane(medium, trackers, is, is_12, is_11, 3, rc, 0, i_18, 0, i_14, i_5, i_6, 7, 0, false, 0, false);
+        if(depth / size < 7F)
+            planes[i].master = 2;
+        i++;
+        is_11[0] = (int)((double)i_5 - 8.6600000000000001D * (double)size);
+        is_12[0] = (int)((float)i_6 - 5F * size);
+        is_11[1] = (int)((double)i_5 - 8.6600000000000001D * (double)size);
+        is_12[1] = (int)((float)i_6 + 5F * size);
+        planes[i] = new Plane(medium, trackers, is, is_12, is_11, 3, rc, 0, i_18, 0, i_14, i_5, i_6, 7, 0, false, 0, false);
+        if(depth / size < 7F)
+            planes[i].master = 2;
+        i++;
+        is_11[0] = (int)((double)i_5 - 8.6600000000000001D * (double)size);
+        is_12[0] = (int)((float)i_6 + 5F * size);
+        is_11[1] = i_5;
+        is_12[1] = (int)((float)i_6 + 10F * size);
+        planes[i] = new Plane(medium, trackers, is, is_12, is_11, 3, rc, 0, i_18, 0, i_14, i_5, i_6, 7, 0, false, 0, false);
+        if(depth / size < 7F)
+            planes[i].master = 2;
+        i++;
+        is[0] = (int)((float)i_4 - 4F * f);
+        is_11[0] = (int)((float)i_5 - 12.557F * f_15);
+        is_12[0] = (int)((float)i_6 + 3.3646F * f_15);
+        is[1] = (int)((float)i_4 - 4F * f);
+        is_11[1] = (int)((float)i_5 - 12.557F * f_15);
+        is_12[1] = (int)((float)i_6 - 3.3646F * f_15);
+        is[2] = (int)((float)i_4 + 4F * f);
+        is_11[2] = (int)((float)i_5 - 12.557F * f_15);
+        is_12[2] = (int)((float)i_6 - 3.3646F * f_15);
+        is[3] = (int)((float)i_4 + 4F * f);
+        is_11[3] = (int)((float)i_5 - 12.557F * f_15);
+        is_12[3] = (int)((float)i_6 + 3.3646F * f_15);
+        planes[i] = new Plane(medium, trackers, is, is_12, is_11, 4, is_13, 0, i_10, -1 * i_16, i_14, i_5, i_6, 7, 0, false, 0, true);
+        i++;
+        is[0] = (int)((float)i_4 - 4F * f);
+        is_11[0] = (int)((float)i_5 - 9.1923F * f_15);
+        is_12[0] = (int)((float)i_6 - 9.1923F * f_15);
+        is[1] = (int)((float)i_4 - 4F * f);
+        is_11[1] = (int)((float)i_5 - 12.557F * f_15);
+        is_12[1] = (int)((float)i_6 - 3.3646F * f_15);
+        is[2] = (int)((float)i_4 + 4F * f);
+        is_11[2] = (int)((float)i_5 - 12.557F * f_15);
+        is_12[2] = (int)((float)i_6 - 3.3646F * f_15);
+        is[3] = (int)((float)i_4 + 4F * f);
+        is_11[3] = (int)((float)i_5 - 9.1923F * f_15);
+        is_12[3] = (int)((float)i_6 - 9.1923F * f_15);
+        planes[i] = new Plane(medium, trackers, is, is_12, is_11, 4, is_13, 0, i_10, 1 * i_16, i_14, i_5, i_6, 7, 0, false, 0, true);
+        i++;
+        is[0] = (int)((float)i_4 - 4F * f);
+        is_11[0] = (int)((float)i_5 - 9.1923F * f_15);
+        is_12[0] = (int)((float)i_6 - 9.1923F * f_15);
+        is[1] = (int)((float)i_4 - 4F * f);
+        is_11[1] = (int)((float)i_5 - 3.3646F * f_15);
+        is_12[1] = (int)((float)i_6 - 12.557F * f_15);
+        is[2] = (int)((float)i_4 + 4F * f);
+        is_11[2] = (int)((float)i_5 - 3.3646F * f_15);
+        is_12[2] = (int)((float)i_6 - 12.557F * f_15);
+        is[3] = (int)((float)i_4 + 4F * f);
+        is_11[3] = (int)((float)i_5 - 9.1923F * f_15);
+        is_12[3] = (int)((float)i_6 - 9.1923F * f_15);
+        planes[i] = new Plane(medium, trackers, is, is_12, is_11, 4, is_13, 0, i_10, 1 * i_16, i_14, i_5, i_6, 7, 0, false, 0, true);
+        i++;
+        is[0] = (int)((float)i_4 - 4F * f);
+        is_11[0] = (int)((float)i_5 - 3.3646F * f_15);
+        is_12[0] = (int)((float)i_6 - 12.557F * f_15);
+        is[1] = (int)((float)i_4 - 4F * f);
+        is_11[1] = (int)((float)i_5 + 3.3646F * f_15);
+        is_12[1] = (int)((float)i_6 - 12.557F * f_15);
+        is[2] = (int)((float)i_4 + 4F * f);
+        is_11[2] = (int)((float)i_5 + 3.3646F * f_15);
+        is_12[2] = (int)((float)i_6 - 12.557F * f_15);
+        is[3] = (int)((float)i_4 + 4F * f);
+        is_11[3] = (int)((float)i_5 - 3.3646F * f_15);
+        is_12[3] = (int)((float)i_6 - 12.557F * f_15);
+        planes[i] = new Plane(medium, trackers, is, is_12, is_11, 4, is_13, 0, i_10, -1 * i_16, i_14, i_5, i_6, 7, 0, false, 0, true);
+        i++;
+        is[0] = (int)((float)i_4 - 4F * f);
+        is_11[0] = (int)((float)i_5 + 9.1923F * f_15);
+        is_12[0] = (int)((float)i_6 - 9.1923F * f_15);
+        is[1] = (int)((float)i_4 - 4F * f);
+        is_11[1] = (int)((float)i_5 + 3.3646F * f_15);
+        is_12[1] = (int)((float)i_6 - 12.557F * f_15);
+        is[2] = (int)((float)i_4 + 4F * f);
+        is_11[2] = (int)((float)i_5 + 3.3646F * f_15);
+        is_12[2] = (int)((float)i_6 - 12.557F * f_15);
+        is[3] = (int)((float)i_4 + 4F * f);
+        is_11[3] = (int)((float)i_5 + 9.1923F * f_15);
+        is_12[3] = (int)((float)i_6 - 9.1923F * f_15);
+        planes[i] = new Plane(medium, trackers, is, is_12, is_11, 4, is_13, 0, i_10, 1 * i_16, i_14, i_5, i_6, 7, 0, false, 0, true);
+        i++;
+        is[0] = (int)((float)i_4 - 4F * f);
+        is_11[0] = (int)((float)i_5 + 9.1923F * f_15);
+        is_12[0] = (int)((float)i_6 - 9.1923F * f_15);
+        is[1] = (int)((float)i_4 - 4F * f);
+        is_11[1] = (int)((float)i_5 + 12.557F * f_15);
+        is_12[1] = (int)((float)i_6 - 3.3646F * f_15);
+        is[2] = (int)((float)i_4 + 4F * f);
+        is_11[2] = (int)((float)i_5 + 12.557F * f_15);
+        is_12[2] = (int)((float)i_6 - 3.3646F * f_15);
+        is[3] = (int)((float)i_4 + 4F * f);
+        is_11[3] = (int)((float)i_5 + 9.1923F * f_15);
+        is_12[3] = (int)((float)i_6 - 9.1923F * f_15);
+        planes[i] = new Plane(medium, trackers, is, is_12, is_11, 4, is_13, 0, i_10, 1 * i_16, i_14, i_5, i_6, 7, 0, false, 0, true);
+        i++;
+        is[0] = (int)((float)i_4 - 4F * f);
+        is_11[0] = (int)((float)i_5 + 12.557F * f_15);
+        is_12[0] = (int)((float)i_6 - 3.3646F * f_15);
+        is[1] = (int)((float)i_4 - 4F * f);
+        is_11[1] = (int)((float)i_5 + 12.557F * f_15);
+        is_12[1] = (int)((float)i_6 + 3.3646F * f_15);
+        is[2] = (int)((float)i_4 + 4F * f);
+        is_11[2] = (int)((float)i_5 + 12.557F * f_15);
+        is_12[2] = (int)((float)i_6 + 3.3646F * f_15);
+        is[3] = (int)((float)i_4 + 4F * f);
+        is_11[3] = (int)((float)i_5 + 12.557F * f_15);
+        is_12[3] = (int)((float)i_6 - 3.3646F * f_15);
+        planes[i] = new Plane(medium, trackers, is, is_12, is_11, 4, is_13, 0, i_10, -1 * i_16, i_14, i_5, i_6, 7, 0, false, 0, true);
+        i++;
+        is[0] = (int)((float)i_4 - 4F * f);
+        is_11[0] = (int)((float)i_5 + 9.1923F * f_15);
+        is_12[0] = (int)((float)i_6 + 9.1923F * f_15);
+        is[1] = (int)((float)i_4 - 4F * f);
+        is_11[1] = (int)((float)i_5 + 12.557F * f_15);
+        is_12[1] = (int)((float)i_6 + 3.3646F * f_15);
+        is[2] = (int)((float)i_4 + 4F * f);
+        is_11[2] = (int)((float)i_5 + 12.557F * f_15);
+        is_12[2] = (int)((float)i_6 + 3.3646F * f_15);
+        is[3] = (int)((float)i_4 + 4F * f);
+        is_11[3] = (int)((float)i_5 + 9.1923F * f_15);
+        is_12[3] = (int)((float)i_6 + 9.1923F * f_15);
+        planes[i] = new Plane(medium, trackers, is, is_12, is_11, 4, is_13, 0, i_10, 1 * i_16, i_14, i_5, i_6, 7, 0, false, 0, true);
+        i++;
+        is[0] = (int)((float)i_4 - 4F * f);
+        is_11[0] = (int)((float)i_5 + 9.1923F * f_15);
+        is_12[0] = (int)((float)i_6 + 9.1923F * f_15);
+        is[1] = (int)((float)i_4 - 4F * f);
+        is_11[1] = (int)((float)i_5 + 3.3646F * f_15);
+        is_12[1] = (int)((float)i_6 + 12.557F * f_15);
+        is[2] = (int)((float)i_4 + 4F * f);
+        is_11[2] = (int)((float)i_5 + 3.3646F * f_15);
+        is_12[2] = (int)((float)i_6 + 12.557F * f_15);
+        is[3] = (int)((float)i_4 + 4F * f);
+        is_11[3] = (int)((float)i_5 + 9.1923F * f_15);
+        is_12[3] = (int)((float)i_6 + 9.1923F * f_15);
+        planes[i] = new Plane(medium, trackers, is, is_12, is_11, 4, is_13, 0, i_10, 1 * i_16, i_14, i_5, i_6, 7, 0, false, 0, true);
+        i++;
+        is[0] = (int)((float)i_4 - 4F * f);
+        is_11[0] = (int)((float)i_5 + 3.3646F * f_15);
+        is_12[0] = (int)((float)i_6 + 12.557F * f_15);
+        is[1] = (int)((float)i_4 - 4F * f);
+        is_11[1] = (int)((float)i_5 - 3.3646F * f_15);
+        is_12[1] = (int)((float)i_6 + 12.557F * f_15);
+        is[2] = (int)((float)i_4 + 4F * f);
+        is_11[2] = (int)((float)i_5 - 3.3646F * f_15);
+        is_12[2] = (int)((float)i_6 + 12.557F * f_15);
+        is[3] = (int)((float)i_4 + 4F * f);
+        is_11[3] = (int)((float)i_5 + 3.3646F * f_15);
+        is_12[3] = (int)((float)i_6 + 12.557F * f_15);
+        planes[i] = new Plane(medium, trackers, is, is_12, is_11, 4, is_13, 0, i_10, -1 * i_16, i_14, i_5, i_6, 7, 0, false, 0, true);
+        i++;
+        is[0] = (int)((float)i_4 - 4F * f);
+        is_11[0] = (int)((float)i_5 - 9.1923F * f_15);
+        is_12[0] = (int)((float)i_6 + 9.1923F * f_15);
+        is[1] = (int)((float)i_4 - 4F * f);
+        is_11[1] = (int)((float)i_5 - 3.3646F * f_15);
+        is_12[1] = (int)((float)i_6 + 12.557F * f_15);
+        is[2] = (int)((float)i_4 + 4F * f);
+        is_11[2] = (int)((float)i_5 - 3.3646F * f_15);
+        is_12[2] = (int)((float)i_6 + 12.557F * f_15);
+        is[3] = (int)((float)i_4 + 4F * f);
+        is_11[3] = (int)((float)i_5 - 9.1923F * f_15);
+        is_12[3] = (int)((float)i_6 + 9.1923F * f_15);
+        planes[i] = new Plane(medium, trackers, is, is_12, is_11, 4, is_13, 0, i_10, 1 * i_16, i_14, i_5, i_6, 7, 0, false, 0, true);
+        i++;
+        is[0] = (int)((float)i_4 - 4F * f);
+        is_11[0] = (int)((float)i_5 - 9.1923F * f_15);
+        is_12[0] = (int)((float)i_6 + 9.1923F * f_15);
+        is[1] = (int)((float)i_4 - 4F * f);
+        is_11[1] = (int)((float)i_5 - 12.557F * f_15);
+        is_12[1] = (int)((float)i_6 + 3.3646F * f_15);
+        is[2] = (int)((float)i_4 + 4F * f);
+        is_11[2] = (int)((float)i_5 - 12.557F * f_15);
+        is_12[2] = (int)((float)i_6 + 3.3646F * f_15);
+        is[3] = (int)((float)i_4 + 4F * f);
+        is_11[3] = (int)((float)i_5 - 9.1923F * f_15);
+        is_12[3] = (int)((float)i_6 + 9.1923F * f_15);
+        planes[i] = new Plane(medium, trackers, is, is_12, is_11, 4, is_13, 0, i_10, 1 * i_16, i_14, i_5, i_6, 7, 0, false, 0, true);
+        i++;
+    }
+
     int ground;
     int mast;
+    int sparkat;
     int rc[] = {
         120, 120, 120
     };
     float size;
     float depth;
-
-    public Wheels()
-    {
-        size = 2.0F;
-        depth = 3F;
-        ground = 0;
-        mast = 0;
-    }
-
-    public void setrims(int i, int j, int k, int l, int i1)
-    {
-        rc[0] = i;
-        rc[1] = j;
-        rc[2] = k;
-        size = (float)l / 10F;
-        depth = (float)i1 / 10F;
-    }
-
-    public void make(Medium medium, Trackers trackers, Plane aplane[], int i, int j, int k, int l, 
-            int i1, int j1, int k1, int l1)
-    {
-        int ai[] = new int[16];
-        int ai1[] = new int[16];
-        int ai2[] = new int[16];
-        int ai3[] = {
-            45, 45, 45
-        };
-        int i2 = 0;
-        float f = (float)j1 / 10F;
-        float f1 = (float)k1 / 10F;
-        if(i1 == 11)
-        {
-            i2 = (int)((float)j + 4F * f);
-        }
-        byte byte0 = -1;
-        if(j < 0)
-        {
-            byte0 = 1;
-        }
-        int j2 = 0;
-        do
-        {
-            ai[j2] = (int)((float)j - 4F * f);
-        } while(++j2 < 16);
-        ai1[0] = (int)((float)k - 12F * f1);
-        ai2[0] = (int)((float)l + 5F * f1);
-        ai1[1] = (int)((float)k - 12F * f1);
-        ai2[1] = (int)((float)l - 5F * f1);
-        ai1[2] = (int)((float)k - 5F * f1);
-        ai2[2] = (int)((float)l - 12F * f1);
-        ai1[3] = (int)((float)k + 5F * f1);
-        ai2[3] = (int)((float)l - 12F * f1);
-        ai1[4] = (int)((float)k + 12F * f1);
-        ai2[4] = (int)((float)l - 5F * f1);
-        ai1[5] = (int)((float)k + 12F * f1);
-        ai2[5] = (int)((float)l + 5F * f1);
-        ai1[6] = (int)((float)k + 5F * f1);
-        ai2[6] = (int)((float)l + 12F * f1);
-        ai1[7] = (int)((float)k - 5F * f1);
-        ai2[7] = (int)((float)l + 12F * f1);
-        ai1[8] = k;
-        ai2[8] = (int)((float)l + 10F * size);
-        ai1[9] = (int)((double)k + 8.6600000000000001D * (double)size);
-        ai2[9] = (int)((float)l + 5F * size);
-        ai1[10] = (int)((double)k + 8.6600000000000001D * (double)size);
-        ai2[10] = (int)((float)l - 5F * size);
-        ai1[11] = k;
-        ai2[11] = (int)((float)l - 10F * size);
-        ai1[12] = (int)((double)k - 8.6600000000000001D * (double)size);
-        ai2[12] = (int)((float)l - 5F * size);
-        ai1[13] = (int)((double)k - 8.6600000000000001D * (double)size);
-        ai2[13] = (int)((float)l + 5F * size);
-        ai1[14] = k;
-        ai2[14] = (int)((float)l + 10F * size);
-        ai1[15] = (int)((float)k - 5F * f1);
-        ai2[15] = (int)((float)l + 12F * f1);
-        aplane[i] = new Plane(medium, trackers, ai, ai2, ai1, 16, ai3, false, l1, 0, i2, k, l, 7, 0, false, 0);
-        mast++;
-        aplane[i].master = mast;
-        i++;
-        ai[2] = (int)((float)j - depth * f);
-        ai1[2] = k;
-        ai2[2] = l;
-        j2 = -16;
-        if(l1 == 21)
-        {
-            j2 = -17;
-        }
-        ai1[0] = k;
-        ai2[0] = (int)((float)l + 10F * size);
-        ai1[1] = (int)((double)k + 8.6600000000000001D * (double)size);
-        ai2[1] = (int)((float)l + 5F * size);
-        aplane[i] = new Plane(medium, trackers, ai, ai2, ai1, 3, rc, false, j2, 0, i2, k, l, 7, 0, false, 0);
-        i++;
-        ai1[0] = (int)((double)k + 8.6600000000000001D * (double)size);
-        ai2[0] = (int)((float)l + 5F * size);
-        ai1[1] = (int)((double)k + 8.6600000000000001D * (double)size);
-        ai2[1] = (int)((float)l - 5F * size);
-        aplane[i] = new Plane(medium, trackers, ai, ai2, ai1, 3, rc, false, j2, 0, i2, k, l, 7, 0, false, 0);
-        i++;
-        ai1[0] = (int)((double)k + 8.6600000000000001D * (double)size);
-        ai2[0] = (int)((float)l - 5F * size);
-        ai1[1] = k;
-        ai2[1] = (int)((float)l - 10F * size);
-        aplane[i] = new Plane(medium, trackers, ai, ai2, ai1, 3, rc, false, j2, 0, i2, k, l, 7, 0, false, 0);
-        i++;
-        ai1[0] = k;
-        ai2[0] = (int)((float)l - 10F * size);
-        ai1[1] = (int)((double)k - 8.6600000000000001D * (double)size);
-        ai2[1] = (int)((float)l - 5F * size);
-        aplane[i] = new Plane(medium, trackers, ai, ai2, ai1, 3, rc, false, j2, 0, i2, k, l, 7, 0, false, 0);
-        i++;
-        ai1[0] = (int)((double)k - 8.6600000000000001D * (double)size);
-        ai2[0] = (int)((float)l - 5F * size);
-        ai1[1] = (int)((double)k - 8.6600000000000001D * (double)size);
-        ai2[1] = (int)((float)l + 5F * size);
-        aplane[i] = new Plane(medium, trackers, ai, ai2, ai1, 3, rc, false, j2, 0, i2, k, l, 7, 0, false, 0);
-        i++;
-        ai1[0] = (int)((double)k - 8.6600000000000001D * (double)size);
-        ai2[0] = (int)((float)l + 5F * size);
-        ai1[1] = k;
-        ai2[1] = (int)((float)l + 10F * size);
-        aplane[i] = new Plane(medium, trackers, ai, ai2, ai1, 3, rc, false, j2, 0, i2, k, l, 7, 0, false, 0);
-        i++;
-        ai[0] = (int)((float)j - 4F * f);
-        ai1[0] = (int)((float)k - 12F * f1);
-        ai2[0] = (int)((float)l + 5F * f1);
-        ai[1] = (int)((float)j - 4F * f);
-        ai1[1] = (int)((float)k - 12F * f1);
-        ai2[1] = (int)((float)l - 5F * f1);
-        ai[2] = (int)((float)j + 4F * f);
-        ai1[2] = (int)((float)k - 12F * f1);
-        ai2[2] = (int)((float)l - 5F * f1);
-        ai[3] = (int)((float)j + 4F * f);
-        ai1[3] = (int)((float)k - 12F * f1);
-        ai2[3] = (int)((float)l + 5F * f1);
-        aplane[i] = new Plane(medium, trackers, ai, ai2, ai1, 4, ai3, false, l1, -1 * byte0, i2, k, l, 7, 0, false, 0);
-        i++;
-        ai[0] = (int)((float)j - 4F * f);
-        ai1[0] = (int)((float)k - 5F * f1);
-        ai2[0] = (int)((float)l - 12F * f1);
-        ai[1] = (int)((float)j - 4F * f);
-        ai1[1] = (int)((float)k - 12F * f1);
-        ai2[1] = (int)((float)l - 5F * f1);
-        ai[2] = (int)((float)j + 4F * f);
-        ai1[2] = (int)((float)k - 12F * f1);
-        ai2[2] = (int)((float)l - 5F * f1);
-        ai[3] = (int)((float)j + 4F * f);
-        ai1[3] = (int)((float)k - 5F * f1);
-        ai2[3] = (int)((float)l - 12F * f1);
-        aplane[i] = new Plane(medium, trackers, ai, ai2, ai1, 4, ai3, false, l1, 1 * byte0, i2, k, l, 7, 0, false, 0);
-        i++;
-        ai[0] = (int)((float)j - 4F * f);
-        ai1[0] = (int)((float)k - 5F * f1);
-        ai2[0] = (int)((float)l - 12F * f1);
-        ai[1] = (int)((float)j - 4F * f);
-        ai1[1] = (int)((float)k + 5F * f1);
-        ai2[1] = (int)((float)l - 12F * f1);
-        ai[2] = (int)((float)j + 4F * f);
-        ai1[2] = (int)((float)k + 5F * f1);
-        ai2[2] = (int)((float)l - 12F * f1);
-        ai[3] = (int)((float)j + 4F * f);
-        ai1[3] = (int)((float)k - 5F * f1);
-        ai2[3] = (int)((float)l - 12F * f1);
-        aplane[i] = new Plane(medium, trackers, ai, ai2, ai1, 4, ai3, false, l1, -1 * byte0, i2, k, l, 7, 0, false, 0);
-        i++;
-        ai[0] = (int)((float)j - 4F * f);
-        ai1[0] = (int)((float)k + 12F * f1);
-        ai2[0] = (int)((float)l - 5F * f1);
-        ai[1] = (int)((float)j - 4F * f);
-        ai1[1] = (int)((float)k + 5F * f1);
-        ai2[1] = (int)((float)l - 12F * f1);
-        ai[2] = (int)((float)j + 4F * f);
-        ai1[2] = (int)((float)k + 5F * f1);
-        ai2[2] = (int)((float)l - 12F * f1);
-        ai[3] = (int)((float)j + 4F * f);
-        ai1[3] = (int)((float)k + 12F * f1);
-        ai2[3] = (int)((float)l - 5F * f1);
-        aplane[i] = new Plane(medium, trackers, ai, ai2, ai1, 4, ai3, false, l1, 1 * byte0, i2, k, l, 7, 0, false, 0);
-        i++;
-        ai[0] = (int)((float)j - 4F * f);
-        ai1[0] = (int)((float)k + 12F * f1);
-        ai2[0] = (int)((float)l - 5F * f1);
-        ai[1] = (int)((float)j - 4F * f);
-        ai1[1] = (int)((float)k + 12F * f1);
-        ai2[1] = (int)((float)l + 5F * f1);
-        ai[2] = (int)((float)j + 4F * f);
-        ai1[2] = (int)((float)k + 12F * f1);
-        ai2[2] = (int)((float)l + 5F * f1);
-        ai[3] = (int)((float)j + 4F * f);
-        ai1[3] = (int)((float)k + 12F * f1);
-        ai2[3] = (int)((float)l - 5F * f1);
-        aplane[i] = new Plane(medium, trackers, ai, ai2, ai1, 4, ai3, false, l1, -1 * byte0, i2, k, l, 7, 0, false, 0);
-        i++;
-        if(ground < (int)((float)k + 12F * f1 + 1.0F))
-        {
-            ground = (int)((float)k + 12F * f1 + 1.0F);
-        }
-        ai[0] = (int)((float)j - 4F * f);
-        ai1[0] = (int)((float)k + 5F * f1);
-        ai2[0] = (int)((float)l + 12F * f1);
-        ai[1] = (int)((float)j - 4F * f);
-        ai1[1] = (int)((float)k + 12F * f1);
-        ai2[1] = (int)((float)l + 5F * f1);
-        ai[2] = (int)((float)j + 4F * f);
-        ai1[2] = (int)((float)k + 12F * f1);
-        ai2[2] = (int)((float)l + 5F * f1);
-        ai[3] = (int)((float)j + 4F * f);
-        ai1[3] = (int)((float)k + 5F * f1);
-        ai2[3] = (int)((float)l + 12F * f1);
-        aplane[i] = new Plane(medium, trackers, ai, ai2, ai1, 4, ai3, false, l1, 1 * byte0, i2, k, l, 7, 0, false, 0);
-        i++;
-        ai[0] = (int)((float)j - 4F * f);
-        ai1[0] = (int)((float)k + 5F * f1);
-        ai2[0] = (int)((float)l + 12F * f1);
-        ai[1] = (int)((float)j - 4F * f);
-        ai1[1] = (int)((float)k - 5F * f1);
-        ai2[1] = (int)((float)l + 12F * f1);
-        ai[2] = (int)((float)j + 4F * f);
-        ai1[2] = (int)((float)k - 5F * f1);
-        ai2[2] = (int)((float)l + 12F * f1);
-        ai[3] = (int)((float)j + 4F * f);
-        ai1[3] = (int)((float)k + 5F * f1);
-        ai2[3] = (int)((float)l + 12F * f1);
-        aplane[i] = new Plane(medium, trackers, ai, ai2, ai1, 4, ai3, false, l1, -1 * byte0, i2, k, l, 7, 0, false, 0);
-        i++;
-        ai[0] = (int)((float)j - 4F * f);
-        ai1[0] = (int)((float)k - 12F * f1);
-        ai2[0] = (int)((float)l + 5F * f1);
-        ai[1] = (int)((float)j - 4F * f);
-        ai1[1] = (int)((float)k - 5F * f1);
-        ai2[1] = (int)((float)l + 12F * f1);
-        ai[2] = (int)((float)j + 4F * f);
-        ai1[2] = (int)((float)k - 5F * f1);
-        ai2[2] = (int)((float)l + 12F * f1);
-        ai[3] = (int)((float)j + 4F * f);
-        ai1[3] = (int)((float)k - 12F * f1);
-        ai2[3] = (int)((float)l + 5F * f1);
-        aplane[i] = new Plane(medium, trackers, ai, ai2, ai1, 4, ai3, false, l1, 1 * byte0, i2, k, l, 7, 0, false, 0);
-        i++;
-    }
 }
