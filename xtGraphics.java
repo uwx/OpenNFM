@@ -375,6 +375,10 @@ public class xtGraphics extends Panel
     static int sshake;
     static int sprevdam;
     boolean isloadoldstatus;
+    int alocked;
+    int lcarx;
+    int lcary;
+    int lcarz;
     
     public void makeFont()
     {
@@ -3294,6 +3298,164 @@ public class xtGraphics extends Panel
 //=======
 //>>>>>>> nfm2desktop
     
+    public float calprox(CheckPoints c)
+    {
+        int i = 0;
+        for(int i_9 = 0; i_9 < c.n - 1; i_9++)
+        {
+            for(int i_10 = i_9 + 1; i_10 < c.n; i_10++)
+            {
+                if(Math.abs(c.x[i_9] - c.x[i_10]) > i)
+                    i = Math.abs(c.x[i_9] - c.x[i_10]);
+                if(Math.abs(c.z[i_9] - c.z[i_10]) > i)
+                    i = Math.abs(c.z[i_9] - c.z[i_10]);
+            }
+
+        }
+
+        return (float)i / 90F;
+    }
+    
+    public void getalocked(CheckPoints c, Madness ma) {
+    	if (alocked == -1) {
+	    	for(int i1 = 0; i1 < 7; i1++)
+	        {
+	            if(holdit)
+	            {
+	                if(c.pos[i1] == 0)
+	                {
+	                    alocked = i1;
+	                    //ma.im = i1;
+	                }
+	                continue;
+	            }
+	            if(c.dested[i1] == 0)
+	            {
+	                alocked = i1;
+	                //ma.im = i1;
+	            }
+	        }
+    	}
+    }
+    
+    public void radarstat(Madness mad, ContO conto, CheckPoints checkpoints)
+    {
+    	getalocked(checkpoints, mad);
+        rd.setComposite(AlphaComposite.getInstance(3, 0.5F));
+        rd.setColor(new Color(m.csky[0], m.csky[1], m.csky[2]));
+        rd.fillRoundRect(10, 55, 172, 172, 30, 30);
+        rd.setComposite(AlphaComposite.getInstance(3, 1.0F));
+        rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        rd.setColor(new Color(m.csky[0] / 2, m.csky[1] / 2, m.csky[2] / 2));
+        int i = 0;
+        do
+        {
+            if(i >= checkpoints.n)
+                break;
+            int j = i + 1;
+            if(i == checkpoints.n - 1)
+                j = 0;
+            boolean flag = false;
+            if(checkpoints.typ[j] == -3)
+            {
+                j = 0;
+                flag = true;
+            }
+            int ai[] = {
+                (int)(96F - (float)(checkpoints.opx[mad.im] - checkpoints.x[i]) / calprox(checkpoints)), (int)(96F - (float)(checkpoints.opx[mad.im] - checkpoints.x[j]) / calprox(checkpoints))
+            };
+            int ai2[] = {
+                (int)(141F - (float)(checkpoints.z[i] - checkpoints.opz[mad.im]) / calprox(checkpoints)), (int)(141F - (float)(checkpoints.z[j] - checkpoints.opz[mad.im]) / calprox(checkpoints))
+            };
+            rot(ai, ai2, 96, 141, mad.cxz, 2);
+            rd.drawLine(ai[0], ai2[0], ai[1], ai2[1]);
+            if(flag)
+                break;
+            i++;
+        } while(true);
+        i = 0;
+        int k = 0;
+        int l = 0;
+		int ai1[] = new int[7];
+		int ai3[] = new int[7];
+		for(int k1 = 0; k1 < 7; k1++)
+		{
+			ai1[k1] = (int)(96F - (float)(checkpoints.opx[mad.im] - checkpoints.opx[k1]) / calprox(checkpoints));
+			ai3[k1] = (int)(141F - (float)(checkpoints.opz[k1] - checkpoints.opz[mad.im]) / calprox(checkpoints));
+		}
+
+		rot(ai1, ai3, 96, 141, mad.cxz, 7);
+		i = 0;
+		k = (int)(80F + 80F * ((float)m.snap[1] / 100F));
+		if(k > 255)
+			k = 255;
+		if(k < 0)
+			k = 0;
+		l = (int)(159F + 159F * ((float)m.snap[2] / 100F));
+		if(l > 255)
+			l = 255;
+		if(l < 0)
+			l = 0;
+		for(int l1 = 0; l1 < 7; l1++)
+		{
+			if(l1 == mad.im || checkpoints.dested[l1] != 0)
+				continue;
+			byte byte0 = 2;
+			if(alocked == l1)
+			{
+				byte0 = 3;
+				rd.setColor(new Color(i, k, l));
+			} else
+			{
+				rd.setColor(new Color((i + m.csky[0]) / 2, (m.csky[1] + k) / 2, (l + m.csky[2]) / 2));
+			}
+			rd.drawLine(ai1[l1] - byte0, ai3[l1], ai1[l1] + byte0, ai3[l1]);
+			rd.drawLine(ai1[l1], ai3[l1] + byte0, ai1[l1], ai3[l1] - byte0);
+			rd.setColor(new Color(i, k, l));
+			rd.fillRect(ai1[l1] - 1, ai3[l1] - 1, 3, 3);
+		}
+        i = (int)(159F + 159F * ((float)m.snap[0] / 100F));
+        if(i > 255)
+            i = 255;
+        if(i < 0)
+            i = 0;
+        k = 0;
+        l = 0;
+        rd.setColor(new Color((i + m.csky[0]) / 2, (m.csky[1] + k) / 2, (l + m.csky[2]) / 2));
+        rd.drawLine(96, 139, 96, 143);
+        rd.drawLine(94, 141, 98, 141);
+        rd.setColor(new Color(i, k, l));
+        rd.fillRect(95, 140, 3, 3);
+        rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
+        if(m.darksky)
+        {
+            Color color = new Color(m.csky[0], m.csky[1], m.csky[2]);
+            float af[] = new float[3];
+            Color.RGBtoHSB(m.csky[0], m.csky[1], m.csky[2], af);
+            af[2] = 0.6F;
+            color = Color.getHSBColor(af[0], af[1], af[2]);
+            rd.setColor(color);
+            rd.fillRect(5, 232, 181, 17);
+            rd.drawLine(4, 233, 4, 247);
+            rd.drawLine(3, 235, 3, 245);
+            rd.drawLine(186, 233, 186, 247);
+            rd.drawLine(187, 235, 187, 245);
+        }
+        rd.drawImage(sped, 7, 234, null);
+        int i1 = conto.x - lcarx;
+        lcarx = conto.x;
+        int j1 = conto.y - lcary;
+        lcary = conto.y;
+        int i2 = conto.z - lcarz;
+        lcarz = conto.z;
+        float f = (float)Math.sqrt(i1 * i1 + i2 * i2);
+        float f1 = (f * 1.4F * 21F * 60F * 60F) / 100000F;
+        float f2 = f1 * 0.621371F;
+        rd.setColor(new Color(0, 0, 100));
+        rd.drawString((new StringBuilder()).append("").append((int)f1).toString(), 62, 245);
+        rd.drawString((new StringBuilder()).append("").append((int)f2).toString(), 132, 245);
+    }
+    
     public void oldposition(Graphics2D rd, Madness madness[], CheckPoints checkpoints) {
         rd.setColor(new Color(0, 0, 100));
         rd.drawString("" + (madness[0].nlaps + 1) + " / " + checkpoints.nlaps + "", 51, 18);
@@ -3706,6 +3868,7 @@ public class xtGraphics extends Panel
                     	isloadoldstatus = true;
                     }
                     
+                    radarstat(madness[0], conto[sc[0]], checkpoints);
                     m.flex++;
                 } else
                 {
@@ -5871,6 +6034,10 @@ public class xtGraphics extends Panel
         sshake = 0;
         sprevdam = 0;
         isloadoldstatus = false;
+        alocked = -1;
+        lcarx = 0;
+        lcary = 0;
+        lcarz = 0;
         m = medium;
         app = applet;
         rd = graphics2d;
