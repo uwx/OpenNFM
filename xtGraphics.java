@@ -370,6 +370,11 @@ public class xtGraphics extends Panel
 //>>>>>>> nfm2desktop
     final int nTracks = 100;
     final int nCars = 50;
+    static int groove;
+    static int sgroove;
+    static int sshake;
+    static int sprevdam;
+    boolean isloadoldstatus;
     
     public void makeFont()
     {
@@ -3289,6 +3294,159 @@ public class xtGraphics extends Panel
 //=======
 //>>>>>>> nfm2desktop
     
+    public void oldposition(Graphics2D rd, Madness madness[], CheckPoints checkpoints) {
+        rd.setColor(new Color(0, 0, 100));
+        rd.drawString("" + (madness[0].nlaps + 1) + " / " + checkpoints.nlaps + "", 51, 18);
+        rd.drawImage(was, 92, 7, null);
+        rd.setColor(new Color(0, 0, 100));
+        rd.drawString("" + checkpoints.wasted + " / 6", 150, 18);
+        rd.drawImage(pos, 42, 27, null);
+        rd.drawImage(rank[checkpoints.pos[madness[0].im]], 110, 28, null);
+    }
+    
+    public void status(Graphics2D rd) {
+    	rd.drawImage(dmg, 470, 7, null);
+        rd.drawImage(pwr, 470, 27, null);
+        rd.drawImage(lap, 19, 7, null);
+    }
+    
+    public void status(Graphics2D rd, Medium m, Madness madness, int negoffset) {
+        rd.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        colorSnap(50, 50, 50, 220);
+        Polygon pol = new Polygon(new int[] {
+            580 - negoffset, 801 - negoffset, 801 - negoffset, 600 - negoffset
+        }, new int[] {
+            6, 6, 56, 56
+        }, 4);
+        rd.fillPolygon(pol);
+        if(m.darksky || m.lightson)
+            rd.setColor(new Color(50, 204, 255, 220));
+        else
+            colorSnap(50, 204, 255, 220);
+        rd.drawPolygon(pol);
+        int pow = (int)((madness.power / 98F) * 116F);
+        int dam = (int)(((float)madness.hitmag / (float)madness.maxmag[madness.cn]) * 116F);
+        int shakex = 0;
+        int shakey = 0;
+        if(dam != sprevdam)
+        {
+            if(dam > sprevdam)
+                sshake = 15;
+            sprevdam = dam;
+        }
+        if(sshake > 0)
+        {
+            shakex = 3 - (int)(Math.random() * 6D);
+            shakey = 3 - (int)(Math.random() * 6D);
+            rd.translate(shakex, shakey);
+        }
+        Font tmp = rd.getFont();
+        rd.setFont(adventure13.deriveFont(0, 14F));
+        rd.setColor(!m.darksky && !m.lightson ? colorSnap(250, 250, 250) : Color.WHITE);
+        rd.drawString("Damage", 605 - negoffset, 27);
+        rd.drawString("Power", 614 - negoffset, 47);
+        if(dam > 0)
+        {
+            rd.setClip(new Rectangle(669 - negoffset, 14, 116, 14));
+            rd.setColor(dam <= 90 ? dam <= 50 ? Color.YELLOW : new Color(250, 140, 0) : Color.RED);
+            pol = new Polygon(new int[] {
+                650 - negoffset, (674 + dam) - negoffset, (669 + dam) - negoffset, 650 - negoffset
+            }, new int[] {
+                14, 14, 28, 28
+            }, 4);
+            rd.fillPolygon(pol);
+            rd.setClip(null);
+        }
+        String str = "" + (int)Math.floor(100F * ((float)madness.hitmag / (float)madness.maxmag[madness.cn])) + "%";
+        rd.setFont(new Font("Arial", 1, 11));
+        dam = dam <= 116 ? dam : 116;
+        if(dam > 30)
+        {
+            rd.setColor(Color.BLACK);
+            rd.drawString(str, (671 + (dam - rd.getFontMetrics().stringWidth(str)) / 2) - negoffset, 25);
+        } else
+        {
+            rd.setColor(!m.darksky && !m.lightson ? colorSnap(250, 250, 250) : Color.WHITE);
+            rd.drawString(str, (675 + dam) - negoffset, 25);
+        }
+        if(m.darksky || m.lightson)
+            rd.setColor(new Color(50, 204, 255, 220));
+        else
+            colorSnap(50, 204, 255, 220);
+        for(int i = 0; i < pow && i < 114; i += 6)
+            rd.fillRect((671 + i) - negoffset, pow < 110 || i != sgroove ? 36 : 35, 4, pow < 110 || i != sgroove ? 10 : 12);
+
+        sgroove += 6;
+        if(sgroove > 114)
+            sgroove = 0;
+        str = (new StringBuilder()).append((int)Math.floor(100F * (madness.power / 98F))).append("%").toString();
+        rd.setColor(!m.darksky && !m.lightson ? colorSnap(250, 250, 250) : Color.WHITE);
+        rd.drawString(str, 782 - rd.getFontMetrics().stringWidth(str), 45);
+        //rd.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
+        rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
+        colorSnap(0, 0, 0);
+        Stroke stroke = rd.getStroke();
+        rd.setStroke(new BasicStroke(2.0F));
+        rd.drawRect(668 - negoffset, 13, 118, 16);
+        rd.drawRect(668 - negoffset, 33, 118, 16);
+        rd.setStroke(stroke);
+        rd.setColor(!m.darksky && !m.lightson ? colorSnap(250, 0, 0) : Color.RED);
+        rd.drawRect(667 - negoffset, 12, 119, 17);
+        rd.setColor(!m.darksky && !m.lightson ? colorSnap(50, 204, 255) : new Color(50, 204, 255));
+        rd.drawRect(667 - negoffset, 32, 119, 17);
+        rd.setFont(tmp);
+        if(sshake > 0)
+        {
+            rd.translate(-shakex, -shakey);
+            sshake--;
+        }
+    }
+    
+    public void position(Graphics2D rd, Medium m, CheckPoints checkpoints, Madness madness) {
+        rd.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
+        rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+        colorSnap(50, 50, 50, 220);
+        Polygon pol = new Polygon(new int[] {
+            -1, 220, 200, -1
+        }, new int[] {
+            6, 6, 56, 56
+        }, 4);
+        rd.fillPolygon(pol);
+        if(m.darksky || m.lightson)
+            rd.setColor(new Color(50, 204, 255, 220));
+        else
+            colorSnap(50, 204, 255, 220);
+        rd.drawPolygon(pol);
+        Font tmp = rd.getFont();
+        rd.setFont(adventure13.deriveFont(0, 14F));
+        rd.setColor(!m.darksky && !m.lightson ? colorSnap(250, 250, 250) : Color.WHITE);
+        rd.drawString("Lap:", 15, 22);
+        rd.drawString("Wasted:", 102, 22);
+        rd.drawString("Position:", 32, 42);
+        rd.setColor(!m.darksky && !m.lightson ? colorSnap(50, 204, 255) : new Color(50, 204, 255));
+        //rd.setColor(Color.green);
+        rd.drawString("" + (madness.nlaps + 1) + " / " + checkpoints.nlaps, 46, 22);
+        rd.drawString("" + checkpoints.wasted + " / " + "6", 160, 22);
+        int pos = checkpoints.pos[madness.im] + 1;
+        String sufix;
+        if(pos == 1)
+            sufix = "st";
+        else if(pos == 2)
+            sufix = "nd";
+        else if(pos == 3)
+            sufix = "rd";
+        else
+            sufix = "th";
+        sufix = (new StringBuilder()).append(sufix).append(" / ").append(7 - checkpoints.wasted).toString();
+        rd.drawString(sufix, 125, 42);
+        rd.setFont(adventure13.deriveFont(0, 32F));
+        rd.drawString(String.valueOf(pos), 121 - rd.getFontMetrics().stringWidth(String.valueOf(pos)), 52);
+        rd.setFont(tmp);
+        rd.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_OFF);
+        //rd.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING, RenderingHints.VALUE_TEXT_ANTIALIAS_OFF);
+    }
+    
     public void stat(Madness madness[], CheckPoints checkpoints, Control control, ContO conto[], boolean flag)
     {        
         if(holdit)
@@ -3528,17 +3686,6 @@ public class xtGraphics extends Panel
                     rd.drawLine(148, 29, 148, 43);
                     ////////////
                     
-                    rd.drawImage(dmg, 470, 7, null);
-                    rd.drawImage(pwr, 470, 27, null);
-                    rd.drawImage(lap, 19, 7, null);
-                    rd.setColor(new Color(0, 0, 100));
-                    rd.drawString("" + (madness[0].nlaps + 1) + " / " + checkpoints.nlaps + "", 51, 18);
-                    rd.drawImage(was, 92, 7, null);
-                    rd.setColor(new Color(0, 0, 100));
-                    rd.drawString("" + checkpoints.wasted + " / 6", 150, 18);
-                    rd.drawImage(pos, 42, 27, null);
-                    rd.drawImage(rank[checkpoints.pos[madness[0].im]], 110, 28, null);
-                    
                     rd.drawImage(sped, 7, 234, null);
                     float speedKph = (float)unitsToKilometers((madness[0].speed * 1.4F * 21F * 60F * 60F) / 100000F);
                     float speedMph = (float)unitsToMiles((madness[0].speed * 1.4F * 21F * 60F * 60F) / 100000F);;
@@ -3549,32 +3696,45 @@ public class xtGraphics extends Panel
                     //drawSpeedo(speedKph, (float)unitsToKilometers(madness[0].swits[sc[madness[0].im]][2] + 20), 0.0F, 0, 75);
                     dragShotSpeedo(checkpoints, madness, (int)unitsToKilometers(madness[0].swits[sc[madness[0].im]][2]), speedKph);
                     
+                    try { //new dragshot status
+                    	position(rd, m, checkpoints, madness[0]);
+                    	status(rd, m, madness[0], 120);
+                    	isloadoldstatus = false;
+                    } catch (Exception ex) { //old nfm status
+                    	oldposition(rd, madness, checkpoints);
+                    	status(rd);
+                    	isloadoldstatus = true;
+                    }
+                    
                     m.flex++;
                 } else
                 {
-                    if(posit != checkpoints.pos[madness[0].im])
-                    {
-                        rd.drawImage(rank[checkpoints.pos[madness[0].im]], 110, 28, null);
-                        posit = checkpoints.pos[madness[0].im];
-                    }
-                    if(wasted != checkpoints.wasted)
-                    {
-                        rd.setColor(new Color(m.csky[0], m.csky[1], m.csky[2]));
-                        rd.fillRect(150, 8, 30, 10);
-                        rd.setColor(new Color(0, 0, 100));
-                        rd.drawString("" + checkpoints.wasted + " / 6", 150, 18);
-                        wasted = checkpoints.wasted;
-                    }
-                    if(laps != madness[0].nlaps)
-                    {
-                        rd.setColor(new Color(m.csky[0], m.csky[1], m.csky[2]));
-                        rd.fillRect(51, 8, 40, 10);
-                        rd.setColor(new Color(0, 0, 100));
-                        rd.drawString("" + (madness[0].nlaps + 1) + " / " + checkpoints.nlaps + "", 51, 18);
-                        laps = madness[0].nlaps;
-                    }
+                	if (isloadoldstatus) { //old nfm status
+	                    if(posit != checkpoints.pos[madness[0].im])
+	                    {
+	                        rd.drawImage(rank[checkpoints.pos[madness[0].im]], 110, 28, null);
+	                        posit = checkpoints.pos[madness[0].im];
+	                    }
+	                    if(wasted != checkpoints.wasted)
+	                    {
+	                        rd.setColor(new Color(m.csky[0], m.csky[1], m.csky[2]));
+	                        rd.fillRect(150, 8, 30, 10);
+	                        rd.setColor(new Color(0, 0, 100));
+	                        rd.drawString("" + checkpoints.wasted + " / 6", 150, 18);
+	                        wasted = checkpoints.wasted;
+	                    }
+	                    if(laps != madness[0].nlaps)
+	                    {
+	                        rd.setColor(new Color(m.csky[0], m.csky[1], m.csky[2]));
+	                        rd.fillRect(51, 8, 40, 10);
+	                        rd.setColor(new Color(0, 0, 100));
+	                        rd.drawString("" + (madness[0].nlaps + 1) + " / " + checkpoints.nlaps + "", 51, 18);
+	                        laps = madness[0].nlaps;
+	                    }
+                	}
                 }
-                drawstat(madness[0].maxmag[madness[0].cn], madness[0].hitmag, madness[0].newcar, madness[0].power);
+                if (isloadoldstatus) //old nfm status
+                	drawstat(madness[0].maxmag[madness[0].cn], madness[0].hitmag, madness[0].newcar, madness[0].power);
             }
             if(!holdit)
             {
@@ -5706,6 +5866,11 @@ public class xtGraphics extends Panel
         flickr = 0;
         flickr2 = 0;
         flickr3 = 0;
+        groove = 0;
+        sgroove = 0;
+        sshake = 0;
+        sprevdam = 0;
+        isloadoldstatus = false;
         m = medium;
         app = applet;
         rd = graphics2d;
