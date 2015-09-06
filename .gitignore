@@ -42,19 +42,18 @@ Network Trash Folder
 Temporary Items
 .apdisk
 
-# Set in Eclipse
-
-
-# Mine
-
-# BlueJ comment context
-*.ctxt
+########
+# Mine #
+########
 
 # Saved game data
 *.dat
 
 # Bluej data
 *.bluej
+
+# BlueJ comment context
+*.ctxt
 
 # Game runner
 *.html
