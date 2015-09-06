@@ -5,19 +5,6 @@
 	<classpathentry kind="lib" path="libraries/dragshotMod.jar" sourcepath="libraries/dragshotMod.zip"/>
 	<classpathentry kind="lib" path="libraries/plugin.jar"/>
 	<classpathentry kind="lib" path="libraries/easyogg/easyogg.jar"/>
-	<classpathentry kind="lib" path="libraries/easyogg/jogg-0.0.7.jar"/>
-	<classpathentry kind="lib" path="libraries/easyogg/jorbis-0.0.15.jar"/>
-	<classpathentry kind="lib" path="libraries/easyogg/startup2.jar"/>
-	<classpathentry kind="lib" path="libraries/CodecJOrbis.jar"/>
-	<classpathentry kind="lib" path="libraries/dragshotMod.zip"/>
 	<classpathentry kind="lib" path="libraries/jl1.0.1.jar"/>
-	<classpathentry kind="lib" path="libraries/jl1.0.1.zip"/>
-	<classpathentry kind="lib" path="libraries/jorbis-0.0.17.zip"/>
-	<classpathentry kind="lib" path="libraries/LibraryJavaSound.jar"/>
-	<classpathentry kind="lib" path="libraries/mp3spi-1.9.5-1.jar"/>
-	<classpathentry kind="lib" path="libraries/org.apache.commons.io.jar.zip"/>
-	<classpathentry kind="lib" path="libraries/SoundSystem.jar"/>
-	<classpathentry kind="lib" path="libraries/tritonus-share-0.3.7-2.jar"/>
-	<classpathentry kind="lib" path="libraries/vorbisspi-1.0.3-1.jar"/>
 	<classpathentry kind="output" path=""/>
 </classpath>

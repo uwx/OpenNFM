@@ -1622,7 +1622,7 @@ public class xtGraphics extends Panel
                     if(loadedt[i - 1])
                     {
                     	if(isMidi[i - 1]) {
-                    		mtracks[i - 1].stop();
+                    		mtracks[i - 1].setPaused(true);
                     	} else {
                     		stracks[i - 1].stop();
                     	}
@@ -1633,7 +1633,7 @@ public class xtGraphics extends Panel
                 	System.out.println("We've reached an unmute check...");
                 	if(isMidi[i - 1]) {
                 		System.out.println("Unmute check > play midi...");
-                		mtracks[i - 1].resume();
+                		mtracks[i - 1].setPaused(false);
                 	} else {
                 		System.out.println("Unmute check > play mod...");
                 		stracks[i - 1].resume();
@@ -2539,7 +2539,7 @@ public class xtGraphics extends Panel
                 	System.out.println("We've reached an unmute check...");
                 	if(isMidi[i - 1]) {
                 		System.out.println("Unmute check > play midi...");
-                		mtracks[i - 1].resume();
+                		mtracks[i - 1].setPaused(false);
                 	} else {
                 		System.out.println("Unmute check > play mod...");
                 		stracks[i - 1].resume();
@@ -2556,7 +2556,7 @@ public class xtGraphics extends Panel
                     	System.out.println("We've reached an unmute check...");
                     	if(isMidi[i - 1]) {
                     		System.out.println("Unmute check > play midi...");
-                    		mtracks[i - 1].resume();
+                    		mtracks[i - 1].setPaused(false);
                     	} else {
                     		System.out.println("Unmute check > play mod...");
                     		stracks[i - 1].resume();
@@ -3322,7 +3322,7 @@ public class xtGraphics extends Panel
                 if(loadedt[checkpoints.stage - 1])
                 {
                 	if(isMidi[checkpoints.stage - 1]) {
-                		mtracks[checkpoints.stage - 1].stop();
+                		mtracks[checkpoints.stage - 1].setPaused(true);
                 	} else {
                 		stracks[checkpoints.stage - 1].stop();
                 	}
@@ -4433,7 +4433,7 @@ public class xtGraphics extends Panel
             if(loadedt[checkpoints.stage - 1])
             {
             	if(isMidi[checkpoints.stage - 1]) {
-            		mtracks[checkpoints.stage - 1].stop();
+            		mtracks[checkpoints.stage - 1].setPaused(true);
             	} else {
             		stracks[checkpoints.stage - 1].stop();
             	}
