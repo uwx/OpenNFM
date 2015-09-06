@@ -204,7 +204,7 @@ public class ContO
         }
         return ((j - m.focus_point) * (m.cy - i)) / j + i;
     }
-
+    
     public ContO(byte abyte0[], Medium medium, Trackers trackers)
     {
         npl = 0;
@@ -246,17 +246,17 @@ public class ContO
         checkpoint = 0;
         m = medium;
         t = trackers;
-        p = new Plane[270];
+        p = new Plane[300];
         String s1 = "";
         boolean flag = false;
         boolean flag1 = false;
         int i = 0;
         float f = 1.0F;
         float f1 = 1.0F;
-        int ai[] = new int[100];
-        int ai1[] = new int[100];
-        int ai2[] = new int[100];
-        int ai3[] = new int[3];
+        int ai[] = new int[500]; //x
+        int ai1[] = new int[500]; //y
+        int ai2[] = new int[500]; //z
+        int ai3[] = new int[3]; //colors
         boolean flag2 = false;
         boolean flag3 = false;
         Wheels wheels = new Wheels();
@@ -332,7 +332,7 @@ public class ContO
                 }
                 if(s1.startsWith("</p>"))
                 {
-                    p[npl] = new Plane(m, t, ai, ai2, ai1, i, ai3, flag2, k, l, 0, 0, 0, disline, 0, flag3, byte0);
+                	p[npl] = new Plane(m, t, ai, ai2, ai1, i, ai3, flag2, k, l, 0, 0, 0, disline, 0, flag3, byte0);
                     npl++;
                     flag = false;
                 }

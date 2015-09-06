@@ -2627,7 +2627,7 @@ public class xtGraphics extends Panel
     	{
     		settings(control);
     	}*/
-        if(flipo == 1)
+        if(flipo == 0)
         {
             powerup.play();
             flipo = 2;

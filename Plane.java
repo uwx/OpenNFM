@@ -72,12 +72,12 @@ public class Plane
         }
         return ((j - m.focus_point) * (m.cy - i)) / j + i;
     }
-
+    
     public Plane(Medium medium, Trackers trackers, int ai[], int ai1[], int ai2[], int i, int ai3[], 
             boolean flag, int j, int k, int l, int i1, int j1, int k1, 
             int l1, boolean flag1, int i2)
     {
-        c = new int[3];
+    	c = new int[3];
         oc = new int[3];
         hsb = new float[3];
         glass = false;
@@ -672,19 +672,52 @@ public class Plane
             {
                 if(l5 == 0)
                 {
-                    rd.setColor((new Color(c[0], c[1], c[2])).darker());
+                	/*if (glass) { 
+                		final int transp[] = new int[3];
+                		transp[0] = Color.getHSBColor(c[0], c[1], c[2]).getRed();
+                    	transp[1] = Color.getHSBColor(c[0], c[1], c[2]).getGreen();
+                    	transp[2] = Color.getHSBColor(c[0], c[1], c[2]).getBlue();
+                        rd.setColor(new Color(transp[0], transp[1], transp[2], 100).darker());
+                	} else {*/
+                		rd.setColor(Color.getHSBColor(c[0], c[1], c[2]).darker());
+                	//}
                 }
                 if(l5 == 1)
                 {
-                    rd.setColor(new Color(c[0], c[1], c[2]));
+                	/*if (glass) { 
+                		final int transp[] = new int[3];
+                		transp[0] = Color.getHSBColor(c[0], c[1], c[2]).getRed();
+                    	transp[1] = Color.getHSBColor(c[0], c[1], c[2]).getGreen();
+                    	transp[2] = Color.getHSBColor(c[0], c[1], c[2]).getBlue();
+                        rd.setColor(new Color(transp[0], transp[1], transp[2], 100));
+                	} else {*/
+                		rd.setColor(Color.getHSBColor(c[0], c[1], c[2]));
+                	//}
                 }
                 if(l5 == 2)
                 {
-                    rd.setColor((new Color(c[0], c[1], c[2])).brighter());
+                	/*if (glass) { 
+                		final int transp[] = new int[3];
+                		transp[0] = Color.getHSBColor(c[0], c[1], c[2]).getRed();
+                    	transp[1] = Color.getHSBColor(c[0], c[1], c[2]).getGreen();
+                    	transp[2] = Color.getHSBColor(c[0], c[1], c[2]).getBlue();
+                        rd.setColor(new Color(transp[0], transp[1], transp[2], 100).brighter());
+                	} else {*/
+                		rd.setColor(Color.getHSBColor(c[0], c[1], c[2]).brighter());
+                	//}
                 }
             } else
             {
-                rd.setColor(Color.getHSBColor(hsb[0], hsb[1], hsb[2]));
+            	/*if (glass) { 
+            		final int transp[] = new int[3];
+            		transp[0] = Color.getHSBColor(hsb[0], hsb[1], hsb[2]).getRed();
+                	transp[1] = Color.getHSBColor(hsb[0], hsb[1], hsb[2]).getGreen();
+                	transp[2] = Color.getHSBColor(hsb[0], hsb[1], hsb[2]).getBlue();
+                    rd.setColor(new Color(transp[0], transp[1], transp[2], 100));
+            	} else {*/
+            		rd.setColor(Color.getHSBColor(hsb[0], hsb[1], hsb[2]));
+            	//}
+            	
             }
             rd.fillPolygon(ai10, ai11, 3);
             chip++;
@@ -1151,7 +1184,11 @@ public class Plane
                     }
                 } while(++l15 < 8);
             }
-            rd.setColor(new Color(l11, j13, k14));
+            if (glass) { //////////////TRANSPARENT GLASS
+                rd.setColor(new Color(l11, j13, k14, 150)); // red, green, blue, alpha
+        	} else {
+        		rd.setColor(new Color(l11, j13, k14)); // red, green, blue
+        	}
             rd.fillPolygon(ai14, ai15, n);
             if(m.trk && gr == -10)
             {
@@ -1194,7 +1231,15 @@ public class Plane
                             k14 = 0;
                         }
                     }
-                    rd.setColor(new Color(l11, j13, k14));
+                    /*if (glass) { 
+                		final int transp[] = new int[3];
+                		transp[0] = new Color(l11, j13, k14).getRed();
+                    	transp[1] = new Color(l11, j13, k14).getGreen();
+                    	transp[2] = new Color(l11, j13, k14).getBlue();
+                        rd.setColor(new Color(transp[0], transp[1], transp[2], 100));
+                	} else {*/
+                		rd.setColor(new Color(l11, j13, k14));
+                	//}
                     rd.drawPolygon(ai14, ai15, n);
                 } else
                 {
@@ -1203,7 +1248,7 @@ public class Plane
                         rd.setColor(new Color(0, 0, 0));
                         rd.drawPolygon(ai14, ai15, n);
                     }
-                    if(flx == 1)
+                    if(flx == 1) /////////////////////////// MAY BE SHADOW
                     {
                         l11 = 0;
                         j13 = (int)(223F + 223F * ((float)m.snap[1] / 100F));
@@ -1224,7 +1269,16 @@ public class Plane
                         {
                             k14 = 0;
                         }
-                        rd.setColor(new Color(l11, j13, k14));
+                        /////////////////////////// MAY BE SHADOW
+                        /*if (glass) { 
+                    		final int transp[] = new int[3];
+                    		transp[0] = new Color(l11, j13, k14).getRed();
+                        	transp[1] = new Color(l11, j13, k14).getGreen();
+                        	transp[2] = new Color(l11, j13, k14).getBlue();
+                            rd.setColor(new Color(transp[0], transp[1], transp[2], 100));
+                    	} else {*/
+                    		rd.setColor(new Color(l11, j13, k14));
+                    	//}
                         rd.drawPolygon(ai14, ai15, n);
                         flx = 2;
                     }

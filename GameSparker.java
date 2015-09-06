@@ -679,7 +679,7 @@ public class GameSparker extends Applet
         xtgraphics.loaddata(k);
         Record record = new Record(medium);
         String as[] = {
-                "TunedTornadoShark", "formula7", "canyenaro", "TunedLVC", "TunedNimi", "TunedMaxRevenge", "TunedOxide", "koolkat", "drifter", "policecops", 
+        		"TunedTornadoShark", "formula7", "canyenaro", "TunedLVC", "TunedNimi", "TunedMaxRevenge", "TunedOxide", "koolkat", "drifter", "policecops", 
                 "mustang", "king", "TunedM8", "masheen", "radicalone", "TunedMonstaa", //16
                 
                 //added cars
