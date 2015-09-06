@@ -1971,14 +1971,6 @@ public class xtGraphics extends Panel
         		System.out.println("Loading midi...");
             	mtracks[i - 1].load();
             	loadedt[i - 1] = true;
-            	//mtracks[i - 1].play();
-        		// also applicable: 
-        		//mtracks[i - 1].play(0.5D);
-        		// would play it at half volume
-        		//mtracks[i - 1].play(0.5D, 1);
-        		// would play it 1 time 
-        		// (or 2? i don't know and don't care)
-        		// and at half volume
         	} else if (f2.exists()) {
         		System.out.println("Initializing mp3...");
         		isMidi[i - 1] = true;
