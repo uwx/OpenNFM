@@ -259,7 +259,6 @@ public class ContO
         int ai3[] = new int[3];
         boolean flag2 = false;
         boolean flag3 = false;
-        boolean rainbow = false;
         Wheels wheels = new Wheels();
         int j = 0;
         int k = 1;
@@ -302,10 +301,6 @@ public class ContO
                         ai3[1] = getvalue("c", s1, 1);
                         ai3[2] = getvalue("c", s1, 2);
                     }
-                    if(s1.startsWith("rainbow()"))
-                    {
-                    	rainbow = true;
-                    }
                     if(s1.startsWith("glass"))
                     {
                         flag2 = true;
@@ -337,10 +332,7 @@ public class ContO
                 }
                 if(s1.startsWith("</p>"))
                 {
-                    if (rainbow)
-                    	p[npl] = new Plane(m, t, ai, ai2, ai1, i, ai3, flag2, k, l, 0, 0, 0, disline, 0, flag3, byte0, true);
-                    else
-                    	p[npl] = new Plane(m, t, ai, ai2, ai1, i, ai3, flag2, k, l, 0, 0, 0, disline, 0, flag3, byte0);
+                    p[npl] = new Plane(m, t, ai, ai2, ai1, i, ai3, flag2, k, l, 0, 0, 0, disline, 0, flag3, byte0);
                     npl++;
                     flag = false;
                 }
