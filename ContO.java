@@ -253,12 +253,13 @@ public class ContO
         int i = 0;
         float f = 1.0F;
         float f1 = 1.0F;
-        int ai[] = new int[500]; //x
-        int ai1[] = new int[500]; //y
-        int ai2[] = new int[500]; //z
+        int ai[] = new int[500]; //x points
+        int ai1[] = new int[500]; //y points
+        int ai2[] = new int[500]; //z points
         int ai3[] = new int[3]; //colors
         boolean flag2 = false;
         boolean flag3 = false;
+        boolean randomcolor = false;
         Wheels wheels = new Wheels();
         int j = 0;
         int k = 1;
@@ -305,6 +306,10 @@ public class ContO
                     {
                         flag2 = true;
                     }
+                    if(s1.startsWith("random()") || s1.startsWith("rainbow()"))
+                    {
+                        randomcolor = true;
+                    }
                     if(s1.startsWith("lightF"))
                     {
                         byte0 = 1;
@@ -332,7 +337,10 @@ public class ContO
                 }
                 if(s1.startsWith("</p>"))
                 {
-                	p[npl] = new Plane(m, t, ai, ai2, ai1, i, ai3, flag2, k, l, 0, 0, 0, disline, 0, flag3, byte0);
+                	if (randomcolor)
+                		p[npl] = new Plane(m, t, ai, ai2, ai1, i, ai3, flag2, k, l, 0, 0, 0, disline, 0, flag3, byte0, true);
+                	else
+                		p[npl] = new Plane(m, t, ai, ai2, ai1, i, ai3, flag2, k, l, 0, 0, 0, disline, 0, flag3, byte0);
                     npl++;
                     flag = false;
                 }
