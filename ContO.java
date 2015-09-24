@@ -15,7 +15,7 @@ public class ContO
     int zy;
     int wxz;
     int wzy;
-    int dist;
+    int dist = 0;
     int maxR;
     int disp;
     int disline;

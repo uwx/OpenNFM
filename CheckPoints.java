@@ -19,7 +19,12 @@ public class CheckPoints
     int nlaps;
     String name;
     int pos[] = {
-        6, 6, 6, 6, 6, 6, 6
+    		50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 
+    		50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 
+    		50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 
+    		50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 
+    		50, 50, 50, 50, 50, 50, 50, 50, 50, 50, 
+    		50
     };
     int clear[];
     int dested[];
@@ -51,20 +56,20 @@ public class CheckPoints
         stage = 1;
         nlaps = 0;
         name = "hogan rewish";
-        clear = new int[7];
-        dested = new int[7];
+        clear = new int[51];
+        dested = new int[51];
         wasted = 0;
         haltall = false;
         pcleared = 0;
-        opx = new int[7];
-        opz = new int[7];
-        onscreen = new int[7];
-        omxz = new int[7];
+        opx = new int[51];
+        opz = new int[51];
+        onscreen = new int[51];
+        omxz = new int[51];
         catchfin = 0;
         postwo = 0;
     }
 
-    public void checkstat(Madness amadness[], ContO aconto[], Record record)
+    public void checkstat(Madness amadness[], ContO aconto[], Record record, int nplayers, int ncops)
     {
         if(!haltall)
         {
@@ -84,11 +89,11 @@ public class CheckPoints
                 {
                     clear[i] = -1;
                 }
-            } while(++i < 7);
+            } while(++i < nplayers - ncops - 1);
             i = 0;
             do
             {
-                for(int l = i + 1; l < 7; l++)
+                for(int l = i + 1; l < nplayers - ncops - 1; l++)
                 {
                     if(clear[i] != clear[l])
                     {
@@ -120,7 +125,7 @@ public class CheckPoints
                     }
                 }
 
-            } while(++i < 7);
+            } while(++i < nplayers - ncops - 1);
             if(stage > 2)
             {
                 int j = 0;
@@ -137,7 +142,7 @@ public class CheckPoints
                                 {
                                     postwo = i1;
                                 }
-                            } while(++i1 < 7);
+                            } while(++i1 < nplayers - ncops - 1);
                             if(py(opx[0] / 100, opx[postwo] / 100, opz[0] / 100, opz[postwo] / 100) < 14000 && clear[0] - clear[postwo] == 1)
                             {
                                 catchfin = 30;
@@ -149,7 +154,7 @@ public class CheckPoints
                             postwo = j;
                         }
                     }
-                } while(++j < 7);
+                } while(++j < nplayers - ncops - 1);
             }
         }
         wasted = 0;
@@ -160,7 +165,7 @@ public class CheckPoints
             {
                 wasted++;
             }
-        } while(++k < 7);
+        } while(++k < nplayers - ncops - 1);
         if(catchfin != 0)
         {
             catchfin--;

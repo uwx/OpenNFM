@@ -4,6 +4,7 @@ import java.awt.*;
 import java.io.*;
 import java.net.URL;
 import java.util.Date;
+import java.util.Random;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 //import org.apache.commons.io.FileUtils;
@@ -187,7 +188,7 @@ public class GameSparker extends Applet
     
     public GameSparker()
     {
-        u = new Control[7];
+        u = new Control[51];
         mouses = 0;
         xm = 0;
         ym = 0;
@@ -310,7 +311,7 @@ public class GameSparker extends Applet
             Record record)
     {
         trackers.nt = 0;
-        nob = 7;
+        nob = xtgraphics.nplayers;
         notb = 0;
         checkpoints.n = 0;
         checkpoints.nsp = 0;
@@ -641,15 +642,38 @@ public class GameSparker extends Applet
         int j1 = 0;
         do
             u[j1].reset(checkpoints, xtgraphics.sc[j1]);
-        while(++j1 < 7);
+        while(++j1 < xtgraphics.nplayers);
         xtgraphics.resetstat(checkpoints.stage);
         j1 = 0;
+        int prevx = 0;
+    	int prevz = 0;
         do
         {
-            aconto[j1] = new ContO(aconto1[xtgraphics.sc[j1]], xtgraphics.xstart[j1], 250 - aconto1[xtgraphics.sc[j1]].grat, xtgraphics.zstart[j1], 0);
-            amadness[j1].reseto(xtgraphics.sc[j1], aconto[j1], checkpoints);
-        } while(++j1 < 7);
+        	// STARTING LOCATIONS
+            // aconto[j1] = new ContO(aconto1[xtgraphics.sc[j1]], xtgraphics.xstart[j1], 250 - aconto1[xtgraphics.sc[j1]].grat, xtgraphics.zstart[j1], 0);
+        	for (int x = 0; x < trackers.nt; x++) {
+        		if (trackers.x[x] > prevx) prevx = trackers.x[x];
+        		if (trackers.z[x] > prevz) prevz = trackers.z[x];
+        	}
+        	int copx = (int)((Math.random() * prevx) - (Math.random() * (prevx * 2)));
+        	int copz = (int)((Math.random() * prevz) - (Math.random() * (prevz * 2)));
+        	System.out.println(""+j1);
+        	System.out.println(""+xtgraphics.sc[j1]);
+        	System.out.println(""+aconto1[xtgraphics.sc[j1]].grat);
+        	if (j1 >= xtgraphics.nplayers - xtgraphics.ncops - 1) {
+        	    aconto[j1] = new ContO(aconto1[xtgraphics.sc[j1]], copx, 250 - aconto1[xtgraphics.sc[j1]].grat, copz, 0);
+        	} else if(j1 % 3 == 0) {
+        	    aconto[j1] = new ContO(aconto1[xtgraphics.sc[j1]], 0, 250 - aconto1[xtgraphics.sc[j1]].grat, -760 + ((j1 / 3) * 760), 0);
+        	} else if(j1 % 3 == 1) {
+        	    aconto[j1] = new ContO(aconto1[xtgraphics.sc[j1]], -350, 250 - aconto1[xtgraphics.sc[j1]].grat, -380 + ((int)(j1 / 3) * 760), 0);
+        	} else if(j1 % 3 == 2) {
+        	    aconto[j1] = new ContO(aconto1[xtgraphics.sc[j1]], 350, 250 - aconto1[xtgraphics.sc[j1]].grat, -380 + ((int)(j1 / 3) * 760), 0);
+        	}
+        	amadness[j1].reseto(xtgraphics.sc[j1], aconto[j1], checkpoints);
+        } while(++j1 < xtgraphics.nplayers);
+        
         record.reset(aconto);
+        
         System.gc();
     }
 
@@ -707,13 +731,13 @@ public class GameSparker extends Applet
         ContO aconto[] = new ContO[as.length];
         loadbase(aconto, medium, trackers, xtgraphics, as);
         ContO aconto1[] = new ContO[10000];
-        Madness amadness[] = new Madness[7];
+        Madness amadness[] = new Madness[51];
         int l = 0;
         do
         {
             amadness[l] = new Madness(medium, record, xtgraphics, l);
             u[l] = new Control(medium);
-        } while(++l < 7);
+        } while(++l < xtgraphics.nplayers);
         l = 0;
         float f = 35F;
         int i1 = 80;
@@ -788,7 +812,7 @@ public class GameSparker extends Applet
                 }
             }
             if(xtgraphics.fase == 9)
-                if(i2 < 75)
+                if(i2 < xtgraphics.nplayers)
                 {
                     xtgraphics.rad(i2, 1);
                     catchlink(0);
@@ -916,7 +940,7 @@ public class GameSparker extends Applet
             }
             if(xtgraphics.fase == 2)
             {
-                xtgraphics.loadingstage(checkpoints.stage);
+            	xtgraphics.loadingstage(checkpoints.stage);
                 loadstage(aconto1, aconto, medium, trackers, checkpoints, xtgraphics, amadness, record);
                 u[0].falseo();
             }
@@ -927,7 +951,7 @@ public class GameSparker extends Applet
                 medium.aroundtrack(checkpoints);
                 int i3 = 0;
                 int ai[] = new int[10000];
-                for(int k5 = 7; k5 < notb; k5++)
+                for(int k5 = 51; k5 < notb; k5++)
                     if(aconto1[k5].dist != 0)
                     {
                         ai[i3] = k5;
@@ -980,14 +1004,12 @@ public class GameSparker extends Applet
                 int j3 = 0;
                 int ai1[] = new int[10000];
                 for(int i6 = 0; i6 < nob; i6++)
-                    if(aconto1[i6].dist != 0)
-                    {
-                        ai1[j3] = i6;
-                        j3++;
-                    } else
-                    {
-                        aconto1[i6].d(rd);
-                    }
+                	//if(aconto1[i6] != null)
+						if(aconto1[i6].dist != 0) {
+					    	ai1[j3] = i6;
+					        j3++;
+						} else
+							aconto1[i6].d(rd);
 
                 int ai6[] = new int[j3];
                 for(int i8 = 0; i8 < j3; i8++)
@@ -1052,19 +1074,20 @@ public class GameSparker extends Applet
                         aconto1[k3].zy = l8;
                         amadness[k3].newcar = false;
                     }
-                } while(++k3 < 7);
+                } while(++k3 < xtgraphics.nplayers);
                 medium.d(rd);
                 k3 = 0;
                 int ai2[] = new int[10000];
                 for(int k6 = 0; k6 < nob; k6++)
-                    if(aconto1[k6].dist != 0)
-                    {
-                        ai2[k3] = k6;
-                        k3++;
-                    } else
-                    {
-                        aconto1[k6].d(rd);
-                    }
+                	if(aconto1[k6] != null)
+                		if(aconto1[k6].dist != 0)
+	                    {
+	                        ai2[k3] = k6;
+	                        k3++;
+	                    } else
+	                    {
+	                        aconto1[k6].d(rd);
+	                    }
 
                 int ai7[] = new int[k3];
                 int ai10[] = new int[k3];
@@ -1102,21 +1125,21 @@ public class GameSparker extends Applet
                             if(j14 != l12){
                                 amadness[l12].colide(aconto1[l12], amadness[j14], aconto1[j14]);
                             }
-                        }while(++j14 < 7);
-                    } while(++l12 < 7);
+                        }while(++j14 < xtgraphics.nplayers);
+                    } while(++l12 < xtgraphics.nplayers);
                     l12 = 0;
                     do
                         amadness[l12].drive(u[l12], aconto1[l12], trackers, checkpoints);
-                    while(++l12 < 7);
+                    while(++l12 < xtgraphics.nplayers);
                     l12 = 0;
                     do
                         record.rec(aconto1[l12], l12, amadness[l12].squash, amadness[l12].lastcolido, amadness[l12].cntdest);
-                    while(++l12 < 7);
-                    checkpoints.checkstat(amadness, aconto1, record);
+                    while(++l12 < xtgraphics.nplayers);
+                    checkpoints.checkstat(amadness, aconto1, record, xtgraphics.nplayers, xtgraphics.ncops);
                     l12 = 1;
                     do
-                        u[l12].preform(amadness[l12], aconto1[l12], checkpoints, trackers);
-                    while(++l12 < 7);
+                        u[l12].preform(amadness[l12], aconto1[l12], checkpoints, trackers, xtgraphics.nplayers);
+                    while(++l12 < xtgraphics.nplayers);
                 } else
                 {
                     if(xtgraphics.starcnt == 130)
@@ -1187,7 +1210,7 @@ public class GameSparker extends Applet
                         medium.vert = false;
                         medium.adv = 900;
                         medium.vxz = 180;
-                        checkpoints.checkstat(amadness, aconto1, record);
+                        checkpoints.checkstat(amadness, aconto1, record, xtgraphics.nplayers, xtgraphics.ncops);
                         medium.follow(aconto1[0], amadness[0].cxz, 0);
                         xtgraphics.stat(amadness, checkpoints, u[0], aconto1, true);
                         xtgraphics.stat2(amadness, checkpoints, u[0], true);
@@ -1205,7 +1228,7 @@ public class GameSparker extends Applet
                     {
                         record.ocar[i4] = new ContO(aconto1[i4], 0, 0, 0, 0);
                         aconto1[i4] = new ContO(record.car[0][i4], 0, 0, 0, 0);
-                    } while(++i4 < 7);
+                    } while(++i4 < xtgraphics.nplayers);
                 }
                 medium.d(rd);
                 int j4 = 0;
@@ -1272,7 +1295,7 @@ public class GameSparker extends Applet
                     if(k1 == 299)
                         aconto1[l9] = new ContO(record.ocar[l9], 0, 0, 0, 0);
                     record.play(aconto1[l9], amadness[l9], l9, k1);
-                } while(++l9 < 7);
+                } while(++l9 < xtgraphics.nplayers);
                 if(++k1 == 300)
                 {
                     k1 = 0;
@@ -1329,7 +1352,7 @@ public class GameSparker extends Applet
                     int k4 = 0;
                     do
                         aconto1[k4] = new ContO(record.starcar[k4], 0, 0, 0, 0);
-                    while(++k4 < 7);
+                    while(++k4 < xtgraphics.nplayers);
                 }
                 medium.d(rd);
                 int i5 = 0;
@@ -1387,7 +1410,7 @@ public class GameSparker extends Applet
                         record.cntdest[l10] = 0;
                     }
                     record.playh(aconto1[l10], amadness[l10], l10, k1);
-                } while(++l10 < 7);
+                } while(++l10 < xtgraphics.nplayers);
                 if(j2 == 2 && k1 == 299)
                     u[0].enter = true;
                 if(u[0].enter || u[0].handb)

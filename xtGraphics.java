@@ -44,12 +44,12 @@ public class xtGraphics extends Panel
     int gatey;
     int looped;
     int sc[];
-    int xstart[] = {
+    /*int xstart[] = {
         0, -350, 350, 0, -350, 350, 0
     };
     int zstart[] = {
         -760, -380, -380, 0, 380, 380, 760
-    };
+    };*/
     float proba[] = {
         0.6F, 0.7F, 0.4F, 0.3F, 0.8F, 0, 0.3F, 0.3F, 0.3F, 0.1F, 
         0.1F, 0.5F, 0, 0, 0, 0,
@@ -379,6 +379,10 @@ public class xtGraphics extends Panel
     int lcarx;
     int lcary;
     int lcarz;
+    final int ncops = 10;
+    final int copcar = 0;
+    boolean setnumber;
+    final int nplayers = 18; //absolutely no reason that it shouldn't be a final int
     
     public void makeFont()
     {
@@ -656,7 +660,7 @@ public class xtGraphics extends Panel
     public void paintcs(Image img, int y){
         rd.drawImage(img, (img.getWidth(null) / 2) - 670, y, null);
     }
-
+    
     public boolean over(Image image, int i, int j, int k, int l)
     {
         int i1 = image.getHeight(ob);
@@ -1082,9 +1086,9 @@ public class xtGraphics extends Panel
 
     public void arrow(int i, int j, CheckPoints checkpoints, ContO conto[], boolean flag)
     {
-        int ai[] = new int[7];
-        int ai1[] = new int[7];
-        int ai2[] = new int[7];
+        int ai[] = new int[51];
+        int ai1[] = new int[51];
+        int ai2[] = new int[51];
         char c = '\u014F';
         byte byte0 = -90;
         char c1 = '\u02BC';
@@ -1092,7 +1096,7 @@ public class xtGraphics extends Panel
         do
         {
             ai1[k] = byte0;
-        } while(++k < 7);
+        } while(++k < nplayers);
         ai[0] = c;
         ai2[0] = c1 + 110;
         ai[1] = c - 35;
@@ -1133,7 +1137,7 @@ public class xtGraphics extends Panel
                         flag1 = true;
                     }
                 }
-            } while(++l2 < 7);
+            } while(++l2 < nplayers);
             l2 = 0;
             if(checkpoints.opx[l] - checkpoints.opx[0] >= 0)
             {
@@ -3376,8 +3380,8 @@ public class xtGraphics extends Panel
         i = 0;
         int k = 0;
         int l = 0;
-		int ai1[] = new int[7];
-		int ai3[] = new int[7];
+		int ai1[] = new int[51];
+		int ai3[] = new int[51];
 		for(int k1 = 0; k1 < 7; k1++)
 		{
 			ai1[k1] = (int)(96F - (float)(checkpoints.opx[mad.im] - checkpoints.opx[k1]) / calprox(checkpoints));
@@ -3646,7 +3650,7 @@ public class xtGraphics extends Panel
         if(fase != -2)
         {            
             holdit = false;
-            if(checkpoints.wasted == 6)
+            if(checkpoints.wasted == nplayers - 1)
             {
                 if(m.flex != 2)
                 {
@@ -3736,7 +3740,7 @@ public class xtGraphics extends Panel
                         checkpoints.haltall = true;
                         holdit = true;
                     }
-                } while(++i < 7);
+                } while(++i < nplayers);
                 if(checkpoints.clear[0] < (checkpoints.nlaps * checkpoints.nsp) - 1)
                 {
                     if((madness[0].nlaps + 1) == checkpoints.nlaps)
@@ -3875,7 +3879,32 @@ public class xtGraphics extends Panel
                 	if (isloadoldstatus) { //old nfm status
 	                    if(posit != checkpoints.pos[madness[0].im])
 	                    {
-	                        rd.drawImage(rank[checkpoints.pos[madness[0].im]], 110, 28, null);
+	                    	try {
+	                    		rd.drawImage(rank[checkpoints.pos[madness[0].im]], 110, 28, null);
+	                    	} catch (ArrayIndexOutOfBoundsException e) {
+	                    		//pos over 6
+	                            rd.setFont(adventure13.deriveFont(1, 17F));
+	                            String suffix = "";
+	                            int position = checkpoints.pos[0] + 1;
+	                            if((position - 1) % 10 == 0 && position != 11)
+	                            {
+	                                suffix = "st";
+	                            }
+	                            if((position - 2) % 10 == 0 && position != 12)
+	                            {
+	                                suffix = "nd";
+	                            }
+	                            if((position - 3) % 10 == 0 && position != 13)
+	                            {
+	                                suffix = "rd";
+	                            }
+	                            if(position % 10 == 0 || position % 10 >= 4 || position == 11 || position == 12 || position == 13)
+	                            {
+	                                suffix = "th";
+	                            }
+	                            rd.drawString("" + position + suffix + "", 110, 43);
+	                            rd.setFont(adventure13);
+	                    	}
 	                        posit = checkpoints.pos[madness[0].im];
 	                    }
 	                    if(wasted != checkpoints.wasted)
@@ -3883,7 +3912,7 @@ public class xtGraphics extends Panel
 	                        rd.setColor(new Color(m.csky[0], m.csky[1], m.csky[2]));
 	                        rd.fillRect(150, 8, 30, 10);
 	                        rd.setColor(new Color(0, 0, 100));
-	                        rd.drawString("" + checkpoints.wasted + " / 6", 150, 18);
+	                        rd.drawString("" + checkpoints.wasted + " / " + (nplayers - 1), 150, 18);
 	                        wasted = checkpoints.wasted;
 	                    }
 	                    if(laps != madness[0].nlaps)
@@ -4451,7 +4480,7 @@ public class xtGraphics extends Panel
 	                        tcnt = -15;
 	                    }
                     }
-                } while(++k < 7);
+                } while(++k < nplayers);
             }
         }
     }
@@ -4768,13 +4797,13 @@ public class xtGraphics extends Panel
     {
         if(i != 0)
         {
-            for(int j = 1; j < 7; j++)
+            for(int j = 1; j < nplayers; j++)
                 sc[j] = -1;
 
-            boolean aflag[] = new boolean[7];
+            boolean aflag[] = new boolean[nplayers];
             if(i < 0)
                 i = 27;
-            byte byte0 = 7;
+            int byte0 = nplayers;
             boolean flag = false;
             if(i <= 10)
             {
@@ -4808,10 +4837,10 @@ public class xtGraphics extends Panel
             {
                 i -= 10;
                 flag = true;
-                if(sc[0] != 7 + (i + 1) / 2 && i != nTracks)
+                if(sc[0] != nplayers + (i + 1) / 2 && i != nTracks)
                 {
-                    sc[6] = 7 + (i + 1) / 2;
-                    byte0 = 6;
+                    sc[nplayers - 1] = 7 + (i + 1) / 2;
+                    byte0 = nplayers - 1;
                 }
             }
             int k = 16;
@@ -4831,7 +4860,7 @@ public class xtGraphics extends Panel
                     if(sc[j1] >= 16)
                         sc[j1] -= 16;
                     aflag[j1] = true;
-                    for(int l4 = 0; l4 < 7; l4++)
+                    for(int l4 = 0; l4 < nplayers; l4++)
                         if(j1 != l4 && sc[j1] == sc[l4])
                             aflag[j1] = false;
 
@@ -4844,7 +4873,7 @@ public class xtGraphics extends Panel
                         f1 = 0.5F;
                     if((double)f1 > Math.random())
                         aflag[j1] = false;
-                    if((sc[j1] - 7) * 2 > unlocked)
+                    if((sc[j1] - nplayers) * 2 > unlocked)
                         aflag[j1] = false;
                     if(i == 16 && unlocked == 16 && sc[j1] < 9)
                         aflag[j1] = false;
@@ -4862,14 +4891,14 @@ public class xtGraphics extends Panel
             if(!flag && i == 10)
             {
                 boolean flag1 = false;
-                for(int i2 = 0; i2 < 7; i2++)
+                for(int i2 = 0; i2 < nplayers; i2++)
                     if(sc[i2] == 11)
                         flag1 = true;
 
                 if(Math.random() > Math.random())
                     sc[l] = 11;
                 flag1 = false;
-                for(int j2 = 0; j2 < 7; j2++)
+                for(int j2 = 0; j2 < nplayers; j2++)
                     if(sc[j2] == 14)
                         flag1 = true;
 
@@ -4879,7 +4908,7 @@ public class xtGraphics extends Panel
             if(i == 12)
             {
                 boolean flag2 = false;
-                for(int k2 = 0; k2 < 7; k2++)
+                for(int k2 = 0; k2 < nplayers; k2++)
                     if(sc[k2] == 11)
                         flag2 = true;
 
@@ -4889,14 +4918,14 @@ public class xtGraphics extends Panel
             if(i == 14)
             {
                 boolean flag3 = false;
-                for(int l2 = 0; l2 < 7; l2++)
+                for(int l2 = 0; l2 < nplayers; l2++)
                     if(sc[l2] == 12)
                         flag3 = true;
 
                 if(Math.random() > Math.random())
                     sc[l] = 12;
                 flag3 = false;
-                for(int i3 = 0; i3 < 7; i3++)
+                for(int i3 = 0; i3 < nplayers; i3++)
                     if(sc[i3] == 10)
                         flag3 = true;
 
@@ -4906,14 +4935,14 @@ public class xtGraphics extends Panel
             if(i == 15)
             {
                 boolean flag4 = false;
-                for(int j3 = 0; j3 < 7; j3++)
+                for(int j3 = 0; j3 < nplayers; j3++)
                     if(sc[j3] == 11)
                         flag4 = true;
 
                 if(Math.random() > Math.random())
                     sc[l] = 11;
                 flag4 = false;
-                for(int k3 = 0; k3 < 7; k3++)
+                for(int k3 = 0; k3 < nplayers; k3++)
                     if(sc[k3] == 13)
                         flag4 = true;
 
@@ -4923,14 +4952,14 @@ public class xtGraphics extends Panel
             if(i == 16)
             {
                 boolean flag5 = false;
-                for(int l3 = 0; l3 < 7; l3++)
+                for(int l3 = 0; l3 < nplayers; l3++)
                     if(sc[l3] == 13)
                         flag5 = true;
 
                 if(Math.random() > Math.random())
                     sc[l] = 13;
                 flag5 = false;
-                for(int i4 = 0; i4 < 7; i4++)
+                for(int i4 = 0; i4 < nplayers; i4++)
                     if(sc[i4] == 12)
                         flag5 = true;
 
@@ -4940,9 +4969,14 @@ public class xtGraphics extends Panel
         }
 
         // REALLY DIRTY HACK
-        for(int j = 1; j < 7; j++)
-        	if(sc[j] > nCars - 1)
+        for(int j = 1; j < nplayers; j++)
+        	if (sc[j] > nCars - 1)
         		sc[j] = nCars - 1;
+    }
+    
+    public void sortcops() {
+    	for(int j = nplayers - ncops - 1; j < nplayers; j++)
+        	sc[j] = copcar;
     }
     
     public int irandom(int min, int max) {
@@ -4970,10 +5004,10 @@ public class xtGraphics extends Panel
             {
                 sc[j] = -1;
             } while(++j < 7);
-            boolean aflag[] = new boolean[7];
+            boolean aflag[] = new boolean[nplayers];
             if(unlocked == i && unlocked != nTracks)
             {
-                sc[6] = 7 + (i + 1) / 2;
+                sc[nplayers - 1] = 7 + (i + 1) / 2;
                 int k = 1;
                 do
                 {
@@ -5081,7 +5115,7 @@ public class xtGraphics extends Panel
                     do
                     {
                         aflag[j3] = true;
-                    } while(++j3 < 6);
+                    } while(++j3 < nplayers - 1);
                 }
                 k = 1;
                 do
@@ -5093,11 +5127,11 @@ public class xtGraphics extends Panel
                         int l = 0;
                         do
                         {
-                            if(k != l && sc[k] == sc[l])
+                            if(k != l && sc[k] == sc[l] && nplayers <= 9)
                             {
                                 aflag[k] = false;
                             }
-                        } while(++l < 7);
+                        } while(++l < nplayers);
                         if(Math.random() < (double)proba[sc[k]])
                         {
                             aflag[k] = false;
@@ -5116,11 +5150,11 @@ public class xtGraphics extends Panel
                                 aflag[k] = false;
                             }
                         }
-                        if(i == 11 && (sc[k] == 0 || sc[k] == 1 || sc[k] == 2 || sc[k] == 3 || sc[k] == 4 || sc[k] == 7))
+                        if(i == 11 && (sc[k] == 0 || sc[k] == 1 || sc[k] == 2 || sc[k] == 3 || sc[k] == 4 || sc[k] == 7) && nplayers <= 8)
                         {
                             aflag[k] = false;
                         }
-                        if((i == 12 || i == 15) && sc[k] <= 4)
+                        if((i == 12 || i == 15) && sc[k] <= 4 && nplayers <= 9)
                         {
                             aflag[k] = false;
                         }
@@ -5140,7 +5174,7 @@ public class xtGraphics extends Panel
                         {
                             flag = true;
                         }
-                    } while(++i1 < 6);
+                    } while(++i1 < nplayers - 1);
                     if(!flag && Math.random() > Math.random())
                     {
                         if(Math.random() > Math.random())
@@ -5162,7 +5196,7 @@ public class xtGraphics extends Panel
                         {
                             flag1 = true;
                         }
-                    } while(++j1 < 6);
+                    } while(++j1 < nplayers - 1);
                     if(!flag1)
                     {
                         sc[2] = 11;
@@ -5178,7 +5212,7 @@ public class xtGraphics extends Panel
                         {
                             flag2 = true;
                         }
-                    } while(++k1 < 6);
+                    } while(++k1 < nplayers - 1);
                     if(!flag2)
                     {
                         sc[5] = 9;
@@ -5191,7 +5225,7 @@ public class xtGraphics extends Panel
                         {
                             flag2 = true;
                         }
-                    } while(++k1 < 6);
+                    } while(++k1 < nplayers - 1);
                     if(!flag2)
                     {
                         sc[4] = 8;
@@ -5204,7 +5238,7 @@ public class xtGraphics extends Panel
                         {
                             flag2 = true;
                         }
-                    } while(++k1 < 6);
+                    } while(++k1 < nplayers - 1);
                     if(!flag2)
                     {
                         sc[2] = 10;
@@ -5220,7 +5254,7 @@ public class xtGraphics extends Panel
                         {
                             flag3 = true;
                         }
-                    } while(++l1 < 6);
+                    } while(++l1 < nplayers - 1);
                     if(flag3)
                     {
                         if(sc[5] != 10)
@@ -5233,7 +5267,7 @@ public class xtGraphics extends Panel
                                 {
                                     flag4 = true;
                                 }
-                            } while(++i2 < 6);
+                            } while(++i2 < nplayers - 1);
                             if(flag4)
                             {
                                 if(sc[5] != 5)
@@ -5246,7 +5280,7 @@ public class xtGraphics extends Panel
                                         {
                                             flag5 = true;
                                         }
-                                    } while(++j2 < 6);
+                                    } while(++j2 < nplayers - 1);
                                     if(!flag5)
                                     {
                                         sc[5] = 9;
@@ -5264,11 +5298,11 @@ public class xtGraphics extends Panel
                 }
             } else
             {
-                byte byte0 = 7;
+                int byte0 = nplayers;
                 if(sc[0] != 7 + (i + 1) / 2 && i != nTracks)
                 {
-                    sc[6] = 7 + (i + 1) / 2;
-                    byte0 = 6;
+                    sc[nplayers - 1] = 7 + (i + 1) / 2;
+                    byte0 = nplayers - 1;
                 }
                 for(int k2 = 1; k2 < byte0; k2++)
                 {
@@ -5285,11 +5319,11 @@ public class xtGraphics extends Panel
                         int g = 0;
                         do
                         {
-                            if(k2 != f && sc[k2] ==  sc[g])
+                            if(k2 != f && sc[k2] == sc[g] && nplayers <= 9)
                             {
                                 aflag[k2] = false;
                             }
-                        } while(++f < 7);
+                        } while(++f < nplayers);
                         f = proba[sc[k2]];
                         if(i - sc[k2] > 4 && i != nTracks)
                         {
@@ -5336,7 +5370,7 @@ public class xtGraphics extends Panel
                     {
                         flag6 = true;
                     }
-                } while(++l2 < 6);
+                } while(++l2 < nplayers - 1);
                 if(!flag6)
                 {
                     sc[2] = 11;
@@ -5592,7 +5626,7 @@ public class xtGraphics extends Panel
         do
         {
             rank[j] = loadsnap(orank[j]);
-        } while(++j < 7);
+        } while(++j < 7); //keep at 7
         j = 0;
         do
         {
@@ -5668,6 +5702,7 @@ public class xtGraphics extends Panel
 
     public void resetstat(int i)
     {
+        setnumber = false;
         arrace = false;
         ana = 0;
         cntan = 0;
@@ -5696,8 +5731,9 @@ public class xtGraphics extends Panel
         do
         {
             dested[j] = 0;
-        } while(++j < 7);
+        } while(++j < nplayers);
         sortcars(i);
+        sortcops();
     }
 
     public void drawstat(int i, int j, boolean flag, float f)
@@ -5908,6 +5944,7 @@ public class xtGraphics extends Panel
 //=======
     public xtGraphics(Medium medium, Graphics2D graphics2d, Applet applet, Settings gameSettings)
     {
+        setnumber = false;
     	this.gameSettings = gameSettings;
 //>>>>>>> nfm2desktop
         fase = 111;
@@ -5921,7 +5958,7 @@ public class xtGraphics extends Panel
         nextc = false;
         gatey = 0;
         looped = 1;
-        sc = new int[7];
+        sc = new int[51];
         holdit = false;
         holdcnt = 0;
         winner = false;
@@ -5980,7 +6017,7 @@ public class xtGraphics extends Panel
         posit = 0;
         wasted = 0;
         laps = 0;
-        dested = new int[7];
+        dested = new int[51];
         dmcnt = 0;
         dmflk = false;
         pwcnt = 0;
