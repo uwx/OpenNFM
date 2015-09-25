@@ -9,13 +9,14 @@ public class WindowTest {
 	/**
 	 * Launch the application.
 	 */
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		EventQueue.invokeLater(new Runnable() {
+			@Override
 			public void run() {
 				try {
-					WindowTest window = new WindowTest();
+					final WindowTest window = new WindowTest();
 					window.frame.setVisible(true);
-				} catch (Exception e) {
+				} catch (final Exception e) {
 					e.printStackTrace();
 				}
 			}
