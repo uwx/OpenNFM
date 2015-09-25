@@ -21,11 +21,11 @@ public class Control {
 	boolean forget;
 	boolean bulistc;
 	int runbul;
-	int acuracy;
+	int accuracy;
 	int upwait;
 	boolean agressed;
 	float skiplev;
-	int clrnce;
+	int clearance;
 	int rampp;
 	int turntyp;
 	float aim;
@@ -89,16 +89,16 @@ public class Control {
 		if (!madness.dest) {
 			if (madness.mtouch)
 				if (stcnt > statusque) {
-					acuracy = (7 - checkpoints.pos[madness.im]) * checkpoints.pos[0] * (6 - checkpoints.stage * 2);
-					if (acuracy < 0)
-						acuracy = 0;
-					clrnce = 5;
+					accuracy = (7 - checkpoints.pos[madness.im]) * checkpoints.pos[0] * (6 - checkpoints.stage * 2);
+					if (accuracy < 0)
+						accuracy = 0;
+					clearance = 5;
 					if (checkpoints.stage == 6 || checkpoints.stage == 11)
-						clrnce = 2;
+						clearance = 2;
 					if (checkpoints.stage == 12 && (madness.pcleared == 27 || madness.pcleared == 17))
-						clrnce = 3;
+						clearance = 3;
 					if (checkpoints.stage == 16 && madness.pcleared == 33)
-						clrnce = 3;
+						clearance = 3;
 					float f = 0.0F;
 					if (checkpoints.stage == 1)
 						f = 1.5F;
@@ -569,8 +569,8 @@ public class Control {
 										&& py(conto.x / 100, checkpoints.opx[i4] / 100, conto.z / 100,
 												checkpoints.opz[i4] / 100) < 300
 										&& m.random() > 0.59999999999999998D - checkpoints.pos[madness.im] / 10F) {
-									clrnce = 0;
-									acuracy = 0;
+									clearance = 0;
+									accuracy = 0;
 								}
 							}
 						while (++i4 < ncars);
@@ -604,9 +604,9 @@ public class Control {
 						}
 					} else {
 						upwait = 0;
-						acuracy = 0;
+						accuracy = 0;
 						skiplev = 1.0F;
-						clrnce = 2;
+						clearance = 2;
 					}
 					if (!bulistc) {
 						if (checkpoints.stage == 8 && madness.cn == 11 && madness.pcleared == 35) {
@@ -1180,7 +1180,7 @@ public class Control {
 									upwait = 0;
 									turntyp = 2;
 									randtcnt = -1;
-									acuracy = 0;
+									accuracy = 0;
 									rampp = 0;
 									trfix = 3;
 								}
@@ -1205,7 +1205,7 @@ public class Control {
 									/ 0.017453292519943295D);
 						}
 						turncnt = 0;
-						randtcnt = (int) (acuracy * m.random());
+						randtcnt = (int) (accuracy * m.random());
 					} else
 						turncnt++;
 				} else {
@@ -1246,10 +1246,10 @@ public class Control {
 				for (; pan > 180; pan -= 360) {
 				}
 				if (wall != -1 && hold == 0)
-					clrnce = 0;
+					clearance = 0;
 				if (hold == 0)
 					if (Math.abs(j - pan) < 180) {
-						if (Math.abs(j - pan) > clrnce) {
+						if (Math.abs(j - pan) > clearance) {
 							if (j < pan) {
 								left = true;
 								lastl = true;
@@ -1267,7 +1267,7 @@ public class Control {
 									up = false;
 							}
 						}
-					} else if (Math.abs(j - pan) < 360 - clrnce) {
+					} else if (Math.abs(j - pan) < 360 - clearance) {
 						if (j < pan) {
 							right = true;
 							lastl = false;
@@ -1618,7 +1618,7 @@ public class Control {
 		acr = 0;
 		afta = false;
 		trfix = 0;
-		acuracy = 0;
+		accuracy = 0;
 		upwait = 0;
 		forget = false;
 		bulistc = false;
@@ -1718,11 +1718,11 @@ public class Control {
 		forget = false;
 		bulistc = false;
 		runbul = 0;
-		acuracy = 0;
+		accuracy = 0;
 		upwait = 0;
 		agressed = false;
 		skiplev = 1.0F;
-		clrnce = 5;
+		clearance = 5;
 		rampp = 0;
 		turntyp = 0;
 		aim = 0.0F;
